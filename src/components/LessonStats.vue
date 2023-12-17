@@ -13,12 +13,12 @@ const passedPercent = computed(
 
 </script>
 <template>
-    <header>
-        {{ vars.cardPassed }}/{{ consts.sessionLength }}:
-        {{ passedPercent }}% |
-        l-{{ consts.learnNumber }}: ... |
-        c-{{ consts.confirmNumber }} ... |
-        rep-{{ consts.repeatNumber }}/{{ consts.problemNumber }} ... |
-        rec-{{ consts.recognizeNumber }}
-    </header>
+<header>
+    {{ vars.cardPassed }}/{{ consts.sessionLength }}:
+    {{ passedPercent }}% |
+    l-{{ consts.learnNumber }}: ... |
+    c-{{ consts.confirmNumber }} ... |
+    rep-{{ consts.repeatNumber }}/{{ consts.problemNumber }} ... |
+    rec-{{ consts.recognizeNumber }}
+</header>
 </template>
