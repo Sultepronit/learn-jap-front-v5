@@ -3,7 +3,7 @@ import { computed } from 'vue';
 const { consts, vars } = defineProps(['consts', 'vars']);
 
 // console.log(props);
-// console.log(props.consts);
+// console.log(consts);
 // console.log(props.vars);
 // console.log(props.vars.cardPassed);
 
@@ -13,10 +13,12 @@ const passedPercent = computed(
 
 </script>
 <template>
-    <p>
+    <header>
         {{ vars.cardPassed }}/{{ consts.sessionLength }}:
         {{ passedPercent }}% |
-        wl-{{ consts.learnNumber }}: ... |
-        wl-{{ consts.confirmNumber }}
-    </p>
+        l-{{ consts.learnNumber }}: ... |
+        c-{{ consts.confirmNumber }} ... |
+        rep-{{ consts.repeatNumber }}/{{ consts.problemNumber }} ... |
+        rec-{{ consts.recognizeNumber }}
+    </header>
 </template>

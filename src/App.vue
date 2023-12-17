@@ -1,26 +1,34 @@
 <script setup>
 import { ref } from 'vue';
 import startSession from './startSession';
-import StatsConponent from './components/StatsConponent.vue';
+import nextCard from './nextCard';
+import LessonStats from './components/LessonStats.vue';
 
-let sessionConsts = {};
+// let sessionConsts = {};
+const sessionConsts = {};
+const lists = {};
 const sessionVars = ref({
   cardPassed: 1
 });
+const currentCard = ref({});
 
-const start = ref(false);
+const show = ref(false);
 startSession().then((data) => {
   console.log(data);
-  sessionConsts = { ...data.consts };
-  console.log(sessionConsts);
-  start.value = true;
+  // sessionConsts = { ...data.consts };
+  Object.assign(sessionConsts, data.consts);
+  Object.assign(lists, data.lists);
+  show.value = true;
+
+ currentCard.value = nextCard(lists);
+ console.log(currentCard);
 });
 
 
 </script>
 
 <template>
-  <StatsConponent v-if="start"
+  <LessonStats v-if="show"
     :consts="sessionConsts"
     :vars="sessionVars"
   />

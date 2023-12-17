@@ -1,3 +1,4 @@
+import { learnStages, repeatVariants } from "./enums.js";
 async function startSession() {
     console.timeLog('tt', 'fetch');
     // console.time('tt');
@@ -9,6 +10,7 @@ async function startSession() {
         constsAndVars,
         learnList,
         confirmList,
+        repeatList,
         problemList,
         recognizeList
     } = data;
@@ -16,12 +18,42 @@ async function startSession() {
 
     const learnNumber = learnList.length - 1;
     const confirmNumber = Math.round(confirmList.length / confirmDivisor);
-    // const recongnizeNumber = Math.ceil(recognizeList?.length / 5);
-    const recongnizeNumber = 0;
+    const recognizeNumber = Math.ceil(recognizeList?.length / 5);
+
+    let stop = learnNumber;
+    const learnStageList = Array(sessionLength)
+        .fill(learnStages.LEARN)
+        .fill(learnStages.CONFIRM, stop)
+        .fill(learnStages.RECOGNIZE, stop += confirmNumber)
+        .fill(learnStages.REPEAT, stop += recognizeNumber);
+    
+    const repeatNumber = sessionLength - stop;
     const problemNumber = Math.round(problemList.length / problemDivisor);
 
+    const repeatVariantList = Array(repeatNumber)
+        .fill(repeatVariants.PROBLEM)
+        .fill(repeatVariants.NORMAL, problemNumber);
+
+    console.timeLog('tt');
+
     return {
-        consts: { sessionLength, learnNumber, confirmNumber,  }
+        consts: {
+            sessionLength,
+            learnNumber,
+            confirmNumber,
+            repeatNumber,
+            problemNumber,
+            recognizeNumber
+        },
+        lists: {
+            learnList,
+            confirmList,
+            repeatList,
+            problemList,
+            recognizeList,
+            learnStageList,
+            repeatVariantList
+        }
     };
 }
 
