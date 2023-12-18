@@ -1,19 +1,21 @@
 <script setup>
-const props = defineProps(['params']);
+import { marks } from '@/enums';
+defineProps(['params']);
 </script>
 
 <template>
 <footer>
     <button
-        v-show="params.good.show"
-        @click="console.log('hello there')"
+        v-show="params.showSides"
+        @click="params.action(marks.GOOD)"
     >+</button>
     <button
-        v-show="params.central.show"
-        @click="params.central.action()"
+        v-show="params.showCentral"
+        @click="params.action(marks.NEUTRAL)"
     >#</button>
     <button
-        v-show="params.bad.show"
+        v-show="params.showSides"
+        @click="params.action(marks.BAD)"
     >-</button>
 </footer>
 </template>

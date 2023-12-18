@@ -12,9 +12,10 @@ defineProps(['card', 'show']);
 <template>
 <main>
     <p>{{ card.id }} [{{ card.status }}]</p>
+    <p>{{ card.autorepeated }}</p>
 
-    <section id="question-answer">
-        <p id="writing">
+    <section class="question-answer" :class="{ autorep: card.autorepeated }">
+        <p class="writing" :class="card.recogMark?.name">
             <span v-show="show.writing">
                 <span v-html="card.writings" />
             </span>
@@ -43,8 +44,26 @@ defineProps(['card', 'show']);
 .gray {
     color: gray;
 }
-#question-answer {
+.question-answer {
     text-align: center;
     font-size: 2rem;
+    border: 5px solid white;
+}
+.autorep {
+    border-color: black;
+}
+.writing {
+    border-bottom: 5px solid white;
+    width: fit-content;
+    margin: auto;
+}
+.good {
+    border-color: green;
+}
+.bad {
+    border-color: red;
+}
+.neutral {
+    border-color: yellow;
 }
 </style>

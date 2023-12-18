@@ -2,7 +2,9 @@
 import { ref } from 'vue';
 import startSession from './startSession';
 import nextCard from './nextCard';
-import { directions } from './enums';
+import { directions, learnStages } from './enums';
+// import initCycle from '@/initCycle.js';
+// import { initStandardCycle } from './standardCycle.js';
 import LessonStats from './components/LessonStats.vue';
 import MainView from './components/MainView.vue';
 import NavigateButtons from './components/NavigateButtons.vue';
@@ -13,17 +15,8 @@ const progress = ref({
   cardPassed: 0
 });
 const card = ref({});
-const show = ref({
-    writing: false,
-    reading: false,
-    translation: false,
-    answer: false
-});
-const buttons = ref({
-  good: {},
-  central: {},
-  bad: {},
-});
+const show = ref({});
+const buttons = ref({});
 
 const started = ref(false);
 startSession().then((data) => {
@@ -32,19 +25,11 @@ startSession().then((data) => {
   Object.assign(lists, data.lists);
 
   started.value = true;
-  showQuestion();
+  // initCycle(progress, lists, card, show, buttons);
+  nextCycle();
 });
 
-function showQuestion() {
-  progress.value.cardPassed++;
-  card.value = nextCard(lists);
-  //  console.log(currentCard);
-  buttons.value = {
-    good: { show: false },
-    central: { show: true },
-    bad: { show: false }
-  };
-
+function newDisplay() {
   show.value = {
     writing: false,
     reading: false,
@@ -52,27 +37,9 @@ function showQuestion() {
     answer: false
   }
 
-  if(card.value.direction === directions.FORWARD) {
-    show.value.writing = true;
-
-    buttons.value.central.action = showReadingAndEvaluate;
-  } else {
-    show.value.translation = true;
-
-    buttons.value.central.action = showAnswerAndEvaluate;
-  }
-}
-
-function showReadingAndEvaluate() {
-  show.value.reading = true;
-
   buttons.value = {
-    good: { show: true },
-    central: {
-      show: true,
-      action: showAnswerAndEvaluate
-    },
-    bad: { show: true }
+    showCentral: true,
+    showSides: false,
   };
 }
 
@@ -85,20 +52,91 @@ function showAnswer() {
   }
 }
 
-function showAnswerAndEvaluate() {
-  showAnswer();
-  // wordEvaluationButtons();
-  buttons.value = {
-    good: { show: true },
-    central: {
-      show: true,
-      action: showQuestion
-    },
-    bad: { show: true }
-  };
+function nextCycle() {
+  newDisplay();
+
+  progress.value.cardPassed++;
+
+  card.value = nextCard(lists);
+
+  // autorepeat
+  if(card.value[`${card.value.direction}AutoRepeat`]) {
+    autorepeat();
+    return;
+  }
+
+  // recognition
+  if(card.value.learnStage === learnStages.RECOGNIZE) {
+    askToRecognize();
+    return;
+  }
+
+  // learn/confrim/repeat
+  showStandardQuestion();
 }
 
+// learn/confrim/repeat
+function showStandardQuestion() {
+  if(card.value.direction === directions.FORWARD) {
+    show.value.writing = true;
+    buttons.value.action = showReading;
+  } else {
+    show.value.translation = true;
+    buttons.value.action = showStandardAnswer;
+  }
+}
 
+function showReading() {
+  show.value.reading = true;
+
+  buttons.value.action = quickRecognition;
+  buttons.value.showSides = true;
+  if(card.value.learnStage === learnStages.LEARN) {
+    buttons.value.showCentral = false;
+  }
+}
+
+function quickRecognition(mark) {
+  showStandardAnswer();
+  card.value.recogMark = mark;
+}
+
+function showStandardAnswer() {
+  showAnswer();
+  buttons.value.action = evaluateAndSave; 
+  buttons.value.showSides = true;
+  if(card.value.learnStage === learnStages.LEARN) {
+    buttons.value.showCentral = false;
+  }
+}
+
+// recognition
+function askToRecognize() {
+  show.value.writing = true;
+  card.value.recogMark = {name: 'question'};
+  buttons.value.action = showRecognitionAnswer;
+}
+
+function showRecognitionAnswer() {
+  showAnswer();
+  buttons.value.action = evaluateAndSave; 
+  buttons.value.showSides = true;
+  buttons.value.showCentral = false;
+}
+
+// autorepeat
+function autorepeat() {
+  showAnswer();  
+  card.value.autorepeated = true; // adds black border
+  buttons.value.action = evaluateAndSave; 
+}
+
+// common
+function evaluateAndSave() {
+  // evaluate
+  // save
+  nextCycle();
+}
 </script>
 
 <template>
