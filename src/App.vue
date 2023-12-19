@@ -127,12 +127,14 @@ function showRecognitionAnswer() {
 // autorepeat
 function autorepeat() {
   showAnswer();  
+  // change & save
   card.value.autorepeated = true; // adds black border
-  buttons.value.action = evaluateAndSave; 
+  buttons.value.action = nextCycle; 
 }
 
 // common
-function evaluateAndSave() {
+function evaluateAndSave(mark) {
+  console.log(mark);
   // evaluate
   // save
   nextCycle();

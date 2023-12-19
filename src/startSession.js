@@ -1,8 +1,10 @@
 import { learnStages, repeatVariants } from "./enums.js";
+const apiUrl = import.meta.env.VITE_API_URL;
 async function startSession() {
     console.timeLog('tt', 'fetch');
     // console.time('tt');
-    const resp = await fetch('http://localhost:7878/start-jap-session.php');
+    // const resp = await fetch('http://localhost:7878/start-jap-session.php');
+    const resp = await fetch(apiUrl);
     const data = await resp.json();
     console.timeLog('tt', 'data!');
     console.log(data);
