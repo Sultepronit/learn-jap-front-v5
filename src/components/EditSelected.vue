@@ -1,5 +1,6 @@
 <script setup>
-defineProps(['card']);
+import { ref, watch } from 'vue';
+const { card } = defineProps(['card', 'update']);
 </script>
 
 <template>
@@ -7,27 +8,32 @@ defineProps(['card']);
         <input
             type="text"
             class="writings jap-field"
-            v-model="card.writings"
+            :value="card.writings"
+            @change="update($event, 'writings')"
         >
         <input
             type="text"
             class="jap-field gray"
-            v-model="card.rareWritings"
+            :value="card.rareWritings"
+            @change="update($event, 'rareWritings')"
         >
         <input
             type="text"
             class="readings jap-field"
-            v-model="card.readings"
+            :value="card.readings"
+            @change="update($event, 'readings')"
         >
         <input
             type="text"
             class="jap-field gray"
-            v-model="card.rereReadings"
+            :value="card.rereReadings"
+            @change="update($event, 'rereReadings')"
         >
         <input
             type="text"
             class="uk-field"
-            v-model="card.translation"
+            :value="card.translation"
+            @change="update($event, 'translation')"
         >
     </section>
 </template>

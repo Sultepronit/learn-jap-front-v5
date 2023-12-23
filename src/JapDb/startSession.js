@@ -8,6 +8,16 @@ async function startSession() {
     console.log(data);
     
     return data;
+    // const response = await fetch(apiUrl, {
+    //     method: 'PATCH',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({'key': 'value'})
+    // });
+    // console.log(response);
+    // const results = await response.text();
+    // console.log(results);
 }
 
 export default startSession;
