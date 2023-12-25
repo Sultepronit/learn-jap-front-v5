@@ -1,6 +1,6 @@
 <script setup>
-defineProps(['select', 'createNewCard', 'card', 'update', 'isSaving']);
-//  @click="toggle('altWriting')"
+defineProps(['createNewCard', 'card', 'update', 'isSaving']);
+const emit = defineEmits(['deleteCard']);
 </script>
 
 <template>
@@ -9,7 +9,10 @@ defineProps(['select', 'createNewCard', 'card', 'update', 'isSaving']);
             <button class="new-card" @click="createNewCard">
                 新しい
             </button>
-            <p>{{ card.cardNumber }}</p>
+            <span>{{ card.cardNumber }}</span>
+            <button class="delete" @click="emit('deleteCard')">
+                消す
+            </button>
         </div>
         <input
             type="text"
@@ -65,10 +68,16 @@ defineProps(['select', 'createNewCard', 'card', 'update', 'isSaving']);
 .top-line {
     height: 2rem;
 }
-button.new-card {
-    float: right;
+button {
     font-size: 1.0rem;
     padding: 0 1em 0.1em;
+}
+button.delete {
+    color: red;
+    display: inline-block;
+}
+button.new-card {
+    float: right;
 }
 .alt-toggle {
     display: inline-block;

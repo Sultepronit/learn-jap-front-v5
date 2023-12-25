@@ -1,33 +1,65 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import startSession from '@/JapDb/startSession';
 import patch from '@/api/patch.js';
 import post from '@/api/post.js';
-import DbList from './DbList.vue';
 import EditSelected from './EditSelected.vue';
+import FilterBar from './FilterBar.vue';
+import DbList from './DbList.vue';
 
 const db = ref([]);
-// let db = ref([]);
 const ready = ref(false);
-const selectedNumber = ref(-1);
-const selectedCard = ref({});
-const editedCard = ref({});
 
 startSession().then((data) => {
     db.value = data;
 
     select(data.length);
+    setLastDisplayedRow(data.length);
     ready.value = true;
 });
 
-function select(cardNumber) {
+const rowNumber = 18;
+const lastDisplayedRow = ref(0);
+function setLastDisplayedRow(newVal) {
+    if(newVal < rowNumber) {
+        newVal = rowNumber;
+    } else if(newVal >= db.value.length) {
+        newVal = db.value.length;
+    }
+    lastDisplayedRow.value = newVal;   
+}
+
+function incrementLastDisplayedRow(delta) {
+    setLastDisplayedRow(lastDisplayedRow.value + delta);
+}
+
+const displayedRange = computed(() => {
+    return db.value.slice(
+        (lastDisplayedRow.value - rowNumber),
+        lastDisplayedRow.value
+    );
+});
+
+const selectedNumber = ref(0);
+const selectedCard = ref({});
+
+function select(cardNumber, changeDisplay) {
+    cardNumber = Math.round(cardNumber);
     console.log(cardNumber);
+    if(cardNumber < 1 || cardNumber > db.value.length) {
+        return;
+    }
     selectedNumber.value = cardNumber;
     selectedCard.value = db.value[cardNumber - 1];
     console.log(selectedCard.value);
+    if(changeDisplay) {
+        setLastDisplayedRow(cardNumber + rowNumber - 1);
+    }
 }
 
 const isSaving = ref(false);
+const editedCard = ref({});
+
 function update(cardNumber, field, value) {
     console.log('saving...');
     isSaving.value = true;
@@ -72,21 +104,37 @@ async function createNewCard() {
     select(newCard.id);
     // ready.value = true;
 }
+
+function deleteCard() {
+    console.log('deleting!');
+    const confirmation = confirm(`Do you confrim deleating this card?`);
+    console.log(confirmation);
+}
 </script>
 
 <template>
     <EditSelected
-        :select="select"
-        :createNewCard="createNewCard"
         :card="selectedCard"
-        :update="update"
         :isSaving="isSaving"
+        :update="update"
+        :createNewCard="createNewCard"
+        @deleteCard="deleteCard"
+    />
+    <FilterBar
+        :selectedNumber="selectedNumber"
+        :lastCardNumber="db.length"
+        :select="select"
     />
     <DbList
         v-if="ready"
-        :db="db"
-        :select="select"
+        :min="rowNumber"
+        :max="db.length"
+        :range="displayedRange"
+        :lastRow="lastDisplayedRow"
         :selectedNumber="selectedNumber"
+        @setLastRow="setLastDisplayedRow"
+        @incrementLastRow="incrementLastDisplayedRow"
+        :select="select"
     />
     
 </template>
