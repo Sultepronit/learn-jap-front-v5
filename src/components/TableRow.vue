@@ -7,7 +7,10 @@ defineProps(['row']);
             {{ row.id }}
         </td>
         <td class="width-4em">
-            {{ row.status }}
+            {{ row.cardNumber }}
+        </td>
+        <td class="width-4em">
+            {{ row.learnStatus }}
         </td>
         <td class="width-2sym">
             {{ row.fProgress }}
@@ -15,10 +18,10 @@ defineProps(['row']);
         <td class="width-2sym">
             {{ row.bProgress }}
         </td>
-        <td class="width-2sym" :class="{auto: row.fAutoRepeat}">
+        <td class="width-2sym" :class="{auto: row.fAutorepeat}">
             {{ row.fStats }}
         </td>
-        <td class="width-2sym" :class="{auto: row.bAutoRepeat}">
+        <td class="width-2sym" :class="{auto: row.bAutorepeat}">
             {{ row.bStats }}
         </td>
         <td class="width-jap">
@@ -30,7 +33,7 @@ defineProps(['row']);
         <td class="width-jap">
             <div class="cell">
                 <span>{{row.readings}}</span> 
-                <span class="gray">　{{row.rereReadings}}</span>
+                <span class="gray">　{{row.rareReadings}}</span>
             </div>
         </td>
         <td>

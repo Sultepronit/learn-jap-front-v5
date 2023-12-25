@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue';
 import TableRow from './TableRow.vue';
 
-const { db, selectedId } = defineProps(['db', 'select', 'selectedId']);
+const { db, selectedNumber } = defineProps(['db', 'select', 'selectedNumber']);
 
 // const db.length = db.length;
 const lastRow = ref(db.length);
@@ -32,8 +32,8 @@ function handleWheel(event) {
                     v-for="row in range"
                     :key="row.id"
                     :row="row"
-                    @click="select(row.id)"
-                    :class="{selected: selectedId === row.id}"
+                    @click="select(row.cardNumber)"
+                    :class="{selected: selectedNumber === row.cardNumber}"
                 />
             </tbody>
         </table>

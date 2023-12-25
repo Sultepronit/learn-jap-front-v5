@@ -9,43 +9,47 @@ defineProps(['select', 'createNewCard', 'card', 'update', 'isSaving']);
             <button class="new-card" @click="createNewCard">
                 新しい
             </button>
-            <p>{{ card.id }}</p>
+            <p>{{ card.cardNumber }}</p>
         </div>
         <input
             type="text"
             class="jap-field shorter"
             :class="{'blue' : card.altWriting}"
             :value="card.writings"
-            @change="update($event, 'writings')"
+            @change="update(card.cardNumber, 'writings', $event.target.value)"
         >
         <div
             class="alt-toggle"
             :class="{'is-alt' : card.altWriting}"
-            @click="update($event, 'altWriting', true)"
+            @click="update(
+                card.cardNumber,
+                'altWriting',
+                Number(!card.altWriting)
+            )"
         />
         <input
             type="text"
             class="jap-field gray"
             :value="card.rareWritings"
-            @change="update($event, 'rareWritings')"
+            @change="update(card.cardNumber, 'rareWritings', $event.target.value)"
         >
         <input
             type="text"
             class="jap-field"
             :value="card.readings"
-            @change="update($event, 'readings')"
+            @change="update(card.cardNumber, 'readings', $event.target.value)"
         >
         <input
             type="text"
             class="jap-field gray"
-            :value="card.rereReadings"
-            @change="update($event, 'rereReadings')"
+            :value="card.rareReadings"
+            @change="update(card.cardNumber, 'rareReadings', $event.target.value)"
         >
         <input
             type="text"
             class="uk-field"
             :value="card.translation"
-            @change="update($event, 'translation')"
+            @change="update(card.cardNumber, 'translation', $event.target.value)"
         >
     </section>
 </template>

@@ -6,47 +6,43 @@ import post from '@/api/post.js';
 import DbList from './DbList.vue';
 import EditSelected from './EditSelected.vue';
 
-// const db = ref([]);
-let db = ref([]);
+const db = ref([]);
+// let db = ref([]);
 const ready = ref(false);
-const selectedId = ref(-1);
+const selectedNumber = ref(-1);
 const selectedCard = ref({});
+const editedCard = ref({});
+
 startSession().then((data) => {
-    // const newCards = Array(20).fill({id: -1});
-    // db.value = [...data, ...newCards];
     db.value = data;
-    // selectedId.value = data.length;
+
     select(data.length);
     ready.value = true;
 });
 
-function select(id) {
-    console.log(id);
-    selectedId.value = id;
-    // if(id < 0) {
-    //     selectedCard.value = {};
-    //     return;
-    // }
-    selectedCard.value = db.value[id - 1];
+function select(cardNumber) {
+    console.log(cardNumber);
+    selectedNumber.value = cardNumber;
+    selectedCard.value = db.value[cardNumber - 1];
     console.log(selectedCard.value);
 }
 
 const isSaving = ref(false);
-function update(event, field, toggle) {
+function update(cardNumber, field, value) {
     console.log('saving...');
-
-    const newVal = toggle ? Number(!selectedCard.value[field])
-        : event.target.value;
-
-    console.log(field, ': ', newVal);
-
     isSaving.value = true;
-    selectedCard.value[field] = newVal;
+
+    editedCard.value = db.value[cardNumber - 1];
+    editedCard.value[field] = value;
+
+    console.log(cardNumber, field, value);
+    console.log(editedCard.value);
+
     const data = {
-        id: selectedId.value,
+        id: editedCard.value.id,
         changes: {}
     }
-    data.changes[field] = newVal;
+    data.changes[field] = value;
 
     patch(data).then((success) => {
         if(success) {
@@ -90,7 +86,7 @@ async function createNewCard() {
         v-if="ready"
         :db="db"
         :select="select"
-        :selectedId="selectedId"
+        :selectedNumber="selectedNumber"
     />
     
 </template>
