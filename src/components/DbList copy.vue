@@ -4,8 +4,8 @@ import TableRow from './TableRow.vue';
 
 const { db, selectedId } = defineProps(['db', 'select', 'selectedId']);
 
-// const db.length = db.length;
-const lastRow = ref(db.length);
+const dbLast = db.length;
+const lastRow = ref(dbLast);
 const rowNumber = 19;
 const range = computed(() => {
     return db.slice((lastRow.value - rowNumber), lastRow.value)
@@ -16,8 +16,8 @@ function handleWheel(event) {
     let temp = parseInt(lastRow.value) + delta * 5;
     if(temp < rowNumber) {
         temp = rowNumber;
-    } else if(temp >= db.length) {
-        temp = db.length;
+    } else if(temp >= dbLast) {
+        temp = dbLast;
     }
     lastRow.value = temp;
 }
@@ -42,7 +42,7 @@ function handleWheel(event) {
             orient="vertical"
             class="scroller"        
             :min="rowNumber"
-            :max="db.length"
+            :max="dbLast"
             v-model="lastRow"
         >
     </section>

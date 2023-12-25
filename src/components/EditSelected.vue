@@ -1,16 +1,28 @@
 <script setup>
-import { ref, watch } from 'vue';
-const { card } = defineProps(['card', 'update']);
+defineProps(['select', 'createNewCard', 'card', 'update', 'isSaving']);
+//  @click="toggle('altWriting')"
 </script>
 
 <template>
-    <section class="edit">
+    <section class="edit" :class="{'is-saving': isSaving}">
+        <div class="top-line">
+            <button class="new-card" @click="createNewCard">
+                新しい
+            </button>
+            <p>{{ card.id }}</p>
+        </div>
         <input
             type="text"
-            class="writings jap-field"
+            class="jap-field shorter"
+            :class="{'blue' : card.altWriting}"
             :value="card.writings"
             @change="update($event, 'writings')"
         >
+        <div
+            class="alt-toggle"
+            :class="{'is-alt' : card.altWriting}"
+            @click="update($event, 'altWriting', true)"
+        />
         <input
             type="text"
             class="jap-field gray"
@@ -19,7 +31,7 @@ const { card } = defineProps(['card', 'update']);
         >
         <input
             type="text"
-            class="readings jap-field"
+            class="jap-field"
             :value="card.readings"
             @change="update($event, 'readings')"
         >
@@ -39,17 +51,46 @@ const { card } = defineProps(['card', 'update']);
 </template>
 
 <style scoped>
+.edit {
+    margin: 2px;
+    border: 3px solid white;
+}
+.is-saving {
+    border-color: red;
+}
+.top-line {
+    height: 2rem;
+}
+button.new-card {
+    float: right;
+    font-size: 1.0rem;
+    padding: 0 1em 0.1em;
+}
+.alt-toggle {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    background-color: black;
+    margin-inline: 0.3em;
+    margin-bottom: -0.15em;
+}
+.is-alt {
+    background-color: blue;
+}
 input[type="text"] {
     padding-inline: 0.2em;
+    margin: 1px;
+    font-size: 1.3rem;
 }
 .jap-field {
-    width: 50%;
-    font-size: 1.3rem;
+    width: calc(50% - 2px);
     font-family: "Noto Sans CJK JP";
 }
+.shorter {
+    width: calc(50% - 1px - 1.7em);
+}
 .uk-field {
-    width: 100%;
-    font-size: 1.2rem;
+    width: calc(100% - 2px);
     height: 1.5em
 }
 

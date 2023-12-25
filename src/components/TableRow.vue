@@ -6,13 +6,28 @@ defineProps(['row']);
         <td class="width-4em">
             {{ row.id }}
         </td>
-        <td class="width-10">
+        <td class="width-4em">
+            {{ row.status }}
+        </td>
+        <td class="width-2sym">
+            {{ row.fProgress }}
+        </td>
+        <td class="width-2sym">
+            {{ row.bProgress }}
+        </td>
+        <td class="width-2sym" :class="{auto: row.fAutoRepeat}">
+            {{ row.fStats }}
+        </td>
+        <td class="width-2sym" :class="{auto: row.bAutoRepeat}">
+            {{ row.bStats }}
+        </td>
+        <td class="width-jap">
             <div class="cell">
                 <span :class="{'blue': row.altWriting}">{{row.writings}}</span> 
                 <span class="gray">　{{row.rareWritings}}</span>
             </div>
         </td>
-        <td class="width-10">
+        <td class="width-jap">
             <div class="cell">
                 <span>{{row.readings}}</span> 
                 <span class="gray">　{{row.rereReadings}}</span>
@@ -29,19 +44,28 @@ defineProps(['row']);
 
 <style scoped>
 td {
+    font-size: 1.3rem;
     border: 1px solid;
-    padding-inline: 0.5em;
+    padding-inline: 0.2em;
 }
 .cell {
     overflow: hidden;
     height: 1.5em;
 }
 .width-4em {
-    width: 3em;
+    width: 2.5em;
 }
-.width-10 {
-    width: 10%;
-    font-size: 0.9em;
+.width-2sym {
+    width: 1.4em;
+}
+.auto {
+    color: red;
+    border-color: black;
+    font-weight: bold;
+}
+.width-jap {
+    width: 10em;
+    /* font-size: 0.9em; */
 }
 .width-20 {
     width: 20%;
