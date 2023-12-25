@@ -1,8 +1,8 @@
 const apiUrl = import.meta.env.VITE_JAP_DB_API_URI;
 
-async function deleteAPI(request) {
+async function deleteAPI(id) {
     // all I have is only GET, POST and no headers allowed...
-    const url = `${apiUrl}?id=${request.id}&real-method=delete`;
+    const url = `${apiUrl}?id=${id}&real-method=delete`;
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -14,11 +14,11 @@ async function deleteAPI(request) {
         if(results === '{"success": true}') {
             return true;
         } else {
-            alert('Not deleted!');
+            // alert('Not deleted!');
         }
     } catch (error) {
         console.error(error);
-        alert('Not deleted!');
+        // alert('Not deleted!');
     }
 }
 

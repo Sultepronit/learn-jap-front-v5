@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 import startSession from '@/JapDb/startSession';
 import patch from '@/api/patch.js';
 import post from '@/api/post.js';
+import deleteAPI from '@/api/deleteAPI.js';
 import EditSelected from './EditSelected.vue';
 import FilterBar from './FilterBar.vue';
 import DbList from './DbList.vue';
@@ -87,21 +88,19 @@ function update(cardNumber, field, value) {
 
 async function createNewCard() {
     console.log('creating...');
-    ready.value = false;
-    const newCard = await post();
-    console.log(db.value.length);
-    setTimeout(() => {
-        ready.value = true;
-    }, 100);
+    // ready.value = false;
+    const newCard = await post(db.value.length + 1);
+    // console.log(db.value.length);
+    // setTimeout(() => {
+    //     ready.value = true;
+    // }, 10);
     // const newCard = {id: db.value.length + 1};
     console.log(newCard);
     
     db.value.push(newCard);
     console.log(db.value);
-    // db.value = [...db.value, newCard];
-    // db.value.push(...[newCard]);
-    // db = ref([...db.value, newCard]);
-    select(newCard.id);
+
+    select(newCard.cardNumber, true);
     // ready.value = true;
 }
 
@@ -109,6 +108,18 @@ function deleteCard() {
     console.log('deleting!');
     const confirmation = confirm(`Do you confrim deleating this card?`);
     console.log(confirmation);
+    if(!confirmation) {
+        return;
+    }
+    isSaving.value = true;
+    deleteAPI(selectedCard.value.id).then((success) => {
+        isSaving.value = false;
+        if(success) {
+            location.reload();
+        } else {
+            alert('Not deleted!');
+        }
+    });
 }
 </script>
 

@@ -1,11 +1,11 @@
 const apiUrl = import.meta.env.VITE_JAP_DB_API_URI;
 
-async function post() {
+async function post(cardNumber) {
     // all I have is only GET, POST and no headers allowed...
     try {
         const response = await fetch(apiUrl, {
             method: 'POST',
-            // body: JSON.stringify(data)
+            body: JSON.stringify({cardNumber})
         });
         const results = await response.text();
         console.log(results);
