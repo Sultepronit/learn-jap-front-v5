@@ -1,20 +1,27 @@
 <script setup>
-import { ref, computed, watch } from 'vue';
-import { db, ready, numberToSelect } from '@/JapDb/crud.js';
+import { ref, computed } from 'vue';
+import startSession from '@/JapDb/startSession';
+import patch from '@/api/patch.js';
+import post from '@/api/post.js';
+import deleteAPI from '@/api/deleteAPI.js';
+import { createNewCard, deleteCard } from '@/JapDb/c_ud.js';
 import EditSelected from './EditSelected.vue';
 import FilterBar from './FilterBar.vue';
 import DbList from './DbList.vue';
 
-
+const db = ref([]);
 const viewList = ref([]);
+const ready = ref(false);
+
 const maxRowNumber = Math.round((window.innerHeight / 33) - 6);
 const rowNumber = ref(maxRowNumber);
 
-watch(ready, () => {
-    console.log('ready!');
-    viewList.value = db.value;
-    select(db.value.length);
-    setLastDisplayedRow(db.value.length);
+startSession().then((data) => {
+    db.value = viewList.value = data;
+
+    select(data.length);
+    setLastDisplayedRow(data.length);
+    ready.value = true;
 });
 
 const selectedNumber = ref(0);
@@ -34,9 +41,68 @@ function select(cardNumber, changeDisplay) {
     }
 }
 
-watch(numberToSelect, (num) => {
-    select(num, true);
-});
+const isSaving = ref(false);
+const editedCard = ref({});
+
+function update(cardNumber, field, value) {
+    console.log('saving...');
+    isSaving.value = true;
+
+    editedCard.value = db.value[cardNumber - 1];
+    editedCard.value[field] = value;
+
+    console.log(cardNumber, field, value);
+    console.log(editedCard.value);
+
+    const data = {
+        id: editedCard.value.id,
+        changes: {}
+    }
+    data.changes[field] = value;
+
+    patch(data).then((success) => {
+        if(success) {
+            isSaving.value = false;
+        } else {
+            // add possibility to try and save again
+        }
+    });
+}
+
+async function createNewCard0() {
+    try {
+        isSaving.value = true;
+        const newCard = await post(db.value.length + 1);
+        db.value.push(newCard);
+        select(newCard.cardNumber, true);
+
+        // console.log(db.value);
+        // console.log(newCard);
+        isSaving.value = false;
+    } catch(e) {
+        console.error(e);
+    }
+}
+
+async function deleteCard0() {
+    const confirmation = confirm(`Do you confrim deleating this card?`);
+    if(!confirmation) {
+        return;
+    }
+    isSaving.value = true;
+    try {
+        const success = await deleteAPI(selectedCard.value.id);
+        if(success) {
+            location.reload();
+            isSaving.value = false;
+        } else {
+            alert('Not deleted!');
+        }
+    } catch(e) {
+        console.error(e);
+        alert('Error!');
+    }
+}
 
 function searchInWritings(row, input) {
     const writings = row.writings + row.rareWritings;
@@ -65,13 +131,10 @@ function search(column, input) {
         return searchInWritings(row, input);
     });
     // console.log(filtered);
-    if(filtered.length > 1) {
-        viewList.value = filtered;
-        if(rowNumber.value > filtered.length) {
-            rowNumber.value = filtered.length;
-        }
+    viewList.value = filtered;
+    if(rowNumber.value > filtered.length) {
+        rowNumber.value = filtered.length;
     }
-    
     select(filtered[filtered.length - 1].cardNumber, true);
 }
 
@@ -97,11 +160,21 @@ const displayedRange = computed(() => {
         lastDisplayedRow.value
     );
 });
+function useCreateNewCard() {
+    createNewCard(isSaving, db, select);
+}
+function useDeleteCard() {
+    deleteCard(isSaving, selectedCard);
+}
 </script>
 
 <template>
     <EditSelected
         :card="selectedCard"
+        :isSaving="isSaving"
+        :update="update"
+        :createNewCard="useCreateNewCard"
+        @deleteCard="useDeleteCard"
     />
     <FilterBar
         :selectedNumber="selectedNumber"
@@ -120,5 +193,6 @@ const displayedRange = computed(() => {
         @incrementLastRow="incrementLastDisplayedRow"
         :select="select"
     />
+    
 </template>
 

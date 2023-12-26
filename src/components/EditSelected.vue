@@ -1,6 +1,9 @@
 <script setup>
-defineProps(['createNewCard', 'card', 'update', 'isSaving']);
-const emit = defineEmits(['deleteCard']);
+import { isSaving, createNewCard, update, deleteCard } from '@/JapDb/crud';
+// defineProps(['createNewCard', 'card', 'update', 'isSaving']);
+defineProps(['card']);
+// const emit = defineEmits(['deleteCard']);
+
 </script>
 
 <template>
@@ -10,7 +13,7 @@ const emit = defineEmits(['deleteCard']);
                 新しい
             </button>
             <span>{{ card.cardNumber }}</span>
-            <button class="delete" @click="emit('deleteCard')">
+            <button class="delete" @click="deleteCard(card.cardNumber)">
                 消す
             </button>
         </div>
