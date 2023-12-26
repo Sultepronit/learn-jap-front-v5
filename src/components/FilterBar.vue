@@ -12,6 +12,11 @@ defineProps(['selectedNumber', 'select', 'lastCardNumber']);
         :value="selectedNumber"
         @input="select($event.target.value, true)"
     >
+    <span>***</span>
+    <input
+        type="text"
+        @input="console.log($event.target.value)"
+    >
 </template>
 
 <style scoped>

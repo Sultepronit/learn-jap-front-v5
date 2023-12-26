@@ -27,11 +27,12 @@ function setLastDisplayedRow(newVal) {
     } else if(newVal >= db.value.length) {
         newVal = db.value.length;
     }
-    lastDisplayedRow.value = newVal;   
+    lastDisplayedRow.value = newVal; 
+    // console.log(lastDisplayedRow.value);
 }
 
 function incrementLastDisplayedRow(delta) {
-    setLastDisplayedRow(lastDisplayedRow.value + delta);
+    setLastDisplayedRow(Number(lastDisplayedRow.value) + delta);
 }
 
 const displayedRange = computed(() => {
@@ -46,7 +47,7 @@ const selectedCard = ref({});
 
 function select(cardNumber, changeDisplay) {
     cardNumber = Math.round(cardNumber);
-    console.log(cardNumber);
+    // console.log(cardNumber);
     if(cardNumber < 1 || cardNumber > db.value.length) {
         return;
     }
@@ -87,39 +88,38 @@ function update(cardNumber, field, value) {
 }
 
 async function createNewCard() {
-    console.log('creating...');
-    // ready.value = false;
-    const newCard = await post(db.value.length + 1);
-    // console.log(db.value.length);
-    // setTimeout(() => {
-    //     ready.value = true;
-    // }, 10);
-    // const newCard = {id: db.value.length + 1};
-    console.log(newCard);
-    
-    db.value.push(newCard);
-    console.log(db.value);
+    try {
+        isSaving.value = true;
+        const newCard = await post(db.value.length + 1);
+        db.value.push(newCard);
+        select(newCard.cardNumber, true);
 
-    select(newCard.cardNumber, true);
-    // ready.value = true;
+        // console.log(db.value);
+        // console.log(newCard);
+        isSaving.value = false;
+    } catch(e) {
+        console.error(e);
+    }
 }
 
-function deleteCard() {
-    console.log('deleting!');
+async function deleteCard() {
     const confirmation = confirm(`Do you confrim deleating this card?`);
-    console.log(confirmation);
     if(!confirmation) {
         return;
     }
     isSaving.value = true;
-    deleteAPI(selectedCard.value.id).then((success) => {
-        isSaving.value = false;
+    try {
+        const success = await deleteAPI(selectedCard.value.id);
         if(success) {
             location.reload();
+            isSaving.value = false;
         } else {
             alert('Not deleted!');
         }
-    });
+    } catch(e) {
+        console.error(e);
+        alert('Error!');
+    }
 }
 </script>
 
