@@ -1,7 +1,6 @@
 <script setup>
 defineProps(['selectedNumber', 'select', 'lastCardNumber']);
-
-//@change="select"
+const emit = defineEmits(['search']);
 </script>
 
 <template>
@@ -15,7 +14,7 @@ defineProps(['selectedNumber', 'select', 'lastCardNumber']);
     <span>***</span>
     <input
         type="text"
-        @input="console.log($event.target.value)"
+        @input="emit('search', 'writings', $event.target.value)"
     >
 </template>
 

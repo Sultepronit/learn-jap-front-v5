@@ -7,7 +7,7 @@ const emit = defineEmits(['setLastRow', 'incrementLastRow']);
 function handleWheel(event) {
     const delta = Math.sign(event.deltaY) * 5;
     emit('incrementLastRow', delta);
-}
+}                           
 </script>
 
 <template>
@@ -24,6 +24,7 @@ function handleWheel(event) {
             </tbody>
         </table>
         <input
+            v-show="min < max"
             type="range"
             orient="vertical"
             class="scroller"        

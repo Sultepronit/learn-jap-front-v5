@@ -4,42 +4,24 @@ import startSession from '@/JapDb/startSession';
 import patch from '@/api/patch.js';
 import post from '@/api/post.js';
 import deleteAPI from '@/api/deleteAPI.js';
+import { createNewCard, deleteCard } from '@/JapDb/c_ud.js';
 import EditSelected from './EditSelected.vue';
 import FilterBar from './FilterBar.vue';
 import DbList from './DbList.vue';
 
 const db = ref([]);
+const viewList = ref([]);
 const ready = ref(false);
 
+const maxRowNumber = Math.round((window.innerHeight / 33) - 6);
+const rowNumber = ref(maxRowNumber);
+
 startSession().then((data) => {
-    db.value = data;
+    db.value = viewList.value = data;
 
     select(data.length);
     setLastDisplayedRow(data.length);
     ready.value = true;
-});
-
-const rowNumber = 18;
-const lastDisplayedRow = ref(0);
-function setLastDisplayedRow(newVal) {
-    if(newVal < rowNumber) {
-        newVal = rowNumber;
-    } else if(newVal >= db.value.length) {
-        newVal = db.value.length;
-    }
-    lastDisplayedRow.value = newVal; 
-    // console.log(lastDisplayedRow.value);
-}
-
-function incrementLastDisplayedRow(delta) {
-    setLastDisplayedRow(Number(lastDisplayedRow.value) + delta);
-}
-
-const displayedRange = computed(() => {
-    return db.value.slice(
-        (lastDisplayedRow.value - rowNumber),
-        lastDisplayedRow.value
-    );
 });
 
 const selectedNumber = ref(0);
@@ -55,7 +37,7 @@ function select(cardNumber, changeDisplay) {
     selectedCard.value = db.value[cardNumber - 1];
     console.log(selectedCard.value);
     if(changeDisplay) {
-        setLastDisplayedRow(cardNumber + rowNumber - 1);
+        setLastDisplayedRow(cardNumber + rowNumber.value - 1);
     }
 }
 
@@ -87,7 +69,7 @@ function update(cardNumber, field, value) {
     });
 }
 
-async function createNewCard() {
+async function createNewCard0() {
     try {
         isSaving.value = true;
         const newCard = await post(db.value.length + 1);
@@ -102,7 +84,7 @@ async function createNewCard() {
     }
 }
 
-async function deleteCard() {
+async function deleteCard0() {
     const confirmation = confirm(`Do you confrim deleating this card?`);
     if(!confirmation) {
         return;
@@ -121,6 +103,69 @@ async function deleteCard() {
         alert('Error!');
     }
 }
+
+function searchInWritings(row, input) {
+    const writings = row.writings + row.rareWritings;
+    if(writings.includes(input)) {
+        return true;
+    }
+    const inclusiveWritings = writings.replace(/[()[\]{}]/g, '');
+    if(inclusiveWritings.includes(input)) {
+        return true;
+    }
+    const exclusiveWritings = writings.replace(/\([^)]*\)|\[[^\]]*\]|\{[^}]*\}/g, '');
+    if(exclusiveWritings.includes(input)) {
+        return true;
+    }
+}
+
+function search(column, input) {
+    rowNumber.value = maxRowNumber;
+    if(!input) {
+        viewList.value = db.value;
+        select(selectedNumber.value, true);
+        return;
+    }
+    // console.log(column, input);
+    const filtered = db.value.filter((row) => {
+        return searchInWritings(row, input);
+    });
+    // console.log(filtered);
+    viewList.value = filtered;
+    if(rowNumber.value > filtered.length) {
+        rowNumber.value = filtered.length;
+    }
+    select(filtered[filtered.length - 1].cardNumber, true);
+}
+
+const lastDisplayedRow = ref(0);
+function setLastDisplayedRow(newVal) {
+    if(newVal < rowNumber.value) {
+        newVal = rowNumber.value;
+    } else if(newVal >= viewList.value.length) {
+        newVal = viewList.value.length;
+    }
+    lastDisplayedRow.value = newVal; 
+    // console.log(lastDisplayedRow.value);
+}
+
+function incrementLastDisplayedRow(delta) {
+    setLastDisplayedRow(Number(lastDisplayedRow.value) + delta);
+}
+
+const displayedRange = computed(() => {
+    // console.log(lastDisplayedRow.value, rowNumber.value);
+    return viewList.value.slice(
+        (lastDisplayedRow.value - rowNumber.value),
+        lastDisplayedRow.value
+    );
+});
+function useCreateNewCard() {
+    createNewCard(isSaving, db, select);
+}
+function useDeleteCard() {
+    deleteCard(isSaving, selectedCard);
+}
 </script>
 
 <template>
@@ -128,18 +173,19 @@ async function deleteCard() {
         :card="selectedCard"
         :isSaving="isSaving"
         :update="update"
-        :createNewCard="createNewCard"
-        @deleteCard="deleteCard"
+        :createNewCard="useCreateNewCard"
+        @deleteCard="useDeleteCard"
     />
     <FilterBar
         :selectedNumber="selectedNumber"
         :lastCardNumber="db.length"
         :select="select"
+        @search="search"
     />
     <DbList
         v-if="ready"
         :min="rowNumber"
-        :max="db.length"
+        :max="viewList.length"
         :range="displayedRange"
         :lastRow="lastDisplayedRow"
         :selectedNumber="selectedNumber"

@@ -3,9 +3,9 @@ defineProps(['row']);
 </script>
 <template>
     <tr>
-        <td class="width-4em">
+        <!-- <td class="width-4em">
             {{ row.id }}
-        </td>
+        </td> -->
         <td class="width-4em">
             {{ row.cardNumber }}
         </td>
