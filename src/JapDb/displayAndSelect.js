@@ -18,18 +18,11 @@ const selectedCard = ref({});
 watch(ready, () => {
     console.log('ready!');
     resetViewList();
-    setLastDisplayedRow(db.value.length);
-    select(db.value.length);
+    goToTheBottom();
 });
 
 const lastDisplayedRow = ref(0);
 function setLastDisplayedRow(newVal) {
-    // if(newVal < rowNumber.value) {
-    //     newVal = rowNumber.value;
-    // } else if(newVal >= viewList.value.length) {
-    //     newVal = viewList.value.length;
-    // }
-    // lastDisplayedRow.value = newVal; 
     lastDisplayedRow.value = newVal < rowNumber.value ? rowNumber.value
         : newVal > viewList.value.length ? viewList.value.length : newVal;
 }
@@ -63,14 +56,22 @@ watch(numberToSelect, (num) => {
     select(num, true);
 });
 
+function goToTheBottom() {
+    setLastDisplayedRow(db.value.length);
+    select(db.value.length);
+}
+
 export {
     viewList,
+    resetViewList,
     rowNumber,
+    resetRowNumber,
     lastDisplayedRow,
     setLastDisplayedRow,
     incrementLastDisplayedRow,
     displayedRange,
     select,
     selectedNumber,
-    selectedCard
+    selectedCard,
+    goToTheBottom
 };
