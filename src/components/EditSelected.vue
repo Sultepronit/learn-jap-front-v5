@@ -1,14 +1,22 @@
 <script setup>
 import { isSaving, createNewCard, update, deleteCard } from '@/JapDb/crud';
-import { selectedCard as card } from '@/JapDb/displayAndSelect';
+import { selectedCard as card, select } from '@/JapDb/displayAndSelect';
 import { searchText } from '@/JapDb/searchAndFilter.js';
 
 function checkInput(value, field) {
     if(card.value.learnStatus < 0) {
         card.value[field] = value;
-        searchText(value, false, true);
+        searchText(value, false);
     }
 }
+function resetSearch() {
+    if(card.value.learnStatus < 0) {
+        const cn = card.value.cardNumber;
+        searchText('');
+        select(cn);
+    }
+}
+const stats = ['fProgress', 'bProgress', 'fStats', 'fAutorepeat', 'bStats', 'bAutorepeat'];
 </script>
 
 <template>
@@ -17,7 +25,29 @@ function checkInput(value, field) {
             <button class="new-card" @click="createNewCard">
                 新しい
             </button>
-            <span>{{ card.cardNumber }}</span>
+            <span class="card-number">{{ card.cardNumber }}</span>
+            <input
+                type="number"
+                class="status"
+                :value="card.learnStatus"
+                @change="update(
+                    card.cardNumber,
+                    'learnStatus',
+                    Number($event.target.value)
+                )"
+            >
+            <input
+                v-for="field in stats" 
+                :key="field"
+                type="number"
+                class="stats"
+                :value="card[field]"
+                @change="update(
+                    card.cardNumber,
+                    field,
+                    Number($event.target.value)
+                )"
+            >
             <button class="delete" @click="deleteCard(card.cardNumber)">
                 消す
             </button>
@@ -29,6 +59,7 @@ function checkInput(value, field) {
             :value="card.writings"
             @change="update(card.cardNumber, 'writings', $event.target.value)"
             @input="checkInput($event.target.value, 'writings')"
+            @blur="resetSearch"
         >
         <div
             class="alt-toggle"
@@ -51,6 +82,7 @@ function checkInput(value, field) {
             :value="card.readings"
             @change="update(card.cardNumber, 'readings', $event.target.value)"
             @input="checkInput($event.target.value, 'readings')"
+            @blur="resetSearch"
         >
         <input
             type="text"
@@ -68,6 +100,9 @@ function checkInput(value, field) {
 </template>
 
 <style scoped>
+* {
+    font-size: 1.2rem;
+}
 .edit {
     margin: 2px;
     border: 3px solid white;
@@ -78,33 +113,47 @@ function checkInput(value, field) {
 .top-line {
     height: 2rem;
 }
+.card-number {
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
 button {
     font-size: 1.0rem;
     padding: 0 1em 0.1em;
+    margin-inline: 1rem;
+    float: right;
 }
 button.delete {
-    color: red;
-    display: inline-block;
+    color: red;   
 }
-button.new-card {
-    float: right;
+
+input {
+    padding-inline: 0.2em;
+    margin: 1px;
+    /* font-size: 1.3rem; */
+}
+.status {
+    width: 5em;
+}
+.stats {
+    width: 3em;
+    /* padding-inline: 0.1em; */
+    /* margin-top: 0.1rem; */
 }
 .alt-toggle {
     display: inline-block;
-    width: 1.5em;
-    height: 1.5em;
+    width: 1.2rem;
+    height: 1.2rem;
     background-color: black;
     margin-inline: 0.3em;
-    margin-bottom: -0.15em;
+    margin-bottom: -0.05em;
 }
 .is-alt {
     background-color: blue;
 }
-input[type="text"] {
-    padding-inline: 0.2em;
-    margin: 1px;
-    font-size: 1.3rem;
-}
+/* input[type="text"] { */
 .jap-field {
     width: calc(50% - 2px);
     font-family: "Noto Sans CJK JP";
