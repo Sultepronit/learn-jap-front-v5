@@ -1,10 +1,14 @@
 <script setup>
 import { isSaving, createNewCard, update, deleteCard } from '@/JapDb/crud';
 import { selectedCard as card } from '@/JapDb/displayAndSelect';
-// defineProps(['createNewCard', 'card', 'update', 'isSaving']);
-// defineProps(['card']);
-// const emit = defineEmits(['deleteCard']);
+import { searchText } from '@/JapDb/searchAndFilter.js';
 
+function checkInput(value, field) {
+    if(card.value.learnStatus < 0) {
+        card.value[field] = value;
+        searchText(value, false, true);
+    }
+}
 </script>
 
 <template>
@@ -24,6 +28,7 @@ import { selectedCard as card } from '@/JapDb/displayAndSelect';
             :class="{'blue' : card.altWriting}"
             :value="card.writings"
             @change="update(card.cardNumber, 'writings', $event.target.value)"
+            @input="checkInput($event.target.value, 'writings')"
         >
         <div
             class="alt-toggle"
@@ -45,6 +50,7 @@ import { selectedCard as card } from '@/JapDb/displayAndSelect';
             class="jap-field"
             :value="card.readings"
             @change="update(card.cardNumber, 'readings', $event.target.value)"
+            @input="checkInput($event.target.value, 'readings')"
         >
         <input
             type="text"

@@ -34,9 +34,9 @@ function checkTranslation(row, input) {
 
 function displayResults(filtered) {
     resetRowNumber();
+    resetViewList();
 
     if(!filtered || filtered.length < 1) {
-        resetViewList();
         goToTheBottom();
         return;
     }
@@ -52,7 +52,7 @@ function displayResults(filtered) {
 }
 
 function searchText(query, searchInTranslation) {
-    console.log(searchInTranslation);
+    // console.log(searchInTranslation);
     if(query === '') {
         displayResults(null);
         return;
@@ -62,7 +62,7 @@ function searchText(query, searchInTranslation) {
         return searchInTranslation ? checkTranslation(row, query)
             : checkJapanese(row, query);
     });
-    // console.log(filtered);
+    console.log(filtered);
 
     displayResults(filtered);
 }
