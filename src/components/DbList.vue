@@ -1,12 +1,22 @@
 <script setup>
 import TableRow from './TableRow.vue';
 
-defineProps(['min', 'max', 'range', 'lastRow', 'select', 'selectedNumber']);
-const emit = defineEmits(['setLastRow', 'incrementLastRow']);
+// defineProps(['min', 'max', 'range', 'lastRow', 'select', 'selectedNumber']);
+// const emit = defineEmits(['setLastRow', 'incrementLastRow']);
+import {
+    displayedRange as range,
+    selectedNumber,
+    select,
+    incrementLastDisplayedRow as incrementLastRow,
+    setLastDisplayedRow as setLastRow,
+    rowNumber as min,
+    viewList,
+    lastDisplayedRow as lastRow
+} from '@/JapDb/displayAndSelect';
 
 function handleWheel(event) {
     const delta = Math.sign(event.deltaY) * 5;
-    emit('incrementLastRow', delta);
+    incrementLastRow(delta);
 }                           
 </script>
 
@@ -24,14 +34,14 @@ function handleWheel(event) {
             </tbody>
         </table>
         <input
-            v-show="min < max"
+            v-show="min < viewList.length"
             type="range"
             orient="vertical"
             class="scroller"        
             :min="min"
-            :max="max"
+            :max="viewList.length"
             :value="lastRow"
-            @change="emit('setLastRow', $event.target.value)"
+            @change="setLastRow($event.target.value)"
         >
     </section>
 </template>
@@ -55,4 +65,4 @@ table {
     /* background-color: yellow; */
     border: 2px solid red;
 }
-</style>
+</style>@/JapDb/displayAndSelect

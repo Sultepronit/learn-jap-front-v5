@@ -1,42 +1,10 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
-import { db, ready, numberToSelect } from '@/JapDb/crud.js';
+import { db, ready } from '@/JapDb/crud.js';
 import EditSelected from './EditSelected.vue';
 import FilterBar from './FilterBar.vue';
 import DbList from './DbList.vue';
 
-
-const viewList = ref([]);
-const maxRowNumber = Math.round((window.innerHeight / 33) - 6);
-const rowNumber = ref(maxRowNumber);
-
-watch(ready, () => {
-    console.log('ready!');
-    viewList.value = db.value;
-    select(db.value.length);
-    setLastDisplayedRow(db.value.length);
-});
-
-const selectedNumber = ref(0);
-const selectedCard = ref({});
-
-function select(cardNumber, changeDisplay) {
-    cardNumber = Math.round(cardNumber);
-    // console.log(cardNumber);
-    if(cardNumber < 1 || cardNumber > db.value.length) {
-        return;
-    }
-    selectedNumber.value = cardNumber;
-    selectedCard.value = db.value[cardNumber - 1];
-    console.log(selectedCard.value);
-    if(changeDisplay) {
-        setLastDisplayedRow(cardNumber + rowNumber.value - 1);
-    }
-}
-
-watch(numberToSelect, (num) => {
-    select(num, true);
-});
 
 function searchInWritings(row, input) {
     const writings = row.writings + row.rareWritings;
@@ -55,16 +23,23 @@ function searchInWritings(row, input) {
 
 function search(column, input) {
     rowNumber.value = maxRowNumber;
-    if(!input) {
+
+    function breakOut() {
         viewList.value = db.value;
-        select(selectedNumber.value, true);
+        // select(selectedNumber.value, true);
+        setLastDisplayedRow(selectedNumber.value + rowNumber.value - 1);
         return;
     }
+
+    if(!input) breakOut();
     // console.log(column, input);
     const filtered = db.value.filter((row) => {
         return searchInWritings(row, input);
     });
     // console.log(filtered);
+
+    if(filtered.length < 1) breakOut();
+
     if(filtered.length > 1) {
         viewList.value = filtered;
         if(rowNumber.value > filtered.length) {
@@ -74,42 +49,22 @@ function search(column, input) {
     
     select(filtered[filtered.length - 1].cardNumber, true);
 }
-
-const lastDisplayedRow = ref(0);
-function setLastDisplayedRow(newVal) {
-    if(newVal < rowNumber.value) {
-        newVal = rowNumber.value;
-    } else if(newVal >= viewList.value.length) {
-        newVal = viewList.value.length;
-    }
-    lastDisplayedRow.value = newVal; 
-    // console.log(lastDisplayedRow.value);
-}
-
-function incrementLastDisplayedRow(delta) {
-    setLastDisplayedRow(Number(lastDisplayedRow.value) + delta);
-}
-
-const displayedRange = computed(() => {
-    // console.log(lastDisplayedRow.value, rowNumber.value);
-    return viewList.value.slice(
-        (lastDisplayedRow.value - rowNumber.value),
-        lastDisplayedRow.value
-    );
-});
 </script>
 
 <template>
-    <EditSelected
+    <EditSelected />
+    <!-- <EditSelected
         :card="selectedCard"
-    />
-    <FilterBar
+    /> -->
+    <FilterBar />
+    <!-- <FilterBar
         :selectedNumber="selectedNumber"
         :lastCardNumber="db.length"
         :select="select"
         @search="search"
-    />
-    <DbList
+    /> -->
+    <DbList />
+    <!-- <DbList
         v-if="ready"
         :min="rowNumber"
         :max="viewList.length"
@@ -119,6 +74,6 @@ const displayedRange = computed(() => {
         @setLastRow="setLastDisplayedRow"
         @incrementLastRow="incrementLastDisplayedRow"
         :select="select"
-    />
+    /> -->
 </template>
 

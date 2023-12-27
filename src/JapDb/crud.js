@@ -3,6 +3,7 @@ import startSession from "./startSession.js";
 import post from "@/api/post";
 import patch from "@/api/patch.js";
 import deleteAPI from "@/api/deleteAPI";
+// import { select } from './displaySelect.js';
 
 console.time('tt');
 
@@ -13,9 +14,10 @@ startSession().then((data) => {
     ready.value = true;
 });
 
-const numberToSelect = ref(0);
 
 const isSaving = ref(false);
+
+const numberToSelect = ref(0);
 
 async function createNewCard() {
     try {

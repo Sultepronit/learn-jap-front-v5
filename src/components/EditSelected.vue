@@ -1,7 +1,8 @@
 <script setup>
 import { isSaving, createNewCard, update, deleteCard } from '@/JapDb/crud';
+import { selectedCard as card } from '@/JapDb/displayAndSelect';
 // defineProps(['createNewCard', 'card', 'update', 'isSaving']);
-defineProps(['card']);
+// defineProps(['card']);
 // const emit = defineEmits(['deleteCard']);
 
 </script>
@@ -116,4 +117,4 @@ input[type="text"] {
 .gray {
     color: gray;
 }
-</style>
+</style>@/JapDb/displayAndSelect

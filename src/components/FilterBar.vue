@@ -1,5 +1,7 @@
 <script setup>
-defineProps(['selectedNumber', 'select', 'lastCardNumber']);
+// defineProps(['selectedNumber', 'select', 'lastCardNumber']);
+import { db } from '@/JapDb/crud';
+import { selectedNumber, select } from '@/JapDb/displayAndSelect';
 const emit = defineEmits(['search']);
 </script>
 
@@ -7,7 +9,7 @@ const emit = defineEmits(['search']);
     <input
         type="number"
         min="1"
-        :max="lastCardNumber"
+        :max="db.length"
         :value="selectedNumber"
         @input="select($event.target.value, true)"
     >
