@@ -1,11 +1,24 @@
 <script setup>
+import { ref, computed } from 'vue';
+import StartMenu from './StartMenu.vue';
 import JapTap from './JapTap.vue';
 import JapDb from './components/JapDb.vue';
-let mode = 'jap-tap';
-mode = 'jap-db';
+
+const routes = {
+    '#/jap-tap': JapTap,
+    '#/jap-db': JapDb
+};
+
+const currentPath = ref(window.location.hash);
+window.addEventListener('hashchange', () => {
+    currentPath.value = window.location.hash;
+});
+
+const currentView = computed(() => {
+    return routes[currentPath.value] || StartMenu;
+});
 </script>
 
 <template>
-    <JapTap v-if="mode === 'jap-tap'" />
-    <JapDb v-if="mode === 'jap-db'" />
+    <component :is="currentView" />     
 </template>

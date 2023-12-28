@@ -5,15 +5,21 @@ import patch from "@/api/patch.js";
 import deleteAPI from "@/api/deleteAPI";
 // import { select } from './displaySelect.js';
 
-console.time('tt');
+// console.time('tt');
 
 const db = ref([]);
 const ready = ref(false);
-startSession().then((data) => {
-    db.value = data;
-    ready.value = true;
-});
+// startSession().then((data) => {
+//     db.value = data;
+//     ready.value = true;
+// });
 
+function okYouCanStart() {
+    startSession().then((data) => {
+        db.value = data;
+        ready.value = true;
+    });
+}
 
 const isSaving = ref(false);
 
@@ -81,6 +87,7 @@ async function deleteCard(cardNumber) {
 }
 
 export {
+    okYouCanStart,
     db,
     ready,
     numberToSelect,
