@@ -10,10 +10,7 @@ startSession();
 </script>
 
 <template>
-    <p>go</p>
     <EditSelected />
     <SearchBar />
     <DbList />
 </template>
-
-@/Views/WordsDb/services/crud

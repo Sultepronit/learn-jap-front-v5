@@ -45,7 +45,7 @@ async function patch(table, card) {
         if(results !== '{"success": true}') {
             throw new Error('Wrong response: ' + results);
         }
-        
+
         return true;
     } catch (error) {
         console.error(error);

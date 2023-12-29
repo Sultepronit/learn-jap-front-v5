@@ -1,6 +1,5 @@
 import { ref } from "vue";
 import { get, post, patch, deleteApi } from "@/services/commonAPI.js";
-// import { select } from './displaySelect.js';
 
 // console.time('tt');
 
@@ -43,7 +42,7 @@ async function update(cardNumber, field, value) {
         changes: {}
     }
     data.changes[field] = value;
-    
+
     const success = await patch('jap', data);
     if(success) {
         isSaving.value = false;
