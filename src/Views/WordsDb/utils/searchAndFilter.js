@@ -1,4 +1,4 @@
-import { db } from "./crud";
+import { db } from "../services/crud";
 import {
     rowNumber,
     resetRowNumber,
@@ -62,7 +62,7 @@ function searchText(query, searchInTranslation) {
         return searchInTranslation ? checkTranslation(row, query)
             : checkJapanese(row, query);
     });
-    console.log(filtered);
+    // console.log(filtered);
 
     displayResults(filtered);
 }

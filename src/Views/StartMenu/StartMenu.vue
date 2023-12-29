@@ -1,6 +1,6 @@
 <template>
     <p><a href="#/jap-tap">Learn Words</a></p>
-    <p><a href="#/jap-db">Check DB</a></p>
+    <p><a href="#/words-db">Check DB</a></p>
 </template>
 
 <style scoped>

@@ -1,21 +1,14 @@
 import { ref } from "vue";
-import startSession from "./startSession.js";
-import post from "@/api/post";
-import patch from "@/api/patch.js";
-import deleteAPI from "@/api/deleteAPI";
+import { get, post, patch, deleteApi } from "@/services/commonAPI.js";
 // import { select } from './displaySelect.js';
 
 // console.time('tt');
 
 const db = ref([]);
 const ready = ref(false);
-// startSession().then((data) => {
-//     db.value = data;
-//     ready.value = true;
-// });
 
-function okYouCanStart() {
-    startSession().then((data) => {
+function startSession() {
+    get('jap').then((data) => {
         db.value = data;
         ready.value = true;
     });
@@ -28,12 +21,10 @@ const numberToSelect = ref(0);
 async function createNewCard() {
     try {
         isSaving.value = true;
-        const newCard = await post(db.value.length + 1);
+        const newCardNumber = { cardNumber: db.value.length + 1 };
+        const newCard = await post('jap', newCardNumber);
         db.value.push(newCard);
-        // select(newCard.cardNumber, true);
         numberToSelect.value = newCard.cardNumber;
-
-        // console.log(db.value);
         // console.log(newCard);
         isSaving.value = false;
     } catch(e) {
@@ -41,29 +32,24 @@ async function createNewCard() {
     }
 }
 
-function update(cardNumber, field, value) {
-    console.log('saving...');
+async function update(cardNumber, field, value) {
     isSaving.value = true;
 
     const editedCard = db.value[cardNumber - 1];
     editedCard[field] = value;
-
-    // console.log(cardNumber, field, value);
-    // console.log(editedCard);
 
     const data = {
         id: editedCard.id,
         changes: {}
     }
     data.changes[field] = value;
-
-    patch(data).then((success) => {
-        if(success) {
-            isSaving.value = false;
-        } else {
-            // add possibility to try and save again
-        }
-    });
+    
+    const success = await patch('jap', data);
+    if(success) {
+        isSaving.value = false;
+    } else {
+        // add possibility to try and save again
+    }
 }
 
 async function deleteCard(cardNumber) {
@@ -73,21 +59,22 @@ async function deleteCard(cardNumber) {
     }
     isSaving.value = true;
     try {
-        const success = await deleteAPI(db.value[cardNumber - 1].id);
+        const id = db.value[cardNumber - 1].id;
+        const success = await deleteApi('jap', id);
         if(success) {
             location.reload();
             isSaving.value = false;
         } else {
-            alert('Not deleted!');
+            // alert('Not deleted!');
         }
     } catch(e) {
         console.error(e);
-        alert('Error!');
+        // alert('Error!');
     }
 }
 
 export {
-    okYouCanStart,
+    startSession,
     db,
     ready,
     numberToSelect,

@@ -1,7 +1,7 @@
 <script setup>
-import { isSaving, createNewCard, update, deleteCard } from '@/JapDb/crud';
-import { selectedCard as card, select } from '@/JapDb/displayAndSelect';
-import { searchText } from '@/JapDb/searchAndFilter.js';
+import { isSaving, createNewCard, update, deleteCard } from '../services/crud';
+import { selectedCard as card, select } from '../utils/displayAndSelect';
+import { searchText } from '../utils/searchAndFilter.js';
 
 function checkInput(value, field) {
     if(card.value.learnStatus < 0) {
@@ -172,4 +172,4 @@ input {
 .gray {
     color: gray;
 }
-</style>@/JapDb/displayAndSelect
+</style>@/JapDb/displayAndSelect@/Views/WordsDb/utils/displayAndSelect@/Views/WordsDb/utils/searchAndFilter.js@/Views/WordsDb/services/crud

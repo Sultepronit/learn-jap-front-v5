@@ -12,7 +12,7 @@ import {
     rowNumber as min,
     viewList,
     lastDisplayedRow as lastRow
-} from '@/JapDb/displayAndSelect';
+} from '../utils/displayAndSelect';
 
 function handleWheel(event) {
     const delta = Math.sign(event.deltaY) * 5;
@@ -65,4 +65,4 @@ table {
     /* background-color: yellow; */
     border: 2px solid red;
 }
-</style>@/JapDb/displayAndSelect
+</style>@/JapDb/displayAndSelect@/Views/WordsDb/utils/displayAndSelect

@@ -1,12 +1,13 @@
 <script setup>
 import { ref, computed } from 'vue';
-import StartMenu from './StartMenu.vue';
+import StartMenu from './Views/StartMenu/StartMenu.vue';
+import WordsDb from './Views/WordsDb/WordsDb.vue';
 import JapTap from './JapTap.vue';
-import JapDb from './components/JapDb.vue';
+
 
 const routes = {
     '#/jap-tap': JapTap,
-    '#/jap-db': JapDb
+    '#/words-db': WordsDb
 };
 
 const currentPath = ref(window.location.hash);

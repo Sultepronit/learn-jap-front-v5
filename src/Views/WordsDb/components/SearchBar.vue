@@ -1,10 +1,10 @@
 <script setup>
 import { ref } from 'vue';
 // defineProps(['selectedNumber', 'select', 'lastCardNumber']);
-import { db } from '@/JapDb/crud';
-import { selectedNumber, select } from '@/JapDb/displayAndSelect';
+import { db } from '../services/crud';
+import { selectedNumber, select } from '../utils/displayAndSelect';
 // const emit = defineEmits(['search']);
-import { searchText } from '@/JapDb/searchAndFilter.js';
+import { searchText } from '../utils/searchAndFilter.js';
 
 const searchInTranslation = ref(false);
 const query = ref('');
@@ -39,4 +39,4 @@ const query = ref('');
 input {
     font-size: 1.5rem;
 }
-</style>
+</style>@/Views/WordsDb/utils/displayAndSelect@/Views/WordsDb/utils/searchAndFilter.js@/Views/WordsDb/services/crud
