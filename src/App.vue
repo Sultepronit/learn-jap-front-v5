@@ -1,12 +1,12 @@
 <script setup>
 import { ref, computed } from 'vue';
-import StartMenu from './Views/StartMenu/StartMenu.vue';
-import WordsDb from './Views/WordsDb/WordsDb.vue';
-import JapTap from './JapTap.vue';
+import StartMenu from './views/StartMenu/StartMenu.vue';
+import WordsDb from './views/WordsDb/WordsDb.vue';
+import LearnWords from './views/LearnWords/LearnWords.vue';
 
 
 const routes = {
-    '#/jap-tap': JapTap,
+    '#/jap-tap': LearnWords,
     '#/words-db': WordsDb
 };
 

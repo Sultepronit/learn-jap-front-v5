@@ -1,12 +1,14 @@
-import { learnStages, repeatVariants } from "./enums.js";
-const apiUrl = import.meta.env.VITE_API_URL;
+import { ref } from "vue";
+import { learnStages, repeatVariants } from "../utils/enums.js";
+import { get } from "@/services/commonAPI.js";
+// import { nextCycle } from "../utils/cycle.js";
+
+let plan = {};
+let lists = {};
+const ready = ref(false);
+
 async function startSession() {
-    console.timeLog('tt', 'fetch');
-    // console.time('tt');
-    // const resp = await fetch('http://localhost:7878/start-jap-session.php');
-    const resp = await fetch(apiUrl);
-    const data = await resp.json();
-    console.timeLog('tt', 'data!');
+    const data = await get('jap_session');
     console.log(data);
     const {
         constsAndVars,
@@ -28,6 +30,7 @@ async function startSession() {
         .fill(learnStages.CONFIRM, stop)
         .fill(learnStages.RECOGNIZE, stop += confirmNumber)
         .fill(learnStages.REPEAT, stop += recognizeNumber);
+    console.log(learnStageList);
     
     const repeatNumber = sessionLength - stop;
     const problemNumber = Math.round(problemList.length / problemDivisor);
@@ -36,27 +39,25 @@ async function startSession() {
         .fill(repeatVariants.PROBLEM)
         .fill(repeatVariants.NORMAL, problemNumber);
 
-    console.timeLog('tt');
-
-    return {
-        consts: {
-            sessionLength,
-            learnNumber,
-            confirmNumber,
-            repeatNumber,
-            problemNumber,
-            recognizeNumber
-        },
-        lists: {
-            learnList,
-            confirmList,
-            repeatList,
-            problemList,
-            recognizeList,
-            learnStageList,
-            repeatVariantList
-        }
+    plan = {
+        sessionLength,
+        learnNumber,
+        confirmNumber,
+        repeatNumber,
+        problemNumber,
+        recognizeNumber
     };
+    lists = {
+        learnList,
+        confirmList,
+        repeatList,
+        problemList,
+        recognizeList,
+        learnStageList,
+        repeatVariantList
+    }
+    console.log(lists);
+    ready.value = true;
 }
 
-export default startSession;
+export { startSession, ready, plan, lists };

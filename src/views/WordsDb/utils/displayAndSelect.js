@@ -1,5 +1,5 @@
 import { ref, watch, computed } from 'vue';
-import { db, ready, numberToSelect } from '@/Views/WordsDb/services/crud.js';
+import { db, ready, numberToSelect } from '@/views/WordsDb/services/crud.js';
 
 const viewList = ref([]);
 function resetViewList() {

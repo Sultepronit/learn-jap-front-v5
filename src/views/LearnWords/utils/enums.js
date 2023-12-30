@@ -1,10 +1,3 @@
-// const learnStages = {
-//     LEARN: 'learn',
-//     CONFIRM: 'confirm',
-//     REPEAT: 'repeat',
-//     RECOGNIZE: 'recognize'
-// };
-
 const learnStages = {
     LEARN: 'l',
     CONFIRM: 'c',
@@ -13,14 +6,9 @@ const learnStages = {
 };
 
 const repeatVariants = {
-    NORMAL: 'normal',
-    PROBLEM: 'problem'
+    NORMAL: 'n',
+    PROBLEM: 'p'
 };
-
-// const directions = {
-//     FORWARD: 'forward',
-//     BACKWARD: 'backward'
-// };
 
 const directions = {
     FORWARD: 'f',

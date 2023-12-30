@@ -1,5 +1,7 @@
 <script setup>
-defineProps(['card', 'show']);
+// defineProps(['card', 'show']);
+import { show } from '../utils/displayControls.js';
+import { card } from '../utils/cycle.js';
 // const show = {
 //     writing: true,
 //     reading: true,
@@ -65,5 +67,8 @@ defineProps(['card', 'show']);
 }
 .neutral {
     border-color: yellow;
+}
+.question {
+    border-color: black;
 }
 </style>

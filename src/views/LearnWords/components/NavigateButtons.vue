@@ -1,6 +1,7 @@
 <script setup>
-import { marks } from '@/enums';
-defineProps(['params']);
+import { marks } from '../utils/enums';
+// defineProps(['params']);
+import { params } from '../utils/buttonsControls.js';
 </script>
 
 <template>

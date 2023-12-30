@@ -6,7 +6,7 @@ async function get(table) {
         console.time('get');
         const resp = await fetch(url);
         const data = await resp.json();
-        console.log(data.length);
+        // console.log(data.length);
         console.timeEnd('get');
         return data;
     } catch (error) {

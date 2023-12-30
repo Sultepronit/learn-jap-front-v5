@@ -1,8 +1,9 @@
-import { pullRandomElement } from "./commonFunctions";
+import { pullRandomElement } from "./random";
 import { learnStages, repeatVariants, directions } from "./enums";
+import { lists } from "../services/data";
 
-function nextCard(lists) {
-    console.log(lists);
+
+function nextCard() {
     const {
         learnStageList,
         learnList,
@@ -12,6 +13,7 @@ function nextCard(lists) {
         repeatList,
         problemList
     } = lists;
+
     const learnStage = pullRandomElement(learnStageList);
     console.log(learnStage);
     console.log(learnStageList);
@@ -26,7 +28,6 @@ function nextCard(lists) {
     if(learnStage === learnStages.REPEAT) {
         console.log(repeatVariantList);
     }
-    console.log(card);
 
     const direction = (card.fProgress > card.bProgress)
         ? directions.BACKWARD : directions.FORWARD;
@@ -34,6 +35,7 @@ function nextCard(lists) {
 
     Object.assign(card, {learnStage, direction});
 
+    console.log(card);
     return card;
 }
 
