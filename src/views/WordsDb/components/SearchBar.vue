@@ -39,4 +39,4 @@ const query = ref('');
 input {
     font-size: 1.5rem;
 }
-</style>@/Views/WordsDb/utils/displayAndSelect@/Views/WordsDb/utils/searchAndFilter.js@/Views/WordsDb/services/crud
+</style>

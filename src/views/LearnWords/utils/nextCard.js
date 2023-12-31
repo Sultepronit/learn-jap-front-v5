@@ -1,7 +1,7 @@
 import { pullRandomElement } from "./random";
 import { learnStages, repeatVariants, directions } from "./enums";
 import { lists } from "../services/data";
-
+import { parseToStringAndArray } from "./parseWritingsReading";
 
 function nextCard() {
     const {
@@ -34,6 +34,8 @@ function nextCard() {
     console.log(direction);
 
     Object.assign(card, {learnStage, direction});
+
+    parseToStringAndArray(card);
 
     console.log(card);
     return card;

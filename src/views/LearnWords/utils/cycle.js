@@ -3,6 +3,7 @@ import { learnStages, directions } from "./enums";
 import nextCard from "./nextCard";
 import { changeShow as cardDisplay } from "./displayControls";
 import { change as buttons } from './buttonsControls.js';
+import playAudio from "./playAudio";
 
 const card = ref({});
 
@@ -24,7 +25,7 @@ function nextCycle() {
 
 // autorepeat //-----------------------------------------
 function autorepeat() {
-    cardDisplay.showAnswer();
+    showAnswerAndPlay();
     // change & save
     card.value.autorepeated = true; // adds black border
     buttons.setAction(nextCycle);
@@ -34,17 +35,13 @@ function autorepeat() {
 function recognition() {
     cardDisplay.showWriting();
     card.value.recogMark = { name: 'question' };
-    // buttons.value.action = recognitionAnswer;
     buttons.setAction(recognitionAnswer);
 }
   
 function recognitionAnswer() {
-    cardDisplay.showAnswer();
+    showAnswerAndPlay();
     buttons.twoButtons();
     buttons.setAction(evaluateAndSave);
-    // buttons.value.action = evaluateAndSave; 
-    // buttons.value.showSides = true;
-    // buttons.value.showCentral = false;
 } 
 
 // learn/confrim/repeat //-----------------------------------------
@@ -75,7 +72,7 @@ function quickRecognition(mark) {
 }
 
 function answer() {
-    cardDisplay.showAnswer();
+    showAnswerAndPlay();
 
     if(card.value.learnStage === learnStages.LEARN) {
         buttons.twoButtons();
@@ -86,6 +83,10 @@ function answer() {
 }
 
 // common //-----------------------------------------
+function showAnswerAndPlay() {
+    cardDisplay.showAnswer();
+    playAudio(card);
+}
 function evaluateAndSave(mark) {
     console.log(mark);
     // evaluate

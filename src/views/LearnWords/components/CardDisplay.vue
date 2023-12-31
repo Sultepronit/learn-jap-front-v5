@@ -1,51 +1,59 @@
 <script setup>
-// defineProps(['card', 'show']);
+import { computed } from 'vue';
+import { randomInt } from '../utils/random.js';
 import { show } from '../utils/displayControls.js';
 import { card } from '../utils/cycle.js';
-// const show = {
-//     writing: true,
-//     reading: true,
-//     translation: true,
-//     answer: false
-// }
-// console.log(card);
+
+const randomWriting = computed(() => {
+    const ri = randomInt(0, card.value.parsed.writingsArray.length - 1);
+    return card.value.parsed.writingsArray[ randomInt(0, ri) ];
+});
+const randomReading = computed(() => {
+    const ri = randomInt(0, card.value.parsed.mainReadingsArray.length - 1);
+    return card.value.parsed.mainReadingsArray[ randomInt(0, ri) ];
+});
 </script>
 
 <template>
 <main>
     <p>{{ card.id }} [{{ card.status }}]</p>
-    <p>{{ card.autorepeated }}</p>
 
     <section class="question-answer" :class="{ autorep: card.autorepeated }">
         <p class="writing" :class="card.recogMark?.name">
-            <span v-show="show.writing">
-                <span v-html="card.writings" />
-            </span>
-            <span v-show="show.answer">
-                <span v-html="card.writings" />
-                <span class="gray" v-html="card.rareWritings" />
-            </span>
+            <span
+                v-show="show.writing"
+                v-html="randomWriting"
+            />
+            <span
+                v-show="show.answer"
+                v-html="card.parsed.writingsString"
+            />
         </p>
         <p id="reading">
-            <span v-show="show.reading">
-                <span v-html="card.readings" />
-            </span>
-            <span v-show="show.answer">
-                <span v-html="card.readings" />
-                <span class="gray" v-html="card.rareReadings" />
-            </span>
+            <span
+                v-show="show.reading"
+                v-html="randomReading"
+            />
+            <span
+                v-show="show.answer"
+                v-html="card.parsed.readingsString"
+            />
         </p>
-        <p v-show="show.translation" id="translation" v-html="card.translation" />
-        <p v-show="show.answer" id="example" v-html="card.example" />
+        <p
+            id="translation"    
+            v-show="show.translation"
+            v-html="card.translation"
+        />
+        <p
+            id="example"    
+            v-show="show.answer"
+            v-html="card.example"
+        />
     </section>
-
 </main>
 </template>
 
 <style scoped>
-.gray {
-    color: gray;
-}
 .question-answer {
     text-align: center;
     font-size: 2rem;

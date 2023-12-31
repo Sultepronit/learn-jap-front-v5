@@ -4,6 +4,15 @@
     box-sizing: border-box;
 }
 
-/* #app {
-    display: flex;
-} */
+.gray {
+    color: gray;
+}
+.yellow {
+    color: yellow;
+}
+.green {
+    color: green;
+}
+.blue {
+    color: blue;
+}
