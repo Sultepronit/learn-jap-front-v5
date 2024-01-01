@@ -41,4 +41,20 @@ function nextCard() {
     return card;
 }
 
+function returnCard(card) {
+    console.log("I'll be back!");
+    const { learnStageList, learnList } = lists;
+    learnStageList.push(learnStages.LEARN);
+    learnList.push(card);
+    console.log(learnStageList);
+    console.log(learnList);
+}
+
+function repeatOneMore() {
+    console.log("repeat more!");
+    const { learnStageList } = lists;
+    learnStageList.push(learnStages.REPEAT);
+}
+
 export default nextCard;
+export { returnCard, repeatOneMore };

@@ -1,8 +1,9 @@
 const learnStages = {
-    LEARN: 'l',
-    CONFIRM: 'c',
-    REPEAT: 'rpt',
-    RECOGNIZE: 'rcg'
+    LEARN: 'learn',
+    CONFIRM: 'confirm',
+    REPEAT: 'repeat',
+    RECOGNIZE: 'recognize',
+    AUTOREPEAT: 'autorepeat'
 };
 
 const repeatVariants = {
@@ -18,7 +19,8 @@ const directions = {
 const marks = {
     GOOD: { name: 'good', increment: 1 },
     BAD: { name: 'bad', increment: -1 },
-    NEUTRAL: { name: 'neutral', increment: 0 }
+    NEUTRAL: { name: 'neutral', increment: 0 },
+    QUESTION: { name: 'question', increment: 0 }
 };
 
 export { learnStages, repeatVariants, directions, marks };

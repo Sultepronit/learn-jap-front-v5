@@ -1,9 +1,10 @@
 import { ref } from "vue";
-import { learnStages, directions } from "./enums";
+import { learnStages, directions, marks } from "./enums";
 import nextCard from "./nextCard";
 import { changeShow as cardDisplay } from "./displayControls";
 import { change as buttons } from './buttonsControls.js';
 import playAudio from "./playAudio";
+import evaluateAndSave from './evaluateAndSave';
 
 const card = ref({});
 
@@ -14,7 +15,7 @@ function nextCycle() {
   
     card.value = nextCard();
   
-    if(card.value[`${card.value.direction}AutoRepeat`]) {
+    if(card.value[`${card.value.direction}Autorepeat`]) {
         autorepeat();
     } else if(card.value.learnStage === learnStages.RECOGNIZE) {
         recognition();
@@ -26,22 +27,25 @@ function nextCycle() {
 // autorepeat //-----------------------------------------
 function autorepeat() {
     showAnswerAndPlay();
-    // change & save
-    card.value.autorepeated = true; // adds black border
+
+    // card.value.autorepeated = true; // adds black border
+    card.value.learnStage = learnStages.AUTOREPEAT;
+    evaluateAndSave(card);
+
     buttons.setAction(nextCycle);
 }
 
 // recognition //-----------------------------------------
 function recognition() {
     cardDisplay.showWriting();
-    card.value.recogMark = { name: 'question' };
+    card.value.recogMark = marks.QUESTION;
     buttons.setAction(recognitionAnswer);
 }
   
 function recognitionAnswer() {
     showAnswerAndPlay();
     buttons.twoButtons();
-    buttons.setAction(evaluateAndSave);
+    buttons.setAction(evaluateSaveNext);
 } 
 
 // learn/confrim/repeat //-----------------------------------------
@@ -79,7 +83,7 @@ function answer() {
     } else {
         buttons.threeButtons();
     }
-    buttons.setAction(evaluateAndSave);
+    buttons.setAction(evaluateSaveNext);
 }
 
 // common //-----------------------------------------
@@ -87,10 +91,12 @@ function showAnswerAndPlay() {
     cardDisplay.showAnswer();
     playAudio(card);
 }
-function evaluateAndSave(mark) {
+function evaluateSaveNext(mark) {
     console.log(mark);
-    // evaluate
-    // save
+    card.value.mark = mark;
+
+    evaluateAndSave(card);
+    
     nextCycle();
 }  
 

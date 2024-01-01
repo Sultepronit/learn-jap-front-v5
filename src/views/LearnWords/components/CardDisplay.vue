@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import { randomInt } from '../utils/random.js';
 import { show } from '../utils/displayControls.js';
 import { card } from '../utils/cycle.js';
+import { learnStages } from '../utils/enums';
 
 const randomWriting = computed(() => {
     const ri = randomInt(0, card.value.parsed.writingsArray.length - 1);
@@ -16,9 +17,20 @@ const randomReading = computed(() => {
 
 <template>
 <main>
-    <p>{{ card.id }} [{{ card.status }}]</p>
+    <p>
+        {{ card.id }} [{{ card.learnStatus }}]: 
+        {{ card.fProgress }} {{ card.bProgress }} | 
+        <span :class="{ auto: card.fAutorepeat }">
+            {{ card.fStats }}
+        </span>&nbsp;<span :class="{ auto: card.bAutorepeat }">
+            {{ card.bStats }}
+        </span>
+    </p>
 
-    <section class="question-answer" :class="{ autorep: card.autorepeated }">
+    <section
+        class="question-answer"
+        :class="{ autorep: card.learnStage === learnStages.AUTOREPEAT }"
+    >
         <p class="writing" :class="card.recogMark?.name">
             <span
                 v-show="show.writing"
@@ -61,6 +73,10 @@ const randomReading = computed(() => {
 }
 .autorep {
     border-color: black;
+}
+.auto {
+    color: red;
+    font-weight: bold;
 }
 .writing {
     border-bottom: 5px solid white;
