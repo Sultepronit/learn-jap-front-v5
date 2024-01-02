@@ -9,7 +9,6 @@ import NavigateButtons from './components/NavigateButtons.vue';
 
 startSession();
 watch(ready, () => {
-  console.log('here we go!');
   nextCycle();
 });
 

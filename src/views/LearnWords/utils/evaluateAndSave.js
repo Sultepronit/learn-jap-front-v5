@@ -1,3 +1,4 @@
+import update from "../services/update";
 import { directions, learnStages, marks } from "./enums";
 import { returnCard, repeatOneMore } from './nextCard';
 import progress from './progress';
@@ -123,10 +124,6 @@ function evaluateAndSave(cardArg) {
     progress.value.cards++;
     const card = { ...cardArg.value };
     const freezed = { ...cardArg.value };
-    // const freezed = JSON.parse(JSON.stringify(cardArg.value));
-    // const card = { ...freezed };
-    // console.log(card);
-    // console.log(freezed);
     
     evaluations[card.learnStage](card);    
 
@@ -137,6 +134,9 @@ function evaluateAndSave(cardArg) {
         }
     }
     console.log(card);
+    if(Object.keys(card).length > 0) {
+        update(freezed.id, card);
+    }
 }
 
 export default evaluateAndSave;
