@@ -68,7 +68,7 @@ const randomReading = computed(() => {
 <style scoped>
 .question-answer {
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.8rem;
     border: 5px solid white;
 }
 .autorep {
@@ -79,6 +79,7 @@ const randomReading = computed(() => {
     font-weight: bold;
 }
 .writing {
+    font-size: 3rem;
     border-bottom: 5px solid white;
     width: fit-content;
     margin: auto;

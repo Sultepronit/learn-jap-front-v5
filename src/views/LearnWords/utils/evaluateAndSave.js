@@ -1,31 +1,6 @@
-import { ref } from 'vue';
 import { directions, learnStages, marks } from "./enums";
 import { returnCard, repeatOneMore } from './nextCard';
-
-const progress = ref({
-    learn: {
-      good: 0,
-      bad: 0,
-      neutral: 0,
-      upgraded: 0
-    },
-    confirm: {
-      good: 0,
-      bad: 0,
-      neutral: 0,
-      upgraded: 0,
-      degraded: 0
-    },
-    repeat: {
-      good: 0,
-      autoGood: 0,
-      bad: 0,
-      neutral: 0,
-      upgraded: 0,
-      autoUpgraded: 0,
-      degraded: 0
-    }
-  });
+import progress from './progress';
 
 function basicIncrement(card) {
     progress.value[card.learnStage][card.mark.name]++;
@@ -57,10 +32,12 @@ const evaluations = {
             // return
         if(card.mark.name === marks.BAD.name) {
             returnCard(card);
+            progress.value.cards--;
             return;
         }
             // upgrade
         if(card.fProgress > 0 && card.bProgress > 0 && card.fStats > 0) {
+            progress.value.learn.upgraded++;
             card.learnStatus = 1;
             card.fProgress = 0;
             card.bProgress = 0;
@@ -70,6 +47,7 @@ const evaluations = {
         basicIncrement(card);
             // degrade
         if(card.fProgress < -1 || card.bProgress < -1) {
+            progress.value.confirm.degraded++;
             card.learnStatus = 0;
             card.fProgress = 0;
             card.bProgress = 0;
@@ -77,6 +55,7 @@ const evaluations = {
         }
             // upgrade
         if(card.fProgress > 0 && card.bProgress > 0 && card.fStats > 0) {
+            progress.value.confirm.upgraded++;
             card.learnStatus = 2;
             card.fProgress = 0;
             card.bProgress = 0;
@@ -87,6 +66,7 @@ const evaluations = {
         basicIncrement(card);
             // degrade
         if(card.fProgress < -1 || card.bProgress < -1) {
+            progress.value.repeat.degraded++;
             card.learnStatus = 0;
             card.fProgress = 0;
             card.bProgress = 0;
@@ -103,6 +83,7 @@ const evaluations = {
         }
             // upgrade
         if(card.fProgress > 0 && card.bProgress > 0) {
+            progress.value.repeat.upgraded++;
             card.learnStatus = 33; // to be changed on server's side
             card.fProgress = 0;
             card.bProgress = 0;
@@ -123,10 +104,15 @@ const evaluations = {
     },
     autorepeat(card) {
         repeatOneMore();
+        progress.value.cards--;
+
         card[`${card.direction}Autorepeat`] = 0;
+
         if(card.direction === directions.FORWARD) {
+            progress.value.repeat.autoGood++;
             card.fProgress = 1;
         } else {
+            progress.value.repeat.autoUpgraded++;
             card.learnStatus = 33; // to be changed on server's side
             card.fProgress = 0;
         }
@@ -134,12 +120,13 @@ const evaluations = {
 };
 
 function evaluateAndSave(cardArg) {
+    progress.value.cards++;
     const card = { ...cardArg.value };
     const freezed = { ...cardArg.value };
     // const freezed = JSON.parse(JSON.stringify(cardArg.value));
     // const card = { ...freezed };
     // console.log(card);
-    console.log(freezed);
+    // console.log(freezed);
     
     evaluations[card.learnStage](card);    
 
