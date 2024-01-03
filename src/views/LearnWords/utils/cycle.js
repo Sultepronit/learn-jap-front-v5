@@ -7,6 +7,11 @@ import playAudio from "./playAudio";
 import evaluateAndSave from './evaluateAndSave';
 
 const card = ref({});
+const ended = ref(false);
+
+function endSession() {
+    ended.value = true;
+}
 
 function nextCycle() {
     cardDisplay.hideEverything();
@@ -14,6 +19,10 @@ function nextCycle() {
     // progress.value.cardPassed++;
   
     card.value = nextCard();
+    if(!card.value) {
+        endSession();
+        return;
+    }
   
     if(card.value[`${card.value.direction}Autorepeat`]) {
         autorepeat();
@@ -100,4 +109,4 @@ function evaluateSaveNext(mark) {
     nextCycle();
 }  
 
-export { nextCycle, card };
+export { nextCycle, card, ended };

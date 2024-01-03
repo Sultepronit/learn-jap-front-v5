@@ -5,7 +5,8 @@ audio.oncanplaythrough = () => {
     const duration = audio.duration;
     if(duration > 5) {
         console.log('Nothing to play!');
-        audio.pause();
+        // audio.pause();
+        audio.src = null;
         audio.dispatchEvent(new Event('ended'));
     }
 };
@@ -14,7 +15,7 @@ function playPromise() {
     return new Promise(resolve => {
         audio.play();
         audio.onended = () => {
-            resolve('finished');
+            resolve('ended');
         }
     });
 }

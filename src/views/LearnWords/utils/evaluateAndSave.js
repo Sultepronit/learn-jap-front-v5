@@ -122,20 +122,24 @@ const evaluations = {
 
 function evaluateAndSave(cardArg) {
     progress.value.cards++;
+
     const card = { ...cardArg.value };
     const freezed = { ...cardArg.value };
     
     evaluations[card.learnStage](card);    
 
+    const changes = {};
     for(const key in card) {
-        // console.log(key);
-        if(card[key] === freezed[key]) {
-            delete card[key];
+        // if(card[key] === freezed[key]) {
+        //     delete card[key];
+        // }
+        if(card[key] !== freezed[key]) {
+            changes[key] = card[key];
         }
     }
-    console.log(card);
-    if(Object.keys(card).length > 0) {
-        update(freezed.id, card);
+    console.log(changes);
+    if(Object.keys(changes).length > 0) {
+        update(card.id, changes);
     }
 }
 

@@ -14,6 +14,10 @@ function nextCard() {
         problemList
     } = lists;
 
+    if(learnStageList.length < 1) {
+        return null;
+    }
+
     const learnStage = pullRandomElement(learnStageList);
     console.log(learnStage);
     console.log(learnStageList);

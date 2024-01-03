@@ -6,10 +6,10 @@ function parseToString(card) {
         const rw = card.rareWritings.replaceAll(', ', '　');
         writingsString += `　<span class="gray">${rw}</span>`;
     }
-    writingsString = writingsString.replace('(', '<span class="yellow">');
-    writingsString = writingsString.replace('[', '<span class="blue">');
-    writingsString = writingsString.replace('{', '<span class="green">');
-    writingsString = writingsString.replace(/[)\]}]/g, '</span>');
+    writingsString = writingsString.replaceAll('(', '<span class="yellow">');
+    writingsString = writingsString.replaceAll('[', '<span class="blue">');
+    writingsString = writingsString.replaceAll('{', '<span class="green">');
+    writingsString = writingsString.replaceAll(/[)\]}]/g, '</span>');
 
     let readingsString = card.readings.replaceAll(', ', '　');
     if(card.rareReadings) {
