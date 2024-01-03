@@ -138,9 +138,10 @@ function evaluateAndSave(cardArg) {
         }
     }
     console.log(changes);
-    if(Object.keys(changes).length > 0) {
-        update(card.id, changes);
-    }
+    console.log('not saved!');
+    // if(Object.keys(changes).length > 0) {
+    //     update(card.id, changes);
+    // }
 }
 
 export default evaluateAndSave;

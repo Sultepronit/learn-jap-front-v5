@@ -4,6 +4,7 @@ import nextCard from "./nextCard";
 import { changeShow as cardDisplay } from "./displayControls";
 import { change as buttons } from './buttonsControls.js';
 import playAudio from "./playAudio";
+import { preloadAudio } from "./playAudio";
 import evaluateAndSave from './evaluateAndSave';
 
 const card = ref({});
@@ -23,6 +24,8 @@ function nextCycle() {
         endSession();
         return;
     }
+
+    preloadAudio(card);
   
     if(card.value[`${card.value.direction}Autorepeat`]) {
         autorepeat();
