@@ -8,6 +8,7 @@ import CardDisplay from './components/CardDisplay.vue';
 import NavigateButtons from './components/NavigateButtons.vue';
 import HappyEnd from './components/HappyEnd.vue';
 import ResetButton from './components/ResetButton.vue';
+import SpeakMute from './components/SpeakMute.vue';
 
 startSession();
 watch(ready, () => {
@@ -20,6 +21,7 @@ watch(ready, () => {
   <template v-if="ready">
     <LessonStats />
     <template v-if="!ended">
+      <SpeakMute />
       <CardDisplay />  
       <ResetButton />
       <NavigateButtons />

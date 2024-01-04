@@ -6,7 +6,7 @@ import progress from './progress';
 
 function basicIncrement(card) {
     progress.value[card.learnStage][card.mark.name]++;
-    console.log(progress.value[card.learnStage]);
+    // console.log(progress.value[card.learnStage]);
 
     card[card.direction+'Progress'] += card.mark.increment;
 
@@ -101,7 +101,7 @@ const evaluations = {
     recognize(card) {
         card.fStats += card.mark.increment;
         if(card.fStats < -1 && card.mark.name === marks.GOOD.name) {
-            card.fStats = 1;
+            card.fStats = -1;
         }
     },
     autorepeat(card) {
@@ -109,9 +109,9 @@ const evaluations = {
         progress.value.cards--;
 
         card[`${card.direction}Autorepeat`] = 0;
+        progress.value.repeat.autoGood++;
 
         if(card.direction === directions.FORWARD) {
-            progress.value.repeat.autoGood++;
             card.fProgress = 1;
         } else {
             progress.value.repeat.autoUpgraded++;
@@ -131,9 +131,6 @@ function evaluateAndSave(cardArg) {
 
     const changes = {};
     for(const key in card) {
-        // if(card[key] === freezed[key]) {
-        //     delete card[key];
-        // }
         if(card[key] !== freezed[key]) {
             changes[key] = card[key];
         }

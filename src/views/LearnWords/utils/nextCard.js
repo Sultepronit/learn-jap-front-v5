@@ -50,14 +50,15 @@ function returnCard(card) {
     const { learnStageList, learnList } = lists;
     learnStageList.push(learnStages.LEARN);
     learnList.push(card);
-    console.log(learnStageList);
+    // console.log(learnStageList);
     console.log(learnList);
 }
 
 function repeatOneMore() {
     console.log("repeat more!");
-    const { learnStageList } = lists;
+    const { learnStageList, repeatVariantList } = lists;
     learnStageList.push(learnStages.REPEAT);
+    repeatVariantList.push(repeatVariants.NORMAL);
 }
 
 export default nextCard;
