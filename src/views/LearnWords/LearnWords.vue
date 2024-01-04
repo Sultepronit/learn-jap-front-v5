@@ -7,6 +7,7 @@ import LessonStats from './components/LessonStats.vue';
 import CardDisplay from './components/CardDisplay.vue';
 import NavigateButtons from './components/NavigateButtons.vue';
 import HappyEnd from './components/HappyEnd.vue';
+import ResetButton from './components/ResetButton.vue';
 
 startSession();
 watch(ready, () => {
@@ -20,6 +21,7 @@ watch(ready, () => {
     <LessonStats />
     <template v-if="!ended">
       <CardDisplay />  
+      <ResetButton />
       <NavigateButtons />
     </template>
     <HappyEnd v-else />

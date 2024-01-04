@@ -1,13 +1,15 @@
 import { ref } from "vue";
 import { learnStages, repeatVariants } from "../utils/enums.js";
 import { get } from "@/services/commonAPI.js";
-// import { nextCycle } from "../utils/cycle.js";
+import { restoreSession } from "./backup.js";
+import { restoreProgress } from "../utils/progress.js";
+import { showResetButton } from "../utils/resetButtonDisplay.js";
 
 let plan = {};
 let lists = {};
 const ready = ref(false);
 
-async function startSession() {
+async function fetchData() {
     const data = await get('jap_session');
     console.log(data);
     const {
@@ -56,6 +58,22 @@ async function startSession() {
         learnStageList,
         repeatVariantList
     }
+    
+    localStorage.setItem('words_plan', JSON.stringify(plan));
+}
+
+async function startSession() {
+    const restored = await restoreSession();
+    if(restored) {
+        plan = restored.plan;
+        lists = restored.lists;
+        restoreProgress(restored.progress);
+
+        showResetButton();
+    } else {
+        await fetchData();
+    }
+    
     console.log(lists);
     ready.value = true;
 }

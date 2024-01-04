@@ -1,3 +1,4 @@
+import { saveSession } from "../services/backup";
 import update from "../services/update";
 import { directions, learnStages, marks } from "./enums";
 import { returnCard, repeatOneMore } from './nextCard';
@@ -137,11 +138,14 @@ function evaluateAndSave(cardArg) {
             changes[key] = card[key];
         }
     }
+
+    saveSession();
+
     console.log(changes);
-    console.log('not saved!');
-    // if(Object.keys(changes).length > 0) {
-    //     update(card.id, changes);
-    // }
+    // console.log('not saved!');
+    if(Object.keys(changes).length > 0) {
+        update(card.id, changes);
+    }
 }
 
 export default evaluateAndSave;

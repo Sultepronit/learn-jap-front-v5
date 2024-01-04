@@ -25,4 +25,9 @@ const progress = ref({
     }
 });
 
+function restoreProgress(restored) {
+    progress.value = restored;
+}
+
 export default progress;
+export { restoreProgress }

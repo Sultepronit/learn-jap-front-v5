@@ -1,10 +1,8 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 // const { plan, vars } = defineProps(['plan', 'vars']);
 import { plan } from '../services/data.js';
 import progress from '../utils/progress.js';
-
-const { cards, learn, confirm, repeat } = progress;
 
 const passedPercent = computed(
     () => Math.round(progress.value.cards / plan.sessionLength * 100) 
@@ -30,3 +28,9 @@ const passedPercent = computed(
     rec-{{ plan.recognizeNumber }}
 </header>
 </template>
+
+<style scoped>
+header {
+    margin: 0.5rem;
+}
+</style>

@@ -7,17 +7,19 @@ import { params } from '../utils/buttonsControls.js';
 <template>
 <footer>
     <button
+        class="good"
         v-show="params.showSides"
         @click="params.action(marks.GOOD)"
-    >+</button>
+    />
     <button
         v-show="params.showCentral"
         @click="params.action(marks.NEUTRAL)"
-    >#</button>
+    />
     <button
+        class="bad"
         v-show="params.showSides"
         @click="params.action(marks.BAD)"
-    >-</button>
+    />
 </footer>
 </template>
 
@@ -28,13 +30,22 @@ footer {
     bottom: 0.5rem;
     width: 100%;
     gap: 1rem;
-    /* place-content: space-around; */
-    /* margin-bottom: 0.2rem; */
     padding-inline: 0.5rem;
 }
 footer button {
     flex-grow: 1;
     height: 4rem;
     /* margin: 0.2rem; */
+    border-radius: 1rem;
+    border: none;
+    background: gray;
+}
+
+.good {
+    background: green;
+}
+
+.bad {
+    background: red;
 }
 </style>

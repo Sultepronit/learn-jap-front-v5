@@ -66,6 +66,9 @@ const randomReading = computed(() => {
 </template>
 
 <style scoped>
+main {
+    margin: 0.5rem;
+}
 .question-answer {
     text-align: center;
     font-size: 1.8rem;

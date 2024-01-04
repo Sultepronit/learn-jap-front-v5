@@ -11,6 +11,7 @@ const ended = ref(false);
 
 function endSession() {
     ended.value = true;
+    localStorage.clear();
 }
 
 function nextCycle() {
