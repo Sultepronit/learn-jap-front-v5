@@ -4,7 +4,6 @@ import nextCard from "./nextCard";
 import { changeShow as cardDisplay } from "./displayControls";
 import { change as buttons } from './buttonsControls.js';
 import playAudio from "./playAudio";
-import { preloadAudio } from "./playAudio";
 import evaluateAndSave from './evaluateAndSave';
 
 const card = ref({});
@@ -17,15 +16,12 @@ function endSession() {
 function nextCycle() {
     cardDisplay.hideEverything();
     buttons.singleButton();
-    // progress.value.cardPassed++;
   
     card.value = nextCard();
     if(!card.value) {
         endSession();
         return;
     }
-
-    preloadAudio(card);
   
     if(card.value[`${card.value.direction}Autorepeat`]) {
         autorepeat();

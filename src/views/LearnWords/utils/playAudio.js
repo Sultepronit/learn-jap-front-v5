@@ -2,19 +2,17 @@ const audio = new Audio();
 const url = 'https://assets.languagepod101.com/dictionary/japanese/audiomp3.php?kana=';
 
 audio.oncanplay = () => {
-    const duration = audio.duration;
-    // console.log('loaded!');
-    if(duration > 5) {
+    if(audio.duration > 5) {
         console.log('Nothing to play!');
-        // audio.pause();
-        audio.src = null;
         audio.dispatchEvent(new Event('ended'));
+    } else {
+        audio.play();     
     }
 };
 
-function playPromise() {
+function playPromise(src) {
     return new Promise(resolve => {
-        audio.play();
+        audio.src = src;  
         audio.onended = () => {
             resolve('ended');
         }
@@ -24,23 +22,10 @@ function playPromise() {
 async function playAudio(card) {
     const kanji = card.value.parsed.writingsArray[0];
     const variants = card.value.parsed.readingsArray;
-    // variants.push('--');
-    // variants.unshift('---');
     for(const variant of variants) {
-        audio.src = `${url}${variant}&kanji=${kanji}`;
-        const res = await playPromise();
+        const res = await playPromise(`${url}${variant}&kanji=${kanji}`);
         console.log(res, variant);
     }
-    // const res = await playPromise();
-    // console.log(res);
-}
-
-function preloadAudio(card) {
-    // console.log('preload audio!');
-    // const kanji = card.value.parsed.writingsArray[0];
-    // const kana = card.value.parsed.readingsArray[0];
-    // audio.src = `${url}${kana}&kanji=${kanji}`;
 }
 
 export default playAudio;
-export { preloadAudio };
