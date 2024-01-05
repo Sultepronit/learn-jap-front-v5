@@ -28,7 +28,7 @@ function parseToArray(card) {
     const writingsArray = preparedWritings.split(', ');
 
     const mainReadingsArray = card.readings.split(', ');
-    const readingsArray = mainReadingsArray;
+    const readingsArray = [...mainReadingsArray];
     
     if(card.rareReadings) {
         readingsArray.push( ...card.rareReadings.split(', ') );

@@ -7,11 +7,11 @@ import { learnStages } from '../utils/enums';
 
 const randomWriting = computed(() => {
     const ri = randomInt(0, card.value.parsed.writingsArray.length - 1);
-    return card.value.parsed.writingsArray[ randomInt(0, ri) ];
+    return card.value.parsed.writingsArray[ri];
 });
 const randomReading = computed(() => {
     const ri = randomInt(0, card.value.parsed.mainReadingsArray.length - 1);
-    return card.value.parsed.mainReadingsArray[ randomInt(0, ri) ];
+    return card.value.parsed.mainReadingsArray[ri];
 });
 </script>
 

@@ -1,9 +1,9 @@
 import { ref } from 'vue';
+import { card } from './cycle.js';
 
 const audio = new Audio();
 const url = 'https://assets.languagepod101.com/dictionary/japanese/audiomp3.php?kana=';
 const isMute = ref(false);
-let lastCard = null;
 
 audio.oncanplay = () => {
     if(audio.duration > 5) {
@@ -23,17 +23,10 @@ function playPromise(src) {
     });
 }
 
-async function playAudio(card) {
-    if(!card) {
-        card = lastCard;
-    } else {
-        lastCard = card;
-    }
-    
+async function playAudio() {
     if(isMute.value) {
         return;
     }
-    // console.log(card);   
     const kanji = card.value.parsed.writingsArray[0];
     const variants = card.value.parsed.readingsArray;
     for(const variant of variants) {

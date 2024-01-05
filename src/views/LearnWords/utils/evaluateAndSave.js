@@ -26,7 +26,7 @@ const evaluations = {
         basicIncrement(card);
             // degrade
         if(card.fProgress < -1 && card.mark.name === marks.GOOD.name) {
-            card.fProgress = 1;
+            card.fProgress = -1;
         } else if(card.bProgress < -1) {
             card.fProgress = 0;
             card.bProgress = 0;

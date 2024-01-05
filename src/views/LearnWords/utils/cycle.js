@@ -98,7 +98,7 @@ function answer() {
 // common //-----------------------------------------
 function showAnswerAndPlay() {
     cardDisplay.showAnswer();
-    playAudio(card);
+    playAudio();
 }
 function evaluateSaveNext(mark) {
     console.log(mark);
