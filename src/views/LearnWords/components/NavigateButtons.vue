@@ -34,8 +34,8 @@ footer {
 }
 footer button {
     flex-grow: 1;
-    height: 4rem;
-    /* margin: 0.2rem; */
+    height: 5rem;
+    margin-bottom: 1rem;
     border-radius: 1rem;
     border: none;
     background: gray;

@@ -19,8 +19,11 @@ function speak() {
 
 <style scoped>
 p {
-    float: right;
-    padding-inline: 1rem;
+    /* float: right;
+    padding-inline: 1rem; */
     font-size: 1.5rem;
+    position: absolute;
+    top: 2rem;
+    right: 1rem;
 }
 </style>

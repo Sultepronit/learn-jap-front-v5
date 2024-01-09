@@ -13,12 +13,17 @@ const passedPercent = computed(
 <header>
     {{ progress.cards }}/{{ plan.sessionLength }}:
     {{ passedPercent }}% |
-    l-{{ plan.learnNumber }}:
+    <span class="green">
+        l-{{ plan.learnNumber }}:
         +{{ progress.learn.good }}-{{ progress.learn.bad }}
-        <strong>{{ progress.learn.upgraded }}</strong> |
-    c-{{ plan.confirmNumber }}:
+        <strong>{{ progress.learn.upgraded }}</strong>
+    </span> |
+    <span class="blue">
+        c-{{ plan.confirmNumber }}:
         +{{ progress.confirm.good }}-{{ progress.confirm.bad }}±{{ progress.confirm.neutral }}
-        <strong>{{ progress.confirm.upgraded }}-{{ progress.confirm.degraded }}</strong> |
+        <strong>{{ progress.confirm.upgraded }}-{{ progress.confirm.degraded }}</strong>
+    </span>
+    <br>
     rep-{{ plan.repeatNumber }}/{{ plan.problemNumber }}
         <span>+{{ progress.repeat.good }}<sup>{{ progress.repeat.autoGood }}</sup></span>
         <span>-{{ progress.repeat.bad }}±{{ progress.repeat.neutral }}
