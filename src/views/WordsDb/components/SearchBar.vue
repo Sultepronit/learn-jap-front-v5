@@ -1,42 +1,81 @@
 <script setup>
-import { ref } from 'vue';
-// defineProps(['selectedNumber', 'select', 'lastCardNumber']);
+import { ref, watchEffect } from 'vue';
 import { db } from '../services/crud';
 import { selectedNumber, select } from '../utils/displayAndSelect';
-// const emit = defineEmits(['search']);
 import { searchText } from '../utils/searchAndFilter.js';
+import statsTitles from '../utils/statsTitles.js';
+
+const titles = ['learnStatus', ...statsTitles];
 
 const searchInTranslation = ref(false);
 const query = ref('');
+
+const selectedField = ref('');
+const filterValue = ref('');
+
+watchEffect(() => {
+    console.log(selectedField.value);
+    console.log(filterValue.value);
+});
 </script>
 
 <template>
-    <input
-        type="number"
-        min="1"
-        :max="db.length"
-        :value="selectedNumber"
-        @input="select($event.target.value, true)"
-    >
-    <span>***</span>
-    <input
-        type="text"
-        v-model="query"
-        @input="searchText(query, searchInTranslation)"
-    >
-    <label for="translation">
+    <div class="the-bar">
         <input
-            type="checkbox"
-            name="translation"
-            v-model="searchInTranslation"
-            @change="searchText(query, searchInTranslation)"
+            class="cardNumber"
+            type="number"
+            min="1"
+            :max="db.length"
+            :value="selectedNumber"
+            @input="select($event.target.value, true)"
         >
-        Translation
-    </label>
+        
+        <input
+            class="filter-input"
+            type="text"
+            v-model="filterValue"
+        >
+        <select v-model="selectedField">
+            <option
+                v-for="title in titles"
+                :key="title"
+                :value="title"
+            >{{ title }}</option>
+        </select>
+
+        <input
+            type="text"
+            v-model="query"
+            @input="searchText(query, searchInTranslation)"
+        >
+        <label for="translation">
+            <input
+                type="checkbox"
+                name="translation"
+                v-model="searchInTranslation"
+                @change="searchText(query, searchInTranslation)"
+            >
+            Translation
+        </label>
+    </div>
 </template>
 
 <style scoped>
+* {
+    font-size: 1.2rem;
+    margin: 1px;
+}
+.the-bar {
+    margin-top: 5px;
+}
 input {
-    font-size: 1.5rem;
+    padding-inline: 0.2em;
+}
+.cardNumber {
+    width: 4em;
+}
+
+.filter-input {
+    width: 9em;
 }
 </style>

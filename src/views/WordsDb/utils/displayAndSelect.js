@@ -16,7 +16,6 @@ const selectedNumber = ref(0);
 const selectedCard = ref({});
 
 watch(ready, () => {
-    console.log('ready!');
     resetViewList();
     goToTheBottom();
 });

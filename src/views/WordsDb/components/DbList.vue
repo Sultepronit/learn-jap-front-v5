@@ -1,8 +1,6 @@
 <script setup>
 import TableRow from './TableRow.vue';
 
-// defineProps(['min', 'max', 'range', 'lastRow', 'select', 'selectedNumber']);
-// const emit = defineEmits(['setLastRow', 'incrementLastRow']);
 import {
     displayedRange as range,
     selectedNumber,
@@ -65,4 +63,4 @@ table {
     /* background-color: yellow; */
     border: 2px solid red;
 }
-</style>@/JapDb/displayAndSelect@/Views/WordsDb/utils/displayAndSelect
+</style>

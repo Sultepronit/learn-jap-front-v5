@@ -2,6 +2,7 @@
 import { isSaving, createNewCard, update, deleteCard } from '../services/crud';
 import { selectedCard as card, select } from '../utils/displayAndSelect';
 import { searchText } from '../utils/searchAndFilter.js';
+import statsTitles from '../utils/statsTitles.js';
 
 function checkInput(value, field) {
     if(card.value.learnStatus < 0) {
@@ -16,7 +17,7 @@ function resetSearch() {
         select(cn);
     }
 }
-const stats = ['fProgress', 'bProgress', 'fStats', 'fAutorepeat', 'bStats', 'bAutorepeat'];
+// const statsTitles = ['fProgress', 'bProgress', 'fStats', 'fAutorepeat', 'bStats', 'bAutorepeat'];
 </script>
 
 <template>
@@ -37,7 +38,7 @@ const stats = ['fProgress', 'bProgress', 'fStats', 'fAutorepeat', 'bStats', 'bAu
                 )"
             >
             <input
-                v-for="field in stats" 
+                v-for="field in statsTitles" 
                 :key="field"
                 type="number"
                 class="stats"
@@ -60,6 +61,7 @@ const stats = ['fProgress', 'bProgress', 'fStats', 'fAutorepeat', 'bStats', 'bAu
             @change="update(card.cardNumber, 'writings', $event.target.value)"
             @input="checkInput($event.target.value, 'writings')"
             @blur="resetSearch"
+            placeholder="言葉"
         >
         <div
             class="alt-toggle"
@@ -75,6 +77,7 @@ const stats = ['fProgress', 'bProgress', 'fStats', 'fAutorepeat', 'bStats', 'bAu
             class="jap-field gray"
             :value="card.rareWritings"
             @change="update(card.cardNumber, 'rareWritings', $event.target.value)"
+            placeholder="言葉"
         >
         <input
             type="text"
@@ -83,18 +86,28 @@ const stats = ['fProgress', 'bProgress', 'fStats', 'fAutorepeat', 'bStats', 'bAu
             @change="update(card.cardNumber, 'readings', $event.target.value)"
             @input="checkInput($event.target.value, 'readings')"
             @blur="resetSearch"
+            placeholder="ことば"
         >
         <input
             type="text"
             class="jap-field gray"
             :value="card.rareReadings"
             @change="update(card.cardNumber, 'rareReadings', $event.target.value)"
+            placeholder="ことば"
         >
         <input
             type="text"
             class="uk-field"
             :value="card.translation"
             @change="update(card.cardNumber, 'translation', $event.target.value)"
+            placeholder="слово"
+        >
+        <input
+            type="text"
+            class="uk-field"
+            :value="card.example"
+            @change="update(card.cardNumber, 'example', $event.target.value)"
+            placeholder="実例"
         >
     </section>
 </template>
@@ -132,7 +145,6 @@ button.delete {
 input {
     padding-inline: 0.2em;
     margin: 1px;
-    /* font-size: 1.3rem; */
 }
 .status {
     width: 5em;
@@ -172,4 +184,4 @@ input {
 .gray {
     color: gray;
 }
-</style>@/JapDb/displayAndSelect@/Views/WordsDb/utils/displayAndSelect@/Views/WordsDb/utils/searchAndFilter.js@/Views/WordsDb/services/crud
+</style>

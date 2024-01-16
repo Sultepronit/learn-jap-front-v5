@@ -1,5 +1,5 @@
 <script setup>
-import { startSession } from './services/crud';
+import { startSession, ready } from './services/crud';
 import EditSelected from './components/EditSelected.vue';
 import SearchBar from './components/SearchBar.vue';
 import DbList from './components/DbList.vue';
@@ -10,7 +10,9 @@ startSession();
 </script>
 
 <template>
-    <EditSelected />
-    <SearchBar />
-    <DbList />
+    <template v-if="ready">
+        <EditSelected />
+        <SearchBar />
+        <DbList />
+    </template>
 </template>
