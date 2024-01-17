@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue';
-import { randomInt } from '../utils/random.js';
+import { randomInt } from '@/utils/random.js';
 import { show } from '../utils/displayControls.js';
 import { card } from '../utils/cycle.js';
 import { learnStages } from '../utils/enums';

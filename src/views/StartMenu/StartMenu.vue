@@ -1,5 +1,6 @@
 <template>
     <p><a href="#/jap-tap">Learn Words</a></p>
+    <p><a href="#/kanji-tap">Learn Kanji</a></p>
     <p><a href="#/words-db">Check DB</a></p>
 </template>
 

@@ -1,7 +1,7 @@
-import { pullRandomElement } from "./random";
+import { pullRandomElement } from "@/utils/random";
 import { learnStages, repeatVariants, directions } from "./enums";
 import { lists } from "../services/data";
-import { parseToStringAndArray } from "./parseWritingsReading";
+import { parseToStringAndArray } from "@/utils/parseWritingsReadings";
 
 function nextCard() {
     const {

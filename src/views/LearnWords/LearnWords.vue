@@ -10,6 +10,8 @@ import HappyEnd from './components/HappyEnd.vue';
 import ResetButton from './components/ResetButton.vue';
 import SpeakMute from './components/SpeakMute.vue';
 
+document.title = 'Learn Jap Words';
+
 startSession();
 watch(ready, () => {
   nextCycle();
