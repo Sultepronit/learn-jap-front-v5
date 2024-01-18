@@ -1,11 +1,22 @@
 import { randomInt } from "./random";
 
 function parseToString(card) {
+    if(card.parsed) {
+        console.log('I was here already!');
+        return;
+    }
+
     let writingsString = card.writings.replaceAll(', ', '　');
+
+    if(card.altWriting) {
+        writingsString = `<span class="blue">${writingsString}</span>`;
+    }
+
     if(card.rareWritings) {
         const rw = card.rareWritings.replaceAll(', ', '　');
         writingsString += `　<span class="gray">${rw}</span>`;
     }
+
     writingsString = writingsString.replaceAll('(', '<span class="yellow">');
     writingsString = writingsString.replaceAll('[', '<span class="blue">');
     writingsString = writingsString.replaceAll('{', '<span class="green">');
@@ -41,6 +52,10 @@ function parseToArray(card) {
 }
 
 function parseToStringAndArray(card) {
+    if(card.parsed) {
+        console.log('I was here already!');
+        return;
+    }
     parseToString(card);
     parseToArray(card);
 }

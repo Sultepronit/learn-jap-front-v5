@@ -1,20 +1,26 @@
-import { get } from "@/services/commonAPI.js";
-import { pullRandomElement } from "@/utils/random";
+import { ref } from 'vue';
+import { get } from '@/services/commonAPI.js';
+import { pullRandomElement } from '@/utils/random';
+import { repeatStages } from '../utils/enums';
+
+let lists = {};
+let words = {};
+let sessionLength = 0;
+const ready = ref(false);
 
 async function fetchData() {
     const data = await get('kanji_session');
     console.log(data);
+    const { repeatList, problemList } = data;
+    sessionLength = data.sessionLength;
+    words = data.words;
 
-    const { repeatList, words } = data;
-    const card = pullRandomElement(repeatList);
-    
-    card.links = JSON.parse(card.links);
+    const repeatStageList = Array(sessionLength)
+        .fill(repeatStages.PROBLEM, 0, problemList.length)
+        .fill(repeatStages.REPEAT, problemList.length);
+    console.log(repeatStageList);
 
-    console.log(card);
-    
-    for(const link of card.links) {
-        console.log(words[link - 1]);
-    }
+    lists = { repeatList, problemList, repeatStageList };
 }
 
 async function startSession() {
@@ -27,7 +33,7 @@ async function startSession() {
     }
     
     // console.log(lists);
-    // ready.value = true;
+    ready.value = true;
 }
 
-export { startSession };
+export { startSession, ready, sessionLength, lists, words };

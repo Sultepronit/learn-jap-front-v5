@@ -36,7 +36,7 @@ const randomReading = computed(() => {
                 v-show="show.writing"
                 v-html="randomWriting"
             />
-            <span :class="{'blue': card.altWriting}"
+            <span
                 v-show="show.answer"
                 v-html="card.parsed.writingsString"
             />
