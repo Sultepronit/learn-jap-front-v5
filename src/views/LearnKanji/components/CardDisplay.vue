@@ -1,38 +1,26 @@
 <script setup>
-import { ref, watch, watchEffect } from 'vue';
+import { ref, watch } from 'vue';
 import { card, showAnswer } from '../utils/cycle.js';
 import WordCard from './WordCard.vue';
 
 const readings = ref(null);
 const wordList = ref(null);
-// console.log(readings);
-// console.log(readings.value);
-// watch(card, () => {
+const readingsHeight = ref('*');
+
 watch(showAnswer, (val) => {
     if(!val) return;
     setTimeout(() => {
-        // console.log(readings.value);
-        // console.log(window.getComputedStyle(readings.value).getPropertyValue('height'));        
-        const readingsHeight = window
-            .getComputedStyle(readings.value)
-            .getPropertyValue('height');
-        console.log(readingsHeight);
-
-        wordList.value.style.height = `calc(100vh - 15rem - ${readingsHeight})`;
-        // console.log(wordList.value);
-        // console.log(wordList.value.style);
-        console.log(wordList.value.style.height);
-
+        readingsHeight.value = window.getComputedStyle(readings.value).height;
+        console.log(readingsHeight.value);
     }, 10);
-    // console.log(readings);
-    // console.log(readings.value);
-    // console.log(window.getComputedStyle(readings.value).getPropertyValue('height'));
 });
-// watchEffect(() => {
-//     console.log(readings);
-//     console.log(readings.value);
-//     // console.log(window?.getComputedStyle(readings.value)?.getPropertyValue('height'));
-// });
+
+watch(readingsHeight, () => {
+    wordList.value.style.height
+        = `calc(100vh - 15rem - ${readingsHeight.value})`;
+    console.log(wordList.value.style.height);
+});
+
 </script>
 
 <template>
@@ -75,7 +63,8 @@ watch(showAnswer, (val) => {
     color: blue;
 }
 .word-list {
-    margin-bottom: 7rem;
+    /* margin-bottom: 7rem; */
+    /* height: calc(100vh - 15rem - 40px); */
     overflow: auto;
 }
 </style>
