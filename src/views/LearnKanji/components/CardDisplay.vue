@@ -1,11 +1,11 @@
 <script setup>
-import { card } from '../utils/cycle.js';
+import { card, showAnswer } from '../utils/cycle.js';
 import WordCard from './WordCard.vue';
 </script>
 
 <template>
-    <h1>{{ card.kanji }}</h1>
-    <div class="word-list">
+    <p class="the-kanji">{{ card.kanji }}</p>
+    <div class="word-list" v-show="showAnswer">
         <WordCard
             v-for="item in card.wordList"
             :key="item.articleNumber"
@@ -22,3 +22,13 @@ import WordCard from './WordCard.vue';
         />
     </div>
 </template>
+
+<style>
+.the-kanji {
+    font-size: 3.5rem;
+    text-align: center;
+}
+.word-list {
+    margin-bottom: 7rem;
+}
+</style>

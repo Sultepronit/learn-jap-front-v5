@@ -3,6 +3,7 @@ import { watch } from 'vue';
 import { startSession, ready } from './services/data.js';
 import { nextCycle } from './utils/cycle.js';
 import CardDisplay from './components/CardDisplay.vue';
+import NavigateButtons from './components/NavigateButtons.vue';
 
 document.title = 'Learn Kanji';
 
@@ -14,7 +15,7 @@ watch(ready, () => {
 
 <template>
     <template v-if="ready">
-        <h1>Hello there!</h1>
         <CardDisplay />
+        <NavigateButtons />
     </template>
 </template>

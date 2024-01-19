@@ -1,18 +1,22 @@
 <script setup>
 import { marks } from '../utils/enums';
-// defineProps(['params']);
 import { params } from '../utils/buttonsControls.js';
+
 </script>
 
 <template>
 <footer>
+    <button
+        class="best"
+        v-show="params.showBest"
+        @click="params.action(marks.BEST)"
+    />
     <button
         class="good"
         v-show="params.showSides"
         @click="params.action(marks.GOOD)"
     />
     <button
-        v-show="params.showCentral"
         @click="params.action(marks.NEUTRAL)"
     />
     <button
@@ -25,6 +29,7 @@ import { params } from '../utils/buttonsControls.js';
 
 <style scoped>
 footer {
+    background: white;
     display: flex;
     position: fixed;
     /* bottom: 0.5rem; */
@@ -42,11 +47,12 @@ footer button {
     border: none;
     background: gray;
 }
-
+.best {
+    background: blue;
+}
 .good {
     background: green;
 }
-
 .bad {
     background: red;
 }

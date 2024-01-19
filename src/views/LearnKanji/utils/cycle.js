@@ -1,14 +1,13 @@
 import { ref } from "vue";
-import { repeatStages, marks } from "./enums";
+import { marks } from "./enums";
 import nextCard from "./nextCard";
 import linksToLists from './linksToLists';
-// import { changeShow as cardDisplay } from "./displayControls";
-// import { change as buttons } from './buttonsControls.js';
-// import playAudio from "./playAudio";
-// import evaluateAndSave from './evaluateAndSave';
+import { change as buttons } from './buttonsControls.js';
+import evaluateAndSave from './evaluateAndSave';
 
 const card = ref({});
 const ended = ref(false);
+const showAnswer = ref(false);
 
 function endSession() {
     ended.value = true;
@@ -16,9 +15,6 @@ function endSession() {
 }
 
 function nextCycle() {
-    // cardDisplay.hideEverything();
-    // buttons.singleButton();
-  
     card.value = nextCard();
     if(!card.value) {
         endSession();
@@ -26,70 +22,45 @@ function nextCycle() {
     }
   
     if(card.value.autorepeat) {
-        console.log('autorepeat!');
+        // console.log('autorepeat!');
         autorepeat();
     } else {
-        // question();
-        linksToLists(card.value);
+        question();
     }    
 }
 
-
-// autorepeat //-----------------------------------------
 function autorepeat() {
+    // nextCycle();
+    evaluateSaveNext(marks.AUTOREPEAT);
+}
+
+function question() {
+    showAnswer.value = false;
+
+    linksToLists(card.value);
+
+    buttons.singleButton();
+    buttons.setAction(answer);
+}
+
+function answer() {
+    showAnswer.value = true;
+
+    buttons.setAction(evaluateSaveNext);
+    buttons.threeButtons();
+    if(card.value.kanjiStats > 0 && card.value.progress === 0) {
+        buttons.fourthButton();
+    }
+}
+
+function evaluateSaveNext(mark) {
+    console.log(mark);
+    // console.log(marks.GOOD.is(mark));
+    card.value.mark = mark;
+
+    evaluateAndSave(card);
+    
     nextCycle();
 }
 
-// // learn/confrim/repeat //-----------------------------------------
-// function question() {
-//     if(card.value.direction === directions.FORWARD) {
-//         cardDisplay.showWriting();
-//         buttons.setAction(showReading)
-//     } else {
-//         cardDisplay.showTranslation();
-//         buttons.setAction(answer);
-//     }
-// }
-
-// function showReading() {
-//     cardDisplay.showReading();
-
-//     if(card.value.learnStage === learnStages.LEARN) {
-//         buttons.twoButtons();
-//     } else {
-//         buttons.threeButtons();
-//     }
-//     buttons.setAction(quickRecognition);
-// }
-
-// function quickRecognition(mark) {
-//     answer();
-//     card.value.recogMark = mark;
-// }
-
-// function answer() {
-//     showAnswerAndPlay();
-
-//     if(card.value.learnStage === learnStages.LEARN) {
-//         buttons.twoButtons();
-//     } else {
-//         buttons.threeButtons();
-//     }
-//     buttons.setAction(evaluateSaveNext);
-// }
-
-// // common //-----------------------------------------
-// function showAnswerAndPlay() {
-//     cardDisplay.showAnswer();
-//     playAudio();
-// }
-// function evaluateSaveNext(mark) {
-//     console.log(mark);
-//     card.value.mark = mark;
-
-//     evaluateAndSave(card);
-    
-//     nextCycle();
-// }
-
-export { nextCycle, card, ended };
+export { nextCycle, card, showAnswer, ended };
