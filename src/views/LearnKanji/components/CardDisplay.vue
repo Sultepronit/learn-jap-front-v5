@@ -6,6 +6,7 @@ import WordCard from './WordCard.vue';
 const readings = ref(null);
 const wordList = ref(null);
 const readingsHeight = ref('*');
+const windowHeight = window.innerHeight;
 
 watch(showAnswer, (val) => {
     if(!val) return;
@@ -17,8 +18,10 @@ watch(showAnswer, (val) => {
 
 watch(readingsHeight, () => {
     wordList.value.style.height
-        = `calc(100vh - 15rem - ${readingsHeight.value})`;
+        // = `calc(100vh - 20rem - ${readingsHeight.value})`;
+        = `calc(${windowHeight}px - 20rem - ${readingsHeight.value})`;
     console.log(wordList.value.style.height);
+    
 });
 
 </script>
