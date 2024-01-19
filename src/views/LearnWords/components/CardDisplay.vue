@@ -68,10 +68,11 @@ const randomReading = computed(() => {
 <style scoped>
 main {
     margin: 0.5rem;
+    margin-bottom: 7rem;
 }
 .question-answer {
     text-align: center;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     border: 5px solid white;
 }
 .autorep {
@@ -86,6 +87,9 @@ main {
     border-bottom: 5px solid white;
     width: fit-content;
     margin: auto;
+}
+#example {
+    margin-top: 1rem;
 }
 .good {
     border-color: green;

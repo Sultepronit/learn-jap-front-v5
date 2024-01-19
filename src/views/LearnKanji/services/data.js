@@ -1,6 +1,5 @@
 import { ref } from 'vue';
 import { get } from '@/services/commonAPI.js';
-import { pullRandomElement } from '@/utils/random';
 import { repeatStages } from '../utils/enums';
 
 let lists = {};

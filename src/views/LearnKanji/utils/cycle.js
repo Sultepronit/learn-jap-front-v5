@@ -48,7 +48,7 @@ function answer() {
 
     buttons.setAction(evaluateSaveNext);
     buttons.threeButtons();
-    if(card.value.kanjiStats > 0 && card.value.progress === 0) {
+    if(card.value.record > 0 && card.value.progress === 0) {
         buttons.fourthButton();
     }
 }

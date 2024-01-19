@@ -5,6 +5,7 @@ import WordCard from './WordCard.vue';
 
 <template>
     <p class="the-kanji">{{ card.kanji }}</p>
+    <p class="readings">{{  card.readings }}</p>
     <div class="word-list" v-show="showAnswer">
         <WordCard
             v-for="item in card.wordList"
@@ -27,6 +28,10 @@ import WordCard from './WordCard.vue';
 .the-kanji {
     font-size: 3.5rem;
     text-align: center;
+}
+.readings {
+    text-align: center;
+    font-size: 2rem;
 }
 .word-list {
     margin-bottom: 7rem;
