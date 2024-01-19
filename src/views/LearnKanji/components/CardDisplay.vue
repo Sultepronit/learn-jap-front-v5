@@ -26,12 +26,12 @@ import WordCard from './WordCard.vue';
 
 <style>
 .the-kanji {
-    font-size: 3.5rem;
+    font-size: 4rem;
     text-align: center;
 }
 .readings {
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 .word-list {
     margin-bottom: 7rem;

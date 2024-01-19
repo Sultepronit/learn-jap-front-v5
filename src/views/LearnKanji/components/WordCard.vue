@@ -20,7 +20,7 @@ defineProps(['number', 'article', 'additional']);
     border-color: red;
 }
 .article {
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 .number {
     float: right;

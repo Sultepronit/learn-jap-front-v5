@@ -24,7 +24,7 @@ const good = computed(() => progress.value.good + progress.value.best);
 
 <style scoped>
 header {
-    margin: 0.5rem;
+    margin: 0.2rem 0.5rem 0;
 }
 .card-stats {
     float: right;
