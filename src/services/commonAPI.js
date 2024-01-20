@@ -1,6 +1,6 @@
 const apiUrl = import.meta.env.VITE_API_URL;
 
-async function get(table) {
+async function get(table) { // get all
     const url = apiUrl + table;
     try {
         console.time('get');
@@ -45,11 +45,17 @@ async function patch(table, card) {
         if(results !== '{"success": true}') {
             throw new Error('Wrong response: ' + results);
         }
+        console.log('saved!')
 
         return true;
     } catch (error) {
+        console.log(table, card);
         console.error(error);
         alert('Not updated!');
+
+        setTimeout(() => {
+            patch(table, card);
+        }, 1000);
     }
 }
 

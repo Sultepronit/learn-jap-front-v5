@@ -1,6 +1,6 @@
-// import { saveSession } from "../services/backup";
-// import update from "../services/update";
-import { marks } from "./enums";
+// import { saveSession } from '../services/backup';
+import { patch } from '@/services/commonAPI.js';
+import { marks } from './enums';
 import { returnCard, repeatOneMore } from './nextCard';
 import progress from './progress';
 
@@ -63,9 +63,11 @@ function evaluateAndSave(cardArg) {
 
     console.log(changes);
     console.log('not saved!');
-    // if(Object.keys(changes).length > 0) {
-    //     update(card.id, changes);
-    // }
+
+    // patch('kanji', { id: 1082, changes: { repeatStatus: 33 }});
+    if(Object.keys(changes).length > 0) {
+        patch('kanji', { id: card.id, changes });
+    }
 }
 
 export default evaluateAndSave;
