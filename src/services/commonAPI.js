@@ -53,9 +53,10 @@ async function patch(table, card) {
         console.error(error);
         alert('Not updated!');
 
-        setTimeout(() => {
-            patch(table, card);
-        }, 1000);
+        // setTimeout(() => {
+        //     patch(table, card);
+        // }, 1000);
+        return patch(table, card);
     }
 }
 

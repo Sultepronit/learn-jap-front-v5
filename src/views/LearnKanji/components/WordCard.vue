@@ -13,7 +13,7 @@ defineProps(['number', 'article', 'additional']);
 <style>
 .block {
     border: 2px solid green;
-    margin: 0.3rem;
+    margin: 0.1rem;
     padding: 0.2rem;
 }
 .additional {

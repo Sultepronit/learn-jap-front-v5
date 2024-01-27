@@ -34,7 +34,7 @@ footer {
     position: fixed;
     /* bottom: 0.5rem; */
     bottom: 0;
-    padding: 0.4rem 0 0.5rem;
+    padding: 0.4rem 0 1rem;
     width: 100%;
     gap: 1rem;
     padding-inline: 0.5rem;
@@ -42,7 +42,7 @@ footer {
 footer button {
     flex-grow: 1;
     height: 4.5rem;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
     border-radius: 1rem;
     border: none;
     background: gray;

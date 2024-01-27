@@ -1,4 +1,4 @@
-// import { saveSession } from '../services/backup';
+import { saveSession } from '../services/backup';
 import { patch } from '@/services/commonAPI.js';
 import { marks } from './enums';
 import { returnCard, repeatOneMore } from './nextCard';
@@ -59,7 +59,7 @@ function evaluateAndSave(cardArg) {
         }
     }
 
-    // saveSession();
+    saveSession();
 
     console.log(changes);
     console.log('not saved!');

@@ -1,6 +1,8 @@
 import { ref } from 'vue';
 import { get } from '@/services/commonAPI.js';
 import { repeatStages } from '../utils/enums';
+import { restoreSession } from "./backup.js";
+import { restoreProgress } from '../utils/progress';
 
 let lists = {};
 let words = {};
@@ -20,19 +22,22 @@ async function fetchData() {
     console.log(repeatStageList);
 
     lists = { repeatList, problemList, repeatStageList };
+
+    localStorage.setItem('wordsForKanji', JSON.stringify(words));
 }
 
 async function startSession() {
-    // const restored = await restoreSession();
-    const restored = false;
+    const restored = await restoreSession();
     if(restored) {
-        //
+        words = restored.words;
+        lists = restored.lists;
+        restoreProgress(restored.progress);
     } else {
         await fetchData();
     }
     
-    // console.log(lists);
+    console.log(restored);
     ready.value = true;
 }
 
-export { startSession, ready, sessionLength, lists, words };
+export { startSession, ready, /* sessionLength, */ lists, words };

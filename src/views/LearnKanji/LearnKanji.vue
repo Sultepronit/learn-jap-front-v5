@@ -5,6 +5,7 @@ import { nextCycle } from './utils/cycle.js';
 import CardDisplay from './components/CardDisplay.vue';
 import NavigateButtons from './components/NavigateButtons.vue';
 import StatsDisplay from './components/StatsDisplay.vue';
+import ResetButton from '@/components/ResetButton.vue';
 
 document.title = 'Learn Kanji';
 
@@ -18,6 +19,7 @@ watch(ready, () => {
     <template v-if="ready">
         <StatsDisplay />
         <CardDisplay />
+        <ResetButton />
         <NavigateButtons />
     </template>
 </template>
