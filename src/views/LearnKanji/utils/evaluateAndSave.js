@@ -14,18 +14,17 @@ function evaluation(card) {
         return;
     }
 
-    progress.value.cards++;
-    
-    if(card.progress < 0) {
-        progress.problemCards++;
-    }
-
     card.progress += card.mark.increment;
 
     if(card.mark.is(marks.BAD)) {
         card.record = -1;
         returnCard(card);
         return;
+    }
+
+    progress.value.cards++;
+    if(card.progress < 0) {
+        progress.value.problemCards++;
     }
 
     if(card.progress < -1 && card.mark.is(marks.GOOD)) {
@@ -62,7 +61,7 @@ function evaluateAndSave(cardArg) {
     saveSession();
 
     console.log(changes);
-    console.log('not saved!');
+    // console.log('not saved!');
 
     // patch('kanji', { id: 1082, changes: { repeatStatus: 33 }});
     if(Object.keys(changes).length > 0) {

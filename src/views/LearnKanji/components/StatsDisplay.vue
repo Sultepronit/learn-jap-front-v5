@@ -9,9 +9,9 @@ const good = computed(() => progress.value.good + progress.value.best);
 <template>
 <header>
     <p class="card-stats" v-show="showAnswer">
-        {{ card.id }}:
-        {{ card.progress }}
-        <strong>{{ card.record }}</strong>
+        {{ card?.id }}:
+        {{ card?.progress }}
+        <strong>{{ card?.record }}</strong>
     </p>
 
     <p class="session-stats">

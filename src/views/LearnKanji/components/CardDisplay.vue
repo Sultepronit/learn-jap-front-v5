@@ -12,14 +12,13 @@ watch(showAnswer, (val) => {
     if(!val) return;
     setTimeout(() => {
         readingsHeight.value = window.getComputedStyle(readings.value).height;
-        console.log(readingsHeight.value);
+        // console.log(readingsHeight.value);
     }, 10);
 });
 
 watch(readingsHeight, () => {
     wordList.value.style.height
-        // = `calc(100vh - 20rem - ${readingsHeight.value})`;
-        = `calc(${windowHeight}px - 14rem - ${readingsHeight.value})`;
+        = `calc(${windowHeight}px - 13.5rem - ${readingsHeight.value})`;
     console.log(wordList.value.style.height);
     
 });
