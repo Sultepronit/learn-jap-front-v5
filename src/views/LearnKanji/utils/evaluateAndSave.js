@@ -1,6 +1,6 @@
 import { saveSession } from '../services/backup';
 import { patch } from '@/services/commonAPI.js';
-import { marks } from './enums';
+import { marks, repeatStages } from './enums';
 import { returnCard, repeatOneMore } from './nextCard';
 import progress from './progress';
 
@@ -21,7 +21,7 @@ function evaluation(card) {
     }
 
     progress.value.cards++;
-    if(card.progress < 0) {
+    if(card.repeatStage === repeatStages.PROBLEM) {
         progress.value.problemCards++;
     }
 

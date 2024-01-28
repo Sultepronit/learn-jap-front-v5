@@ -21,7 +21,7 @@ function nextCard() {
         card = pullRandomElement(repeatList);
     }
 
-    // card.repeatStage = repeatStage;
+    card.repeatStage = repeatStage;
 
     console.log(card);
     return card;
