@@ -14,8 +14,6 @@ function evaluation(card) {
         return;
     }
 
-    card.progress += card.mark.increment;
-
     if(card.mark.is(marks.BAD)) {
         card.record = -1;
         returnCard(card);
@@ -26,6 +24,8 @@ function evaluation(card) {
     if(card.progress < 0) {
         progress.value.problemCards++;
     }
+
+    card.progress += card.mark.increment;
 
     if(card.progress < -1 && card.mark.is(marks.GOOD)) {
         card.progress = -1;
