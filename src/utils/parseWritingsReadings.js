@@ -1,4 +1,5 @@
 import { randomInt } from "./random";
+import { toKatakana } from "wanakana";
 
 function parseToString(card) {
     if(card.parsed) {
@@ -6,6 +7,7 @@ function parseToString(card) {
         return;
     }
 
+    // writings //
     let writingsString = card.writings.replaceAll(', ', '　');
 
     if(card.altWriting) {
@@ -22,11 +24,20 @@ function parseToString(card) {
     writingsString = writingsString.replaceAll('{', '<span class="green">');
     writingsString = writingsString.replaceAll(/[)\]}]/g, '</span>');
 
+    // readings //
+    const makeKatakana = randomInt(0, 1);
+    if(makeKatakana) {
+        card.readings = toKatakana(card.readings);
+        card.rareReadings = toKatakana(card.rareReadings);
+    }
+
     let readingsString = card.readings.replaceAll(', ', '　');
+    
     if(card.rareReadings) {
         const rr = card.rareReadings.replaceAll(', ', '　');
         readingsString += `　<span class="gray">${rr}</span>`;
     }
+    
     card.parsed = {
         writingsString, readingsString
     }
