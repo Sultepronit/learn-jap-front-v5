@@ -18,7 +18,7 @@ watch(showAnswer, (val) => {
 
 watch(readingsHeight, () => {
     wordList.value.style.height
-        = `calc(${windowHeight}px - 13.5rem - ${readingsHeight.value})`;
+        = `calc(${windowHeight}px - 14.5rem - ${readingsHeight.value})`;
     console.log(wordList.value.style.height);
     
 });

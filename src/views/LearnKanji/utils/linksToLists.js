@@ -1,8 +1,12 @@
 import { words } from "../services/data";
 import { parseToString as prepareWord } from "@/utils/parseWritingsReadings";
+import { randomInt } from "@/utils/random";
 
 function makeList(linksJson) {
     const links = JSON.parse(linksJson);
+    if(links.length < 1) {
+        return [];
+    }
 
     const list = [];
     for(const link of links) {
@@ -17,7 +21,14 @@ function makeList(linksJson) {
         list.push(item);
     }
 
-    return list;
+    const ri = randomInt(0, list.length - 1);
+    const firstPart = list.slice(0, ri);
+    const secondPart = list.slice(ri);
+    // console.log(firstPart);
+    // console.log(secondPart);
+
+    // return list;
+    return [...secondPart, ...firstPart];
 }
 
 function linksToLists(card) {    
