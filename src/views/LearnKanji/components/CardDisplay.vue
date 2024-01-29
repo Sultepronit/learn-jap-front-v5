@@ -12,15 +12,15 @@ watch(showAnswer, (val) => {
     if(!val) return;
     setTimeout(() => {
         readingsHeight.value = window.getComputedStyle(readings.value).height;
-        // console.log(readingsHeight.value);
+
+        wordList.value.scrollTop = 0;
     }, 10);
 });
 
 watch(readingsHeight, () => {
     wordList.value.style.height
-        = `calc(${windowHeight}px - 14.4rem - ${readingsHeight.value})`;
-    console.log(wordList.value.style.height);
-    
+        = `calc(${windowHeight}px - 14.3rem - ${readingsHeight.value})`;
+    // console.log(wordList.value.style.height);
 });
 
 </script>
@@ -66,8 +66,6 @@ watch(readingsHeight, () => {
     color: blue;
 }
 .word-list {
-    /* margin-bottom: 7rem; */
-    /* height: calc(100vh - 15rem - 40px); */
     overflow: auto;
 }
 </style>
