@@ -5,7 +5,7 @@ const repeatStages = {
 };
 
 function is(sample) {
-    return sample.increment === this.increment;
+    return sample.name === this.name;
 }
 
 const marks = {
