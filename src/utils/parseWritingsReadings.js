@@ -26,18 +26,20 @@ function parseToString(card) {
 
     // readings //
     const makeKatakana = randomInt(0, 1);
-    if(makeKatakana) {
-        card.readings = toKatakana(card.readings);
-        card.rareReadings = toKatakana(card.rareReadings);
-    }
 
     let readingsString = card.readings.replaceAll(', ', '　');
-    
-    if(card.rareReadings) {
-        const rr = card.rareReadings.replaceAll(', ', '　');
-        readingsString += `　<span class="gray">${rr}</span>`;
+    if(makeKatakana) {
+        readingsString = toKatakana(readingsString);
     }
     
+    if(card.rareReadings) {
+        let rr = card.rareReadings.replaceAll(', ', '　');
+        if(makeKatakana) {
+            rr = toKatakana(rr);
+        }
+        readingsString += `　<span class="gray">${rr}</span>`;
+    }
+
     card.parsed = {
         writingsString, readingsString
     }

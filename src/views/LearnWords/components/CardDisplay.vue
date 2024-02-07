@@ -4,6 +4,7 @@ import { randomInt } from '@/utils/random.js';
 import { show } from '../utils/displayControls.js';
 import { card } from '../utils/cycle.js';
 import { learnStages } from '../utils/enums';
+import { toKatakana } from "wanakana";
 
 const randomWriting = computed(() => {
     const ri = randomInt(0, card.value.parsed.writingsArray.length - 1);
@@ -11,7 +12,9 @@ const randomWriting = computed(() => {
 });
 const randomReading = computed(() => {
     const ri = randomInt(0, card.value.parsed.mainReadingsArray.length - 1);
-    return card.value.parsed.mainReadingsArray[ri];
+    const reading = card.value.parsed.mainReadingsArray[ri];
+
+    return randomInt(0, 1) ? reading : toKatakana(reading);
 });
 </script>
 
