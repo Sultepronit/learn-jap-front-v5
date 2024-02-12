@@ -32,12 +32,11 @@ async function post(table, data) {
 }
 
 async function patch(table, card) {
-    // const url = `${apiUrl}${table}?id=${card.id}&real-method=patch`;
-    const url = `${apiUrl}${table}?id=${card.id}`;
-    console.log(card);
+    // all I have is only GET, POST and no headers allowed...
+    const url = `${apiUrl}${table}?id=${card.id}&real-method=patch`;
     try {
         const response = await fetch(url, {
-            method: 'PATCH',
+            method: 'POST',
             body: JSON.stringify(card.changes)
         });
         // console.log(response);
@@ -62,11 +61,11 @@ async function patch(table, card) {
 }
 
 async function deleteApi(table, id) {
-    // const url = `${apiUrl}${table}?id=${id}&real-method=delete`;
-    const url = `${apiUrl}${table}?id=${id}`;
+    // all I have is only GET, POST and no headers allowed...
+    const url = `${apiUrl}${table}?id=${id}&real-method=delete`;
     try {
         const response = await fetch(url, {
-            method: 'DELETE',
+            method: 'GET',
         });
         // console.log(response);
         const results = await response.text();
