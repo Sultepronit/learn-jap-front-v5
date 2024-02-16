@@ -2,20 +2,23 @@
 import { ref, watchEffect } from 'vue';
 import { db } from '../services/crud';
 import { selectedNumber, select } from '../utils/displayAndSelect';
-import { searchText } from '../utils/searchAndFilter.js';
+import { searchText, searchInStats } from '../utils/searchAndFilter.js';
 import statsTitles from '../utils/statsTitles.js';
 
 const titles = ['learnStatus', ...statsTitles];
 
 const searchInTranslation = ref(false);
-const query = ref('');
+const searchQuery = ref('');
 
-const selectedField = ref('');
+const filterColumn = ref('');
 const filterValue = ref('');
 
 watchEffect(() => {
-    console.log(selectedField.value);
+    console.log(filterColumn.value);
     console.log(filterValue.value);
+    
+    if(!filterColumn.value) return;
+    searchInStats(filterValue.value, filterColumn.value);
 });
 </script>
 
@@ -35,7 +38,7 @@ watchEffect(() => {
             type="text"
             v-model="filterValue"
         >
-        <select v-model="selectedField">
+        <select v-model="filterColumn">
             <option
                 v-for="title in titles"
                 :key="title"
@@ -45,15 +48,15 @@ watchEffect(() => {
 
         <input
             type="text"
-            v-model="query"
-            @input="searchText(query, searchInTranslation)"
+            v-model="searchQuery"
+            @input="searchText(searchQuery, searchInTranslation)"
         >
         <label for="translation">
             <input
                 type="checkbox"
                 name="translation"
                 v-model="searchInTranslation"
-                @change="searchText(query, searchInTranslation)"
+                @change="searchText(searchQuery, searchInTranslation)"
             >
             Translation
         </label>

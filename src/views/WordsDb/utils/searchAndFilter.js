@@ -52,7 +52,6 @@ function displayResults(filtered) {
 }
 
 function searchText(query, searchInTranslation) {
-    // console.log(searchInTranslation);
     if(query === '') {
         displayResults(null);
         return;
@@ -67,4 +66,33 @@ function searchText(query, searchInTranslation) {
     displayResults(filtered);
 }
 
-export { searchText };
+function searchInStats(query, column) {
+    // if(query === '') {
+    //     displayResults(null);
+    //     return;
+    // }
+
+    let filtered = [];
+    if(!isNaN(query) && query !== '') {
+        filtered = db.value.filter((row) => row[column] == query);
+    } else {
+        const lt = query.split('<')[1];
+        const mt = query.split('>')[1];
+        const btw = query.split('-');
+        // console.log(btw);
+        // console.log(btw[0], 2, btw[1]);
+        // console.log(btw[0] < 2 < btw[1]);
+        if(lt) {
+            filtered = db.value.filter((row) => row[column] < lt);
+        } else if(mt) {
+            filtered = db.value.filter((row) => row[column] > mt);
+        } else if(btw.length === 2) {
+            filtered = db.value.filter((row) => {
+                return btw[0] <= row[column] && row[column] <= btw[1];
+            });
+        }
+    }
+
+    displayResults(filtered);
+}
+export { searchText, searchInStats };

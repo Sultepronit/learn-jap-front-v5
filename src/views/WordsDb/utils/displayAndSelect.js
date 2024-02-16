@@ -4,6 +4,14 @@ import { db, ready, numberToSelect } from '@/views/WordsDb/services/crud.js';
 const viewList = ref([]);
 function resetViewList() {
     viewList.value = db.value; 
+    // sortViewList('learnStatus', true);
+}
+
+function sortViewList(field, reverse) {
+    viewList.value.sort((a, b) => a[field] - b[field]);
+    if(reverse) {
+        viewList.value.reverse();
+    }
 }
 
 const rowNumber = ref(0);
