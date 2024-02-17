@@ -1,15 +1,15 @@
 import { ref, watch, computed } from 'vue';
-import { db, ready, numberToSelect } from '@/views/WordsDb/services/crud.js';
+import { db, ready, numberToSelect } from '../services/crud.js';
 
 const viewList = ref([]);
 function resetViewList() {
     viewList.value = db.value; 
-    // sortViewList('learnStatus', true);
-    console.log('Here we go!');
+    // sortViewList('repeatStatus', true);
+    sortViewList('repeatStatus');
 }
 
 function sortViewList(field, reverse) {
-    console.log('Here we go too?');
+    console.log("here we are???")
     viewList.value.sort((a, b) => a[field] - b[field]);
     if(reverse) {
         viewList.value.reverse();
