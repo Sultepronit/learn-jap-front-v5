@@ -5,8 +5,6 @@ const viewList = ref([]);
 function resetViewList() {
     // viewList.value = db.value; 
     viewList.value = [ ...db.value ]; 
-    // sortViewList('repeatStatus', true);
-    // sortViewList('repeatStatus');
 }
 
 function sortViewList(field, reverse) {
@@ -41,7 +39,6 @@ function incrementLastDisplayedRow(delta) {
 }
 
 const displayedRange = computed(() => {
-    // console.log(lastDisplayedRow.value, rowNumber.value);
     return viewList.value.slice(
         (lastDisplayedRow.value - rowNumber.value),
         lastDisplayedRow.value
@@ -57,7 +54,7 @@ function select(cardNumber, changeDisplay) {
     selectedCard.value = db.value[cardNumber - 1];
     
     // console.log(selectedNumber.value);
-    // console.log(selectedCard.value);
+    console.log(selectedCard.value);
 
     if(changeDisplay) {
         if(db.value[cardNumber - 1] !== viewList.value[cardNumber - 1]) {

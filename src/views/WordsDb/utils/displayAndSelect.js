@@ -3,13 +3,13 @@ import { db, ready, numberToSelect } from '@/views/WordsDb/services/crud.js';
 
 const viewList = ref([]);
 function resetViewList() {
-    viewList.value = db.value; 
+    // viewList.value = db.value; 
+    viewList.value = [ ...db.value ]; 
     // sortViewList('learnStatus', true);
-    console.log('Here we go!');
 }
 
 function sortViewList(field, reverse) {
-    console.log('Here we go too?');
+    console.log('so?');
     viewList.value.sort((a, b) => a[field] - b[field]);
     if(reverse) {
         viewList.value.reverse();
@@ -41,7 +41,6 @@ function incrementLastDisplayedRow(delta) {
 }
 
 const displayedRange = computed(() => {
-    // console.log(lastDisplayedRow.value, rowNumber.value);
     return viewList.value.slice(
         (lastDisplayedRow.value - rowNumber.value),
         lastDisplayedRow.value
@@ -56,7 +55,15 @@ function select(cardNumber, changeDisplay) {
     selectedNumber.value = cardNumber;
     selectedCard.value = db.value[cardNumber - 1];
     console.log(selectedCard.value);
+
     if(changeDisplay) {
+        if(db.value[cardNumber - 1] !== viewList.value[cardNumber - 1]) {
+            // console.log(db.value[cardNumber - 1], viewList.value[cardNumber - 1]);
+            const shifted = viewList.value.findIndex(card => card.id === cardNumber);
+            // console.log(shifted);
+            cardNumber = shifted + 1;
+        }
+        
         setLastDisplayedRow(cardNumber + rowNumber.value - 1);
     }
 }
@@ -73,6 +80,7 @@ function goToTheBottom() {
 export {
     viewList,
     resetViewList,
+    sortViewList,
     rowNumber,
     resetRowNumber,
     lastDisplayedRow,

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, watch, watchEffect } from 'vue';
+import { ref, reactive, watch } from 'vue';
 import { db } from '../services/crud';
 import { selectedNumber, select, sortViewList } from '../utils/displayAndSelect';
 import { searchKanji, searchInStats } from '../utils/searchAndFilter.js';
@@ -27,7 +27,6 @@ const sort = reactive({
 
 watch(sort, () => {
     // console.log(sort);
-
     if(!sort.column) return;
     sortViewList(sort.column, sort.reverse);
 });
@@ -67,14 +66,6 @@ function newSortDirection() {
 
         <span class="space"></span>
 
-        <input
-            type="text"
-            class="search-kanji"
-            @input="searchKanji($event.target.value)"
-        >
-
-        <span class="space"></span>
-
         <button class="sort" @click="newSortDirection">{{ sortArrow }}</button>
 
         <select v-model="sort.column">
@@ -84,6 +75,14 @@ function newSortDirection() {
                 :value="title"
             >{{ title }}</option>
         </select>
+
+        <span class="space"></span>
+
+        <input
+            type="text"
+            class="search-kanji"
+            @input="searchKanji($event.target.value)"
+        >
     </div>
 </template>
 

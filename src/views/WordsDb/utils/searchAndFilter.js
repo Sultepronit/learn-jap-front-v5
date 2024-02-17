@@ -67,21 +67,15 @@ function searchText(query, searchInTranslation) {
 }
 
 function searchInStats(query, column) {
-    // if(query === '') {
-    //     displayResults(null);
-    //     return;
-    // }
-
     let filtered = [];
+    
     if(!isNaN(query) && query !== '') {
         filtered = db.value.filter((row) => row[column] == query);
     } else {
         const lt = query.split('<')[1];
         const mt = query.split('>')[1];
         const btw = query.split('-');
-        // console.log(btw);
-        // console.log(btw[0], 2, btw[1]);
-        // console.log(btw[0] < 2 < btw[1]);
+
         if(lt) {
             filtered = db.value.filter((row) => row[column] < lt);
         } else if(mt) {
