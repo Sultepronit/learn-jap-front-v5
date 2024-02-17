@@ -1,9 +1,7 @@
 const statsTitles = [
-    'fProgress', 
-    'bProgress', 
-    'fStats', 
-    'fAutorepeat', 
-    'bStats', 
-    'bAutorepeat'
+    'repeatStatus', 
+    'progress', 
+    'record', 
+    'autorepeat'
 ];
 export default statsTitles;

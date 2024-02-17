@@ -26,8 +26,8 @@ function handleWheel(event) {
                     v-for="row in range"
                     :key="row.id"
                     :row="row"
-                    @click="select(row.cardNumber)"
-                    :class="{selected: selectedNumber === row.cardNumber}"
+                    @click="select(row.id)"
+                    :class="{selected: selectedNumber === row.id}"
                 />
             </tbody>
         </table>

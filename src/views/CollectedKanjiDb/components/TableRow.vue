@@ -24,8 +24,9 @@ defineProps(['row']);
             </div>
         </td>
         <td class="links">
-            <div class="cell2">
-                {{ row.links.replaceAll(',', ', ') }}
+            <div class="links">
+                <!-- {{ row.links.replaceAll(',', ', ') }} -->
+                {{ row.links }}
             </div>
         </td>
         <td class="links">
@@ -44,7 +45,7 @@ td {
 }
 .links {
     /* width: 15em; */
-    width: 20vw;
+    width: 25vw;
     overflow: hidden;
     height: 1.5em;
 }

@@ -1,25 +1,42 @@
 <script setup>
-import { ref, watchEffect } from 'vue';
+import { ref, reactive, watch, watchEffect } from 'vue';
 import { db } from '../services/crud';
-import { selectedNumber, select } from '../utils/displayAndSelect';
-import { searchText, searchInStats } from '../utils/searchAndFilter.js';
+import { selectedNumber, select, sortViewList } from '../utils/displayAndSelect';
+import { searchKanji, searchInStats } from '../utils/searchAndFilter.js';
 import statsTitles from '../utils/statsTitles.js';
 
-const titles = ['learnStatus', ...statsTitles];
-
-const searchInTranslation = ref(false);
-const searchQuery = ref('');
-
-const filterColumn = ref('');
-const filterValue = ref('');
-
-watchEffect(() => {
-    console.log(filterColumn.value);
-    console.log(filterValue.value);
-    
-    if(!filterColumn.value) return;
-    searchInStats(filterValue.value, filterColumn.value);
+const filter = reactive({
+    column: '',
+    value: ''
 });
+
+watch(filter, () => {
+    // console.log(filter.column);
+    // console.log(filter.value);
+    
+    if(!filter.column) return;
+    searchInStats(filter.value, filter.column);
+});
+
+const sortTitles = ['id', ...statsTitles];
+
+const sort = reactive({
+    column: '',
+    reverse: false
+});
+
+watch(sort, () => {
+    // console.log(sort);
+
+    if(!sort.column) return;
+    sortViewList(sort.column, sort.reverse);
+});
+
+const sortArrow = ref('↓');
+function newSortDirection() {
+    sort.reverse = !sort.reverse;
+    sortArrow.value = sort.reverse ? '↑' : '↓';
+}
 </script>
 
 <template>
@@ -32,34 +49,41 @@ watchEffect(() => {
             :value="selectedNumber"
             @input="select($event.target.value, true)"
         >
+
+        <span class="space"></span>
         
         <input
             class="filter-input"
             type="text"
-            v-model="filterValue"
+            v-model="filter.value"
         >
-        <select v-model="filterColumn">
+        <select v-model="filter.column">
             <option
-                v-for="title in titles"
+                v-for="title in statsTitles"
                 :key="title"
                 :value="title"
             >{{ title }}</option>
         </select>
 
+        <span class="space"></span>
+
         <input
             type="text"
-            v-model="searchQuery"
-            @input="searchText(searchQuery, searchInTranslation)"
+            class="search-kanji"
+            @input="searchKanji($event.target.value)"
         >
-        <label for="translation">
-            <input
-                type="checkbox"
-                name="translation"
-                v-model="searchInTranslation"
-                @change="searchText(searchQuery, searchInTranslation)"
-            >
-            Translation
-        </label>
+
+        <span class="space"></span>
+
+        <button class="sort" @click="newSortDirection">{{ sortArrow }}</button>
+
+        <select v-model="sort.column">
+            <option
+                v-for="title in sortTitles"
+                :key="title"
+                :value="title"
+            >{{ title }}</option>
+        </select>
     </div>
 </template>
 
@@ -71,6 +95,10 @@ watchEffect(() => {
 .the-bar {
     margin-top: 5px;
 }
+.space {
+    display: inline-block;
+    width: 0.5em;
+}
 input {
     padding-inline: 0.2em;
 }
@@ -80,5 +108,13 @@ input {
 
 .filter-input {
     width: 9em;
+}
+
+.search-kanji {
+    width: 2em;
+}
+
+button.sort {
+    width: 1em;
 }
 </style>

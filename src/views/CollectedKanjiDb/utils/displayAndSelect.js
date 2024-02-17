@@ -3,13 +3,13 @@ import { db, ready, numberToSelect } from '../services/crud.js';
 
 const viewList = ref([]);
 function resetViewList() {
-    viewList.value = db.value; 
+    // viewList.value = db.value; 
+    viewList.value = [ ...db.value ]; 
     // sortViewList('repeatStatus', true);
-    sortViewList('repeatStatus');
+    // sortViewList('repeatStatus');
 }
 
 function sortViewList(field, reverse) {
-    console.log("here we are???")
     viewList.value.sort((a, b) => a[field] - b[field]);
     if(reverse) {
         viewList.value.reverse();
@@ -18,7 +18,7 @@ function sortViewList(field, reverse) {
 
 const rowNumber = ref(0);
 function resetRowNumber() {
-    rowNumber.value = Math.round((window.innerHeight / 33) - 6);
+    rowNumber.value = Math.round((window.innerHeight / 33) - 1);
 }
 resetRowNumber();
 
@@ -55,9 +55,20 @@ function select(cardNumber, changeDisplay) {
     }
     selectedNumber.value = cardNumber;
     selectedCard.value = db.value[cardNumber - 1];
-    console.log(selectedCard.value);
+    
+    // console.log(selectedNumber.value);
+    // console.log(selectedCard.value);
+
     if(changeDisplay) {
+        if(db.value[cardNumber - 1] !== viewList.value[cardNumber - 1]) {
+            // console.log(db.value[cardNumber - 1], viewList.value[cardNumber - 1]);
+            const shifted = viewList.value.findIndex(card => card.id === cardNumber);
+            // console.log(shifted);
+            cardNumber = shifted + 1;
+        }
+
         setLastDisplayedRow(cardNumber + rowNumber.value - 1);
+        // console.log(cardNumber + rowNumber.value - 1);
     }
 }
 
@@ -73,6 +84,7 @@ function goToTheBottom() {
 export {
     viewList,
     resetViewList,
+    sortViewList,
     rowNumber,
     resetRowNumber,
     lastDisplayedRow,

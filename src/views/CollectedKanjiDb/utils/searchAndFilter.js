@@ -8,30 +8,6 @@ import {
     goToTheBottom
 } from "./displayAndSelect";
 
-function checkJapanese(row, input) {
-    const text = row.writings + row.rareWritings
-        + row.readings + row.rareReadings;
-    if(text.includes(input)) {
-        return true;
-    }
-    const inclusiveWritings = text.replace(/[()[\]{}]/g, '');
-    if(inclusiveWritings.includes(input)) {
-        return true;
-    }
-    const exclusiveWritings = text.replace(/\([^)]*\)|\[[^\]]*\]|\{[^}]*\}/g, '');
-    if(exclusiveWritings.includes(input)) {
-        return true;
-    }
-}
-
-function checkTranslation(row, input) {
-    const text = row.translation + row.example;
-    // console.log(text);
-    if(text.includes(input)) {
-        return true;
-    }
-}
-
 function displayResults(filtered) {
     resetRowNumber();
     resetViewList();
@@ -48,18 +24,18 @@ function displayResults(filtered) {
         }
     }
     
-    select(filtered[filtered.length - 1].cardNumber, true);
+    select(filtered[filtered.length - 1].id, true);
 }
 
-function searchText(query, searchInTranslation) {
+function searchKanji(query) {
+    console.log(query);
     if(query === '') {
         displayResults(null);
         return;
     }
     
     const filtered = db.value.filter((row) => {
-        return searchInTranslation ? checkTranslation(row, query)
-            : checkJapanese(row, query);
+        return row.kanji == query;
     });
     // console.log(filtered);
 
@@ -67,21 +43,15 @@ function searchText(query, searchInTranslation) {
 }
 
 function searchInStats(query, column) {
-    // if(query === '') {
-    //     displayResults(null);
-    //     return;
-    // }
-
     let filtered = [];
+
     if(!isNaN(query) && query !== '') {
         filtered = db.value.filter((row) => row[column] == query);
     } else {
         const lt = query.split('<')[1];
         const mt = query.split('>')[1];
         const btw = query.split('-');
-        // console.log(btw);
-        // console.log(btw[0], 2, btw[1]);
-        // console.log(btw[0] < 2 < btw[1]);
+
         if(lt) {
             filtered = db.value.filter((row) => row[column] < lt);
         } else if(mt) {
@@ -93,6 +63,8 @@ function searchInStats(query, column) {
         }
     }
 
+    console.log(filtered);
+
     displayResults(filtered);
 }
-export { searchText, searchInStats };
+export { searchKanji, searchInStats };
