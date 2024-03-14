@@ -46,8 +46,6 @@ async function update(cardNumber, field, value) {
     const success = await patch('jap', data);
     if(success) {
         isSaving.value = false;
-    } else {
-        // add possibility to try and save again
     }
 }
 

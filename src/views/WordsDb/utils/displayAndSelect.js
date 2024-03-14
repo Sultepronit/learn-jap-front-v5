@@ -48,6 +48,8 @@ const displayedRange = computed(() => {
 });
 
 function select(cardNumber, changeDisplay) {
+    // console.log(arguments.callee);
+    // console.log(select.caller);
     cardNumber = Math.round(cardNumber);
     if(cardNumber < 1 || cardNumber > db.value.length) {
         return;
@@ -69,10 +71,13 @@ function select(cardNumber, changeDisplay) {
 }
 
 watch(numberToSelect, (num) => {
+    console.log('numberToSelect watcher');
+    resetViewList();
     select(num, true);
 });
 
 function goToTheBottom() {
+    console.log('goToTheBottom()');
     setLastDisplayedRow(db.value.length);
     select(db.value.length);
 }

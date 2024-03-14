@@ -37,6 +37,7 @@ function displayResults(filtered) {
     resetViewList();
 
     if(!filtered || filtered.length < 1) {
+        console.log('displayResults() goToTheBottom()')
         goToTheBottom();
         return;
     }
