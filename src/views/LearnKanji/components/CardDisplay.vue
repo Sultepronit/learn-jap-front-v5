@@ -3,25 +3,25 @@ import { ref, watch } from 'vue';
 import { card, showAnswer } from '../utils/cycle.js';
 import WordCard from './WordCard.vue';
 
-const readings = ref(null);
-const wordList = ref(null);
-const readingsHeight = ref('*');
-const windowHeight = window.innerHeight;
+// const readings = ref(null);
+// const wordList = ref(null);
+// const readingsHeight = ref('*');
+// const windowHeight = window.innerHeight;
 
-watch(showAnswer, (val) => {
-    if(!val) return;
-    setTimeout(() => {
-        readingsHeight.value = window.getComputedStyle(readings.value).height;
+// watch(showAnswer, (val) => {
+//     if(!val) return;
+//     setTimeout(() => {
+//         readingsHeight.value = window.getComputedStyle(readings.value).height;
 
-        wordList.value.scrollTop = 0;
-    }, 10);
-});
+//         wordList.value.scrollTop = 0;
+//     }, 10);
+// });
 
-watch(readingsHeight, () => {
-    wordList.value.style.height
-        = `calc(${windowHeight}px - 14.3rem - ${readingsHeight.value})`;
-    // console.log(wordList.value.style.height);
-});
+// watch(readingsHeight, () => {
+//     wordList.value.style.height
+//         = `calc(${windowHeight}px - 14.3rem - ${readingsHeight.value})`;
+//     // console.log(wordList.value.style.height);
+// });
 
 </script>
 

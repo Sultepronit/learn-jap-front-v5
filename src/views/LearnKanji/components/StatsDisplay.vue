@@ -7,7 +7,6 @@ const good = computed(() => progress.value.good + progress.value.best);
 </script>
 
 <template>
-<header>
     <p class="card-stats" v-show="showAnswer">
         {{ card?.id }}:
         {{ card?.progress }}
@@ -19,7 +18,6 @@ const good = computed(() => progress.value.good + progress.value.best);
         +{{ good }}<sup>{{ progress.best }}</sup>±{{ progress.neutral }}-{{ progress.bad }}
         <strong>{{ progress.upgraded }}<sup>{{ progress.autorepeat }}</sup></strong>
     </p>
-</header>
 </template>
 
 <style scoped>
