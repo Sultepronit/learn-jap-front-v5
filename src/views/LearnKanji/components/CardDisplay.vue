@@ -4,7 +4,7 @@ import { card, showAnswer } from '../utils/cycle.js';
 import WordCard from './WordCard.vue';
 
 // const readings = ref(null);
-// const wordList = ref(null);
+const wordList = ref(null);
 // const readingsHeight = ref('*');
 // const windowHeight = window.innerHeight;
 
@@ -16,6 +16,13 @@ import WordCard from './WordCard.vue';
 //         wordList.value.scrollTop = 0;
 //     }, 10);
 // });
+
+watch(showAnswer, (val) => {
+    if(!val) return;
+    setTimeout(() => {
+        wordList.value.scrollTop = 0;
+    }, 10);
+});
 
 // watch(readingsHeight, () => {
 //     wordList.value.style.height
