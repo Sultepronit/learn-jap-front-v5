@@ -1,5 +1,5 @@
 <script setup>
-import TableRow from './TableRow.vue';
+// import TableRow from './TableRow.vue';
 
 // import {
 //     // displayedRange as range,
@@ -30,20 +30,14 @@ function handleWheel(event) {
 
 <template>
     <section class="list" @wheel="handleWheel">
-        <table>
+        <!-- <table>
             <tbody>
-                <!-- <template
-                    v-for="row in range"
-                    :key="row.id"
-                >
-                    <slot
-                        foo="foo"
-                        :row="row"
-                    />
-                </template> -->
                 <slot  />
             </tbody>
-        </table>
+        </table> -->
+        <section id="table">
+            <slot  />
+        </section>
         <input
             v-show="min < max"
             type="range"
@@ -67,12 +61,19 @@ function handleWheel(event) {
     writing-mode: vertical-rl;
     /* transform: rotate(180deg); */
 }
+#table {
+    width: 98%;
+    border-top: 1px solid;
+    border-right: 1px solid;
+}
 table {
     width: 98%;
     border-collapse: collapse;
 }
 .selected {
     /* background-color: yellow; */
-    border: 2px solid red;
+    /* border: 2px solid red; */
+    /* border: 2px solid blue; */
+    background-color: #90ffef;
 }
 </style>

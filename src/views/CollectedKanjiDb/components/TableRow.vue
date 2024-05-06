@@ -2,67 +2,63 @@
 defineProps(['row']);
 </script>
 <template>
-    <tr>
-        <td class="width-4em">
+    <div id="row">
+        <p class="cell id-col">
             {{ row.id }}
-        </td>
-        <td class="width-4em">
+        </p>
+        <p class="cell">
             {{ row.kanji }}
-        </td>
-        <td class="width-4em">
+        </p>
+        <p class="cell status-col">
             {{ row.repeatStatus }}
-        </td>
-        <td class="width-2sym">
+        </p>
+        <p class="cell width-2sym">
             {{ row.progress }}
-        </td>
-        <td class="width-2sym" :class="{auto: row.autorepeat}">
+        </p>
+        <div class="cell width-2sym" :class="{auto: row.autorepeat}">
             {{ row.record }}
-        </td>
-        <td class="links">
-            <div class="links">
-                {{ row.readings }}
-            </div>
-        </td>
-        <td class="links">
-            <div class="links">
-                <!-- {{ row.links.replaceAll(',', ', ') }} -->
-                {{ row.links }}
-            </div>
-        </td>
-        <td class="links">
-            <div class="links">
-                {{ row.otherLinks }}
-            </div>
-        </td>
-    </tr>
+        </div>
+        <div class="cell links">
+            {{ row.readings }}
+        </div>
+        <div class="cell links">
+            {{ row.links }}
+        </div>
+        <p class="cell links">
+            {{ row.otherLinks }}
+        </p>
+    </div>
 </template>
 
 <style scoped>
-td {
+#row {
     font-size: 1.3rem;
-    border: 1px solid;
-    padding-inline: 0.2em;
-}
-.links {
-    /* width: 15em; */
-    width: 25vw;
-    overflow: hidden;
-    height: 1.5em;
-}
-.cell2 {
-    /* width: 20vw; */
-    overflow: hidden;
-    height: 1.5em;
+    /* display: flex; */
+    display: grid;
+    grid-template-columns: auto auto auto auto auto 1fr 1fr 1fr;
+    /*background: black;*/
 }
 .cell {
-    overflow: hidden;
-    height: 1.5em;
+    /*background: white;*/
+    /* margin: 1px; */
+    border-left: 1px solid;
+    border-bottom: 1px solid;
+    padding-inline: 0.2em;
 }
-.width-4em {
-    width: 2.5em;
+.id-col {
+    width: 3em;
+}
+.status-col {
+    width: 4em;
 }
 .width-2sym {
     width: 1.4em;
+}
+.links {
+    /* width: 15em; */
+    /* max-width: 25vw; */
+    overflow: hidden;
+    height: 1.5em;
 }
 .auto {
     color: red;

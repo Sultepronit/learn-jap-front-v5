@@ -3,7 +3,8 @@ import { startSession, ready } from './services/crud';
 // import EditSelected from './components/EditSelected.vue';
 import SearchBar from './components/SearchBar.vue';
 import TableRow from './components/TableRow.vue';
-import DbList from './components/DbList.vue';
+// import DbList from './components/DbList.vue';
+import DbList from '@/components/DbList.vue';
 
 document.title = 'Collected Kanji DB';
 
@@ -40,11 +41,6 @@ startSession();
                 @click="select(row.id)"
                 :class="{selected: selectedNumber === row.id}"
             />
-            <!-- <p v-slot="props">
-                go!
-                {{ props }}
-            </p> -->
-            <!-- <TableRow v-slot="props" /> -->
         </DbList>
     </template>
 </template>
