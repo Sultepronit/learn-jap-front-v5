@@ -10,7 +10,7 @@ export default defineConfig({
     vue(),
     VitePWA({
       registerType: 'autoUpdate',
-      devOptions: { enabled: true },
+      // devOptions: { enabled: true },
       manifest: {
         "name": "Learn Japanese",
         "short_name": "LearnJap",
