@@ -1,5 +1,4 @@
 <script setup>
-
 defineProps(['number', 'article', 'additional']);
 </script>
 
@@ -12,7 +11,9 @@ defineProps(['number', 'article', 'additional']);
 
 <style>
 .block {
-    border: 2px solid green;
+    /* border: 2px solid green; */
+    border-top: 2px solid green;
+    border-bottom: 2px solid green;
     margin: 0.1rem;
     padding: 0.2rem;
 }

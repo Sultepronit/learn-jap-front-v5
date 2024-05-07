@@ -24,7 +24,7 @@ defineProps(['row']);
         <p class="cell width-2sym" :class="{auto: row.bAutorepeat}">
             {{ row.bStats }}
         </p>
-        <p class="cell width-jap">
+        <p class="cell width-jap sans">
             <span :class="{'blue': row.altWriting}">{{row.writings}}</span> 
             <span class="gray">　{{row.rareWritings}}</span>
         </p>

@@ -3,37 +3,32 @@ import { ref, watch } from 'vue';
 import { card, showAnswer } from '../utils/cycle.js';
 import WordCard from './WordCard.vue';
 
-// const readings = ref(null);
 const wordList = ref(null);
-// const readingsHeight = ref('*');
-// const windowHeight = window.innerHeight;
+const font = ref();
+randomFont();
 
-// watch(showAnswer, (val) => {
-//     if(!val) return;
-//     setTimeout(() => {
-//         readingsHeight.value = window.getComputedStyle(readings.value).height;
-
-//         wordList.value.scrollTop = 0;
-//     }, 10);
-// });
+function randomFont() {
+    font.value = Math.floor(Math.random() * 3);
+    console.log(font.value);
+}
 
 watch(showAnswer, (val) => {
     if(!val) return;
+    randomFont();
+
     setTimeout(() => {
         wordList.value.scrollTop = 0;
     }, 10);
 });
-
-// watch(readingsHeight, () => {
-//     wordList.value.style.height
-//         = `calc(${windowHeight}px - 14.3rem - ${readingsHeight.value})`;
-//     // console.log(wordList.value.style.height);
-// });
-
 </script>
 
 <template>
-    <p class="the-kanji">{{ card.kanji }}</p>
+    <p class="the-kanji">
+        <span class="sans" v-show="showAnswer || font === 0">{{ card.kanji }}</span>
+        <span class="serif" v-show="showAnswer || font === 1">{{ card.kanji }}</span>
+        <span class="kurenaido" v-show="showAnswer">{{ card.kanji }}</span>
+        <span class="maru" v-show="showAnswer || font === 2">{{ card.kanji }}</span>
+    </p>
 
     <p
         class="readings"
@@ -62,11 +57,33 @@ watch(showAnswer, (val) => {
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kurenaido');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic');
+.sans {
+	font-family: 'Noto Sans JP', sans-serif;
+}
+.serif {
+	font-family: 'Noto Serif JP', serif;
+}
+.kurenaido {
+	font-family: 'Zen Kurenaido', sans-serif;
+}
+.maru {
+	font-family: 'Zen Maru Gothic', sans-serif;
+}
+
 .the-kanji {
     font-size: 4rem;
     text-align: center;
     margin-bottom: -0.5rem;
 }
+
+.the-kanji span {
+    padding-inline: 0.1em;
+}
+
 .readings {
     text-align: center;
     font-size: 1.7rem;
