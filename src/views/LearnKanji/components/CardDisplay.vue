@@ -57,10 +57,6 @@ watch(showAnswer, (val) => {
 </template>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP');
-@import url('https://fonts.googleapis.com/css2?family=Zen+Kurenaido');
-@import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic');
 .sans {
 	font-family: 'Noto Sans JP', sans-serif;
 }
