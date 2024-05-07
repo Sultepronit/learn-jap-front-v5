@@ -1,33 +1,10 @@
 <script setup>
-defineProps(['row']);
+const props = defineProps(['range', 'row']);
+console.log(this.key);
+console.log(props);
 </script>
 <template>
-    <div id="row">
-        <p class="cell id-col">
-            {{ row.id }}
-        </p>
-        <p class="cell">
-            {{ row.kanji }}
-        </p>
-        <p class="cell status-col">
-            {{ row.repeatStatus }}
-        </p>
-        <p class="cell width-2sym">
-            {{ row.progress }}
-        </p>
-        <div class="cell width-2sym" :class="{auto: row.autorepeat}">
-            {{ row.record }}
-        </div>
-        <div class="cell links">
-            {{ row.readings }}
-        </div>
-        <div class="cell links">
-            {{ row.links }}
-        </div>
-        <p class="cell links">
-            {{ row.otherLinks }}
-        </p>
-    </div>
+    <div>Go!</div>
 </template>
 
 <style scoped>

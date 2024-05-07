@@ -1,6 +1,5 @@
 <script setup>
 import { startSession, ready } from './services/crud';
-// import EditSelected from './components/EditSelected.vue';
 import SearchBar from './components/SearchBar.vue';
 import TableRow from './components/TableRow.vue';
 // import DbList from './components/DbList.vue';

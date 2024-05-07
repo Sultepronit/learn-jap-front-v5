@@ -13,7 +13,7 @@
 // } from '../utils/displayAndSelect';
 
 const { incrementLastRow } = defineProps([
-    'range',
+    // 'range', // to remove?
     'incrementLastRow',
     'setLastRow',
     'min',
@@ -29,19 +29,19 @@ function handleWheel(event) {
 </script>
 
 <template>
-    <section class="list" @wheel="handleWheel">
+    <section id="table" @wheel="handleWheel">
         <!-- <table>
             <tbody>
-                <slot  />
+                <slot />
             </tbody>
         </table> -->
-        <section id="table">
-            <slot  />
+        <section id="rows">
+            <slot />
         </section>
         <input
+            id="scroller"
             v-show="min < max"
             type="range"
-            class="scroller"
             :min="min"
             :max="max"
             :value="lastRow"
@@ -52,28 +52,21 @@ function handleWheel(event) {
 
 
 <style>
-.list {
+#table {
     display: flex;
     width: 100%;
 }
-.scroller {
+#rows {
+    width: 100%;
+    border-top: 1px solid;
+    border-right: 1px solid;
+}
+#scroller {
     /* width: 2%; */
     writing-mode: vertical-rl;
     /* transform: rotate(180deg); */
 }
-#table {
-    width: 98%;
-    border-top: 1px solid;
-    border-right: 1px solid;
-}
-table {
-    width: 98%;
-    border-collapse: collapse;
-}
 .selected {
-    /* background-color: yellow; */
-    /* border: 2px solid red; */
-    /* border: 2px solid blue; */
     background-color: #90ffef;
 }
 </style>
