@@ -2,61 +2,66 @@
 defineProps(['row']);
 </script>
 <template>
-    <tr>
+    <div id="row">
         <!-- <td class="width-4em">
             {{ row.id }}
         </td> -->
-        <td class="width-4em">
+        <p class="cell id-col">
             {{ row.cardNumber }}
-        </td>
-        <td class="width-4em">
+        </p>
+        <p class="cell statuc-col">
             {{ row.learnStatus }}
-        </td>
-        <td class="width-2sym">
+        </p>
+        <p class="cell width-2sym">
             {{ row.fProgress }}
-        </td>
-        <td class="width-2sym">
+        </p>
+        <p class="cell width-2sym">
             {{ row.bProgress }}
-        </td>
-        <td class="width-2sym" :class="{auto: row.fAutorepeat}">
+        </p>
+        <p class="cell width-2sym" :class="{auto: row.fAutorepeat}">
             {{ row.fStats }}
-        </td>
-        <td class="width-2sym" :class="{auto: row.bAutorepeat}">
+        </p>
+        <p class="cell width-2sym" :class="{auto: row.bAutorepeat}">
             {{ row.bStats }}
-        </td>
-        <td class="width-jap">
-            <div class="cell">
-                <span :class="{'blue': row.altWriting}">{{row.writings}}</span> 
-                <span class="gray">　{{row.rareWritings}}</span>
-            </div>
-        </td>
-        <td class="width-jap">
-            <div class="cell">
-                <span>{{row.readings}}</span> 
-                <span class="gray">　{{row.rareReadings}}</span>
-            </div>
-        </td>
-        <td>
-            <div class="cell over-auto" v-html="row.translation" />
-        </td>
-        <td class="width-20">
-            <div class="cell over-auto" v-html="row.example" />
-        </td>
-    </tr>
+        </p>
+        <p class="cell width-jap">
+            <span :class="{'blue': row.altWriting}">{{row.writings}}</span> 
+            <span class="gray">　{{row.rareWritings}}</span>
+        </p>
+        <p class="cell width-jap">
+            <span>{{row.readings}}</span> 
+            <span class="gray">　{{row.rareReadings}}</span>
+        </p>
+        <p
+            class="cell"
+            v-html="row.translation"
+        />
+        <p
+            class="cell"
+            v-html="row.example"
+        />
+    </div>
 </template>
 
 <style scoped>
-td {
+#row {
+    height: 1.5em;
     font-size: 1.3rem;
-    border: 1px solid;
-    padding-inline: 0.2em;
+    border-bottom: 1px solid;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto 2fr 1fr;
 }
 .cell {
+    border-left: 1px solid;
+    padding-inline: 0.2em;
     overflow: hidden;
-    height: 1.5em;
+    white-space: nowrap;
 }
-.width-4em {
+.id-col {
     width: 2.5em;
+}
+.statuc-col {
+    width: 3.5em;
 }
 .width-2sym {
     width: 1.4em;
@@ -69,12 +74,6 @@ td {
 .width-jap {
     width: 10em;
     /* font-size: 0.9em; */
-}
-.width-20 {
-    width: 20%;
-}
-.over-auto {
-    overflow: auto;
 }
 .blue {
     color: blue;

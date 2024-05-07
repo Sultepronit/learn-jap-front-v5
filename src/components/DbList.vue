@@ -13,12 +13,11 @@
 // } from '../utils/displayAndSelect';
 
 const { incrementLastRow } = defineProps([
-    // 'range', // to remove?
-    'incrementLastRow',
-    'setLastRow',
     'min',
     'max',
-    'lastRow'
+    'current',
+    'incrementLastRow',
+    'setLastRow'
 ]);
 
 function handleWheel(event) {
@@ -44,7 +43,7 @@ function handleWheel(event) {
             type="range"
             :min="min"
             :max="max"
-            :value="lastRow"
+            :value="current"
             @change="setLastRow($event.target.value)"
         >
     </section>

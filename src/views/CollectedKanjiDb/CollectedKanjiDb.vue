@@ -1,9 +1,9 @@
 <script setup>
 import { startSession, ready } from './services/crud';
 import SearchBar from './components/SearchBar.vue';
-import TableRow from './components/TableRow.vue';
 // import DbList from './components/DbList.vue';
 import DbList from '@/components/DbList.vue';
+import TableRow from './components/TableRow.vue';
 
 document.title = 'Collected Kanji DB';
 
@@ -15,23 +15,21 @@ import {
     setLastDisplayedRow, // as setLastRow,
     rowNumber, // as min,
     viewList,
-    lastDisplayedRow, // as lastRow
+    lastDisplayedRow // as lastRow
 } from './utils/displayAndSelect';
 
 startSession();
-// console.log('ready?');
 </script>
 
 <template>
     <template v-if="ready">
         <SearchBar />
         <DbList 
-            :range="range"
-            :incrementLastRow="incrementLastDisplayedRow"
-            :setLastRow="setLastDisplayedRow"
             :min="rowNumber"
             :max="viewList.length"
-            :lastRow="lastDisplayedRow"
+            :current="lastDisplayedRow"
+            :incrementLastRow="incrementLastDisplayedRow"
+            :setLastRow="setLastDisplayedRow"
         >
             <TableRow
                 v-for="row in range"

@@ -15,15 +15,15 @@ defineProps(['row']);
         <p class="cell width-2sym">
             {{ row.progress }}
         </p>
-        <div class="cell width-2sym" :class="{auto: row.autorepeat}">
+        <p class="cell width-2sym" :class="{auto: row.autorepeat}">
             {{ row.record }}
-        </div>
-        <div class="cell links">
+        </p>
+        <p class="cell links">
             {{ row.readings }}
-        </div>
-        <div class="cell links">
+        </p>
+        <p class="cell links">
             {{ row.links }}
-        </div>
+        </p>
         <p class="cell links">
             {{ row.otherLinks }}
         </p>
@@ -34,13 +34,10 @@ defineProps(['row']);
 #row {
     font-size: 1.3rem;
     border-bottom: 1px solid;
-    /* display: flex; */
     display: grid;
     grid-template-columns: auto auto auto auto auto 1fr 1fr 1fr;
 }
 .cell {
-    /*background: white;*/
-    /* margin: 1px; */
     border-left: 1px solid;
     padding-inline: 0.2em;
 }
