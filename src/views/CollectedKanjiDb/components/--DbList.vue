@@ -1,46 +1,42 @@
 <script setup>
-// import TableRow from './TableRow.vue';
+import TableRow from './TableRow.vue';
 
-// import {
-//     // displayedRange as range,
-//     // selectedNumber,
-//     // select,
-//     // incrementLastDisplayedRow as incrementLastRow,
-//     // setLastDisplayedRow as setLastRow,
-//     // rowNumber as min,
-//     // viewList,
-//     // lastDisplayedRow as lastRow
-// } from '../utils/displayAndSelect';
-
-const { incrementLastRow } = defineProps([
-    'range',
-    'incrementLastRow',
-    'setLastRow',
-    'min',
-    'max',
-    'lastRow'
-]);
+import {
+    displayedRange as range,
+    selectedNumber,
+    select,
+    incrementLastDisplayedRow as incrementLastRow,
+    setLastDisplayedRow as setLastRow,
+    rowNumber as min,
+    viewList,
+    lastDisplayedRow as lastRow
+} from '../utils/displayAndSelect';
 
 function handleWheel(event) {
     const delta = Math.sign(event.deltaY) * 5;
     incrementLastRow(delta);
-}        
-
+}                           
 </script>
 
 <template>
     <section class="list" @wheel="handleWheel">
         <table>
             <tbody>
-                <slot  />
+                <TableRow
+                    v-for="row in range"
+                    :key="row.id"
+                    :row="row"
+                    @click="select(row.id)"
+                    :class="{selected: selectedNumber === row.id}"
+                />
             </tbody>
         </table>
         <input
-            v-show="min < max"
+            v-show="min < viewList.length"
             type="range"
-            class="scroller"
+            class="scroller"        
             :min="min"
-            :max="max"
+            :max="viewList.length"
             :value="lastRow"
             @change="setLastRow($event.target.value)"
         >
@@ -48,13 +44,13 @@ function handleWheel(event) {
 </template>
 
 
-<style>
+<style scoped>
 .list {
     display: flex;
     width: 100%;
 }
 .scroller {
-    /* width: 2%; */
+    width: 2%;
     writing-mode: vertical-rl;
     /* transform: rotate(180deg); */
 }
