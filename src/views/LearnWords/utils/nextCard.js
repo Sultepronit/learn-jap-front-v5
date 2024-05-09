@@ -18,8 +18,8 @@ function nextCard() {
         return null;
     }
 
-    // const learnStage = pullRandomElement(learnStageList);
-    const learnStage = learnStages.LEARN;
+    const learnStage = pullRandomElement(learnStageList);
+    // const learnStage = learnStages.LEARN;
     console.log(learnStage);
     console.log(learnStageList);
 

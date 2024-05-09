@@ -1,12 +1,12 @@
 import { saveSession } from "../services/backup";
 import update from "../services/update";
-import { directions, learnStages, marks } from "./enums";
+import { directions, marks } from "./enums";
 import { returnCard, repeatOneMore } from './nextCard';
 import progress from './progress';
 
 function basicIncrement(card) {
     progress.value[card.learnStage][card.mark]++;
-    console.log(progress.value[card.learnStage]);
+    // console.log(progress.value[card.learnStage]);
 
     // card[card.direction+'Progress'] += card.mark.increment;
     if(card.mark === marks.GOOD) {
@@ -35,13 +35,12 @@ const evaluations = {
             card.fProgress = 0;
             card.bProgress = 0;
         }
-        
         // return
         if(card.mark === marks.BAD || card.mark === marks.RESET) {
             returnCard(card);
             progress.value.cards--;
+            return;
         }
-
         // upgrade
         if(card.fProgress > 0 && card.bProgress > 0) {
             progress.value.learn.upgraded++;
@@ -52,27 +51,28 @@ const evaluations = {
     },
     confirm(card) {
         basicIncrement(card);
-            // degrade
-        if(card.fProgress < -1 || card.bProgress < -1) {
+
+        // degrade
+        if(card.mark === marks.BAD) {
             progress.value.confirm.degraded++;
             card.learnStatus = 0;
             card.fProgress = 0;
             card.bProgress = 0;
             return;
         }
-            // upgrade
-        if(card.fProgress > 0 && card.bProgress > 0 && card.fStats > 0) {
+        // upgrade
+        if(card.fProgress > 0 && card.bProgress > 0) {
             progress.value.confirm.upgraded++;
             card.learnStatus = 2;
             card.fProgress = 0;
             card.bProgress = 0;
-            card.fStats = 1;
         }
     },
     repeat(card) {
         basicIncrement(card);
-            // degrade
-        if(card.fProgress < -1 || card.bProgress < -1) {
+
+        // degrade
+        if(card.mark === marks.BAD) {
             progress.value.repeat.degraded++;
             card.learnStatus = 0;
             card.fProgress = 0;
@@ -83,18 +83,27 @@ const evaluations = {
             card.bAutorepeat = 0;
             return;
         }
-            // degrade a little
-        if(card.mark.name === marks.BAD.name && card.direction === directions.BACKWARD) {
-            card.bStats = -1;
-            return;
+        // degrade stats
+        if(card.mark === marks.NEUTRAL) {
+            card[card.direction+'Stats'] = -1;
         }
-            // upgrade
+        if(card.recogMark === marks.BAD) {
+            card.fStats = -1;
+        }
+        // improve fStats 
+        if(card.fStats < 0 && card.recogMark === marks.GOOD) {
+            card.fStats = 0;
+        }
+        // upgrade
         if(card.fProgress > 0 && card.bProgress > 0) {
             progress.value.repeat.upgraded++;
             card.learnStatus = 33; // to be changed on server's side
             card.fProgress = 0;
             card.bProgress = 0;
+
+            card.fStats++;
             card.bStats++;
+
             if(card.fStats > 2) {
                 card.fAutorepeat = 1;
             }
@@ -104,10 +113,16 @@ const evaluations = {
         }
     },
     recognize(card) {
-        card.fStats += card.mark.increment;
-        if(card.fStats < -1 && card.mark.name === marks.GOOD.name) {
-            card.fStats = -1;
+        if(card.mark === marks.BAD) {
+            card.fStats--;
+        } else {
+            // card.fStats < 0 ? card.fStats = 0 : card.fStats++;
+            card.fStats = 1;
         }
+        // card.fStats += card.mark.increment;
+        // if(card.fStats < -1 && card.mark.name === marks.GOOD.name) {
+        //     card.fStats = -1;
+        // }
     },
     autorepeat(card) {
         repeatOneMore();
@@ -144,8 +159,8 @@ function evaluateAndSave(cardArg) {
     saveSession();
 
     console.log(changes);
-    console.log('not saved!');
-    return;
+    // console.log('not saved!');
+    // return;
     if(Object.keys(changes).length > 0) {
         update(card.id, changes);
     }

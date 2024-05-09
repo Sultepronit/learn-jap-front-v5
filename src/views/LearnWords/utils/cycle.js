@@ -73,7 +73,6 @@ function showReading() {
 
     if(card.value.learnStage === learnStages.LEARN) {
         buttons.twoButtons();
-        // buttons.fourButtons();
     } else {
         buttons.threeButtons();
     }
@@ -88,8 +87,13 @@ function quickRecognition(mark) {
 function answer() {
     showAnswerAndPlay();
 
-    if(card.value.learnStage === learnStages.LEARN) {
+    if(card.value.learnStage === learnStages.LEARN && card.value.direction === directions.BACKWARD) {
         // buttons.twoButtons();
+        // if(card.value.direction === directions.FORWARD) {
+        //     buttons.threeButtons();
+        // } else {
+        //     buttons.fourButtons();
+        // }
         buttons.fourButtons();
     } else {
         buttons.threeButtons();
