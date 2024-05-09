@@ -5,40 +5,45 @@ import { returnCard, repeatOneMore } from './nextCard';
 import progress from './progress';
 
 function basicIncrement(card) {
-    progress.value[card.learnStage][card.mark.name]++;
-    // console.log(progress.value[card.learnStage]);
+    progress.value[card.learnStage][card.mark]++;
+    console.log(progress.value[card.learnStage]);
 
-    card[card.direction+'Progress'] += card.mark.increment;
-
-    if(card.direction === directions.FORWARD) {
-        const recogMark
-            = card.recogMark.name === marks.GOOD.name || card.recogMark.name === card.mark.name
-                ? card.mark : marks.BAD;
-
-        card.fStats = recogMark.increment >= 0
-            ? card.fStats + recogMark.increment
-                : card.learnStage === learnStages.REPEAT ? -1 : 0;
+    // card[card.direction+'Progress'] += card.mark.increment;
+    if(card.mark === marks.GOOD) {
+        card[card.direction+'Progress'] = 1;
+    } else {
+        card[card.direction+'Progress']--;
     }
+
+    // if(card.direction === directions.FORWARD) {
+    //     const recogMark
+    //         = card.recogMark.name === marks.GOOD.name || card.recogMark.name === card.mark.name
+    //             ? card.mark : marks.BAD;
+
+    //     card.fStats = recogMark.increment >= 0
+    //         ? card.fStats + recogMark.increment
+    //             : card.learnStage === learnStages.REPEAT ? -1 : 0;
+    // }
 }
 
 const evaluations = {    
     learn(card) {
         basicIncrement(card);
-            // degrade
-        if(card.fProgress < -1 && card.mark.name === marks.GOOD.name) {
-            card.fProgress = -1;
-        } else if(card.bProgress < -1) {
+
+        // degrade
+        if(card.mark === marks.RESET) {
             card.fProgress = 0;
             card.bProgress = 0;
         }
-            // return
-        if(card.mark.name === marks.BAD.name) {
+        
+        // return
+        if(card.mark === marks.BAD || card.mark === marks.RESET) {
             returnCard(card);
             progress.value.cards--;
-            return;
         }
-            // upgrade
-        if(card.fProgress > 0 && card.bProgress > 0 && card.fStats > 0) {
+
+        // upgrade
+        if(card.fProgress > 0 && card.bProgress > 0) {
             progress.value.learn.upgraded++;
             card.learnStatus = 1;
             card.fProgress = 0;
@@ -139,7 +144,8 @@ function evaluateAndSave(cardArg) {
     saveSession();
 
     console.log(changes);
-    // console.log('not saved!');
+    console.log('not saved!');
+    return;
     if(Object.keys(changes).length > 0) {
         update(card.id, changes);
     }

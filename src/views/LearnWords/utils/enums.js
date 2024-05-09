@@ -17,10 +17,19 @@ const directions = {
 };
 
 const marks = {
-    GOOD: { name: 'good', increment: 1 },
-    BAD: { name: 'bad', increment: -1 },
-    NEUTRAL: { name: 'neutral', increment: 0 },
-    QUESTION: { name: 'question', increment: 0 }
+    GOOD: 'good',
+    BAD: 'bad',
+    NEUTRAL: 'neutral',
+    RESET: 'reset',
+    QUESTION: 'question'
 };
+
+// const marks = {
+//     GOOD: { name: 'good', increment: 1 },
+//     BAD: { name: 'bad', increment: -1 },
+//     NEUTRAL: { name: 'neutral', increment: 0 },
+//     RETURN: { name: 'return', increment: 0 },
+//     QUESTION: { name: 'question', increment: 0 }
+// };
 
 export { learnStages, repeatVariants, directions, marks };

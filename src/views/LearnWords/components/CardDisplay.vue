@@ -34,7 +34,7 @@ const randomReading = computed(() => {
         class="question-answer"
         :class="{ autorep: card.learnStage === learnStages.AUTOREPEAT }"
     >
-        <p class="writing" :class="card.recogMark?.name">
+        <p class="writing" :class="card.recogMark">
             <span
                 v-show="show.writing"
                 v-html="randomWriting"

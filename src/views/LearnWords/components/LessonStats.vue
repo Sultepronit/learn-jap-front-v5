@@ -4,18 +4,23 @@ import { computed } from 'vue';
 import { plan } from '../services/data.js';
 import progress from '../utils/progress.js';
 
-const passedPercent = computed(
-    () => Math.round(progress.value.cards / plan.sessionLength * 100) 
+// const passedPercent = computed(
+//     () => Math.round(progress.value.cards / plan.sessionLength * 100) 
+// );
+
+const learnBads = computed(
+    () => progress.value.learn.bad + progress.value.learn.neutral + progress.value.learn.reset
 );
 
 </script>
 <template>
 <header>
-    {{ progress.cards }}/{{ plan.sessionLength }}:
-    {{ passedPercent }}% |
+    <!-- {{ progress.cards }}/{{ plan.sessionLength }}:
+    {{ passedPercent }}% | -->
+    {{ progress.cards }} |
     <span class="green">
         l-{{ plan.learnNumber }}:
-        +{{ progress.learn.good }}-{{ progress.learn.bad }}
+        +{{ progress.learn.good }}-{{ learnBads }}
         <strong>{{ progress.learn.upgraded }}</strong>
     </span> |
     <span class="blue">

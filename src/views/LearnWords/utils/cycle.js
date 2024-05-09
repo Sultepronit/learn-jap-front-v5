@@ -73,6 +73,7 @@ function showReading() {
 
     if(card.value.learnStage === learnStages.LEARN) {
         buttons.twoButtons();
+        // buttons.fourButtons();
     } else {
         buttons.threeButtons();
     }
@@ -88,7 +89,8 @@ function answer() {
     showAnswerAndPlay();
 
     if(card.value.learnStage === learnStages.LEARN) {
-        buttons.twoButtons();
+        // buttons.twoButtons();
+        buttons.fourButtons();
     } else {
         buttons.threeButtons();
     }

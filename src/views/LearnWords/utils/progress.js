@@ -5,6 +5,8 @@ const progress = ref({
     learn: {
         good: 0,
         bad: 0,
+        neutral: 0,
+        reset: 0,
         upgraded: 0
     },
     confirm: {
