@@ -26,8 +26,8 @@ watch(showAnswer, (val) => {
     <p class="the-kanji">
         <span class="sans" v-show="showAnswer || font === 0">{{ card.kanji }}</span>
         <span class="serif" v-show="showAnswer || font === 1">{{ card.kanji }}</span>
-        <span class="kurenaido" v-show="showAnswer">{{ card.kanji }}</span>
         <span class="maru" v-show="showAnswer || font === 2">{{ card.kanji }}</span>
+        <span class="kurenaido" v-show="showAnswer">{{ card.kanji }}</span>
     </p>
 
     <p
