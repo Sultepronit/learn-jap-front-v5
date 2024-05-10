@@ -71,11 +71,12 @@ function question() {
 function showReading() {
     cardDisplay.showReading();
 
-    if(card.value.learnStage === learnStages.LEARN) {
-        buttons.twoButtons();
-    } else {
-        buttons.threeButtons();
-    }
+    // if(card.value.learnStage === learnStages.LEARN) {
+    //     buttons.twoButtons();
+    // } else {
+    //     buttons.threeButtons();
+    // }
+    buttons.twoButtons();
     buttons.setAction(quickRecognition);
 }
 
@@ -88,12 +89,6 @@ function answer() {
     showAnswerAndPlay();
 
     if(card.value.learnStage === learnStages.LEARN && card.value.direction === directions.BACKWARD) {
-        // buttons.twoButtons();
-        // if(card.value.direction === directions.FORWARD) {
-        //     buttons.threeButtons();
-        // } else {
-        //     buttons.fourButtons();
-        // }
         buttons.fourButtons();
     } else {
         buttons.threeButtons();

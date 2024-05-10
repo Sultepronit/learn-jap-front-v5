@@ -9,9 +9,9 @@ function nextCard() {
         learnList,
         confirmList,
         recognizeList,
-        repeatVariantList,
+        // repeatVariantList,
         repeatList,
-        problemList
+        // problemList
     } = lists;
 
     if(learnStageList.length < 1) {
@@ -27,12 +27,13 @@ function nextCard() {
         learnStage === learnStages.LEARN ?      pullRandomElement(learnList) :
         learnStage === learnStages.CONFIRM ?    pullRandomElement(confirmList) :
         learnStage === learnStages.RECOGNIZE ?  pullRandomElement(recognizeList) :
-        pullRandomElement(repeatVariantList) === repeatVariants.NORMAL ?
-            pullRandomElement(repeatList) : pullRandomElement(problemList);
+        pullRandomElement(repeatList);
+        // pullRandomElement(repeatVariantList) === repeatVariants.NORMAL ?
+            // pullRandomElement(repeatList) : pullRandomElement(problemList);
 
-    if(learnStage === learnStages.REPEAT) {
-        console.log(repeatVariantList);
-    }
+    // if(learnStage === learnStages.REPEAT) {
+    //     console.log(repeatVariantList);
+    // }
 
     const direction = (card.fProgress > card.bProgress)
         ? directions.BACKWARD : directions.FORWARD;

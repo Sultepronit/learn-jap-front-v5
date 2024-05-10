@@ -8,22 +8,11 @@ function basicIncrement(card) {
     progress.value[card.learnStage][card.mark]++;
     // console.log(progress.value[card.learnStage]);
 
-    // card[card.direction+'Progress'] += card.mark.increment;
     if(card.mark === marks.GOOD) {
         card[card.direction+'Progress'] = 1;
     } else {
         card[card.direction+'Progress']--;
     }
-
-    // if(card.direction === directions.FORWARD) {
-    //     const recogMark
-    //         = card.recogMark.name === marks.GOOD.name || card.recogMark.name === card.mark.name
-    //             ? card.mark : marks.BAD;
-
-    //     card.fStats = recogMark.increment >= 0
-    //         ? card.fStats + recogMark.increment
-    //             : card.learnStage === learnStages.REPEAT ? -1 : 0;
-    // }
 }
 
 const evaluations = {    
@@ -54,7 +43,6 @@ const evaluations = {
 
         // degrade
         if(card.mark === marks.BAD) {
-            progress.value.confirm.degraded++;
             card.learnStatus = 0;
             card.fProgress = 0;
             card.bProgress = 0;
@@ -73,7 +61,6 @@ const evaluations = {
 
         // degrade
         if(card.mark === marks.BAD) {
-            progress.value.repeat.degraded++;
             card.learnStatus = 0;
             card.fProgress = 0;
             card.bProgress = 0;

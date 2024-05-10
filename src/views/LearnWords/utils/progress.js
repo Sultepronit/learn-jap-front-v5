@@ -14,7 +14,6 @@ const progress = ref({
         bad: 0,
         neutral: 0,
         upgraded: 0,
-        degraded: 0
     },
     repeat: {
         good: 0,
@@ -23,7 +22,6 @@ const progress = ref({
         neutral: 0,
         upgraded: 0,
         autoUpgraded: 0,
-        degraded: 0
     }
 });
 

@@ -6,10 +6,10 @@ const learnStages = {
     AUTOREPEAT: 'autorepeat'
 };
 
-const repeatVariants = {
-    NORMAL: 'n',
-    PROBLEM: 'p'
-};
+// const repeatVariants = {
+//     NORMAL: 'n',
+//     PROBLEM: 'p'
+// };
 
 const directions = {
     FORWARD: 'f',
@@ -32,4 +32,4 @@ const marks = {
 //     QUESTION: { name: 'question', increment: 0 }
 // };
 
-export { learnStages, repeatVariants, directions, marks };
+export { learnStages, /*repeatVariants,*/ directions, marks };

@@ -20,7 +20,7 @@ const randomReading = computed(() => {
 
 <template>
 <main>
-    <p>
+    <p class="card-stats" :class="card.learnStage">
         {{ card.id }} [{{ card.learnStatus }}]: 
         {{ card.fProgress }} {{ card.bProgress }} | 
         <span :class="{ auto: card.fAutorepeat }">
@@ -73,6 +73,25 @@ main {
     margin: 0.5rem;
     margin-bottom: 7rem;
 }
+
+.card-stats {
+    font-size: 1.1em;
+    width: fit-content;
+    border-bottom: 3px solid white;
+}
+
+.learn {
+    border-color: yellow;
+}
+
+.confirm {
+    border-color: green;
+}
+
+.repeat {
+    border-color: blue;
+}
+
 .question-answer {
     text-align: center;
     font-size: 1.6rem;

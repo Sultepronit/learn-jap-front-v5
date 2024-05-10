@@ -19,23 +19,21 @@ const learnBads = computed(
     {{ passedPercent }}% | -->
     {{ progress.cards }} |
     <span class="green">
-        l-{{ plan.learnNumber }}:
-        +{{ progress.learn.good }}-{{ learnBads }}
+        l {{ plan.learnNumber }}:
+        <i>{{ learnBads }}</i> {{ progress.learn.good }}
         <strong>{{ progress.learn.upgraded }}</strong>
     </span> |
     <span class="blue">
-        c-{{ plan.confirmNumber }}:
-        +{{ progress.confirm.good }}-{{ progress.confirm.bad }}±{{ progress.confirm.neutral }}
-        <strong>{{ progress.confirm.upgraded }}-{{ progress.confirm.degraded }}</strong>
+        c {{ plan.confirmNumber }}:
+        <i>{{ progress.confirm.neutral }}</i> {{ progress.confirm.good }}
+        <strong>{{ progress.confirm.upgraded }}-{{ progress.confirm.bad }}</strong>
     </span>
     <br>
-    rep-{{ plan.repeatNumber }}/{{ plan.problemNumber }}
-        <span>+{{ progress.repeat.good }}<sup>{{ progress.repeat.autoGood }}</sup></span>
-        <span>-{{ progress.repeat.bad }}±{{ progress.repeat.neutral }}
-        <strong>{{ progress.repeat.upgraded }}<sup>{{ progress.repeat.autoUpgraded }}</sup>
-        <span>-{{ progress.repeat.degraded }}</span>
-        </strong></span> |
-    rec-{{ plan.recognizeNumber }}
+    rp {{ plan.repeatNumber }}:
+        <i>{{ progress.repeat.neutral }}</i>
+        {{ progress.repeat.good }}<sup>{{ progress.repeat.autoGood+' ' }}</sup>
+        <b>{{ progress.repeat.upgraded }}<sup>{{ progress.repeat.autoUpgraded }}</sup>-{{ progress.repeat.bad }}</b>
+    | rc {{ plan.recognizeNumber }}
 </header>
 </template>
 
