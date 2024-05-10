@@ -26,16 +26,13 @@ async function fetchData() {
     const confirmNumber = Math.round(confirmList.length / confirmDivisor);
     const recognizeNumber = Math.ceil(recognizeList?.length / 5);
 
-    console.time('tt');
     let nextStop = learnNumber;
     const learnStageList = Array(sessionLength)
         .fill(learnStages.LEARN, 0, nextStop)
         .fill(learnStages.CONFIRM, nextStop)
         .fill(learnStages.RECOGNIZE, nextStop += confirmNumber)
         .fill(learnStages.REPEAT, nextStop += recognizeNumber);
-    console.timeLog('tt');
     console.log(learnStageList);
-    console.timeEnd('tt');
     
     const repeatNumber = sessionLength - nextStop;
     // const problemNumber = Math.round(problemList.length / problemDivisor);

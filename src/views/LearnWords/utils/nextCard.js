@@ -1,5 +1,5 @@
 import { pullRandomElement } from "@/utils/random";
-import { learnStages, repeatVariants, directions } from "./enums";
+import { learnStages, /*repeatVariants,*/ directions } from "./enums";
 import { lists } from "../services/data";
 import { parseToStringAndArray } from "@/utils/parseWritingsReadings";
 
@@ -49,18 +49,18 @@ function nextCard() {
 
 function returnCard(card) {
     console.log("I'll be back!");
-    const { learnStageList, learnList } = lists;
-    learnStageList.push(learnStages.LEARN);
-    learnList.push(card);
+    // const { learnStageList, learnList } = lists;
+    lists.learnStageList.push(learnStages.LEARN);
+    lists.learnList.push(card);
     // console.log(learnStageList);
-    console.log(learnList);
+    console.log(lists.learnList);
 }
 
 function repeatOneMore() {
     console.log("repeat more!");
-    const { learnStageList, repeatVariantList } = lists;
-    learnStageList.push(learnStages.REPEAT);
-    repeatVariantList.push(repeatVariants.NORMAL);
+    // const { learnStageList, repeatVariantList } = lists;
+    lists.learnStageList.push(learnStages.REPEAT);
+    // repeatVariantList.push(repeatVariants.NORMAL);
 }
 
 export default nextCard;
