@@ -6,7 +6,7 @@ const progress = ref({
         good: 0,
         bad: 0,
         neutral: 0,
-        reset: 0,
+        return: 0,
         upgraded: 0
     },
     confirm: {
@@ -20,8 +20,13 @@ const progress = ref({
         autoGood: 0,
         bad: 0,
         neutral: 0,
+        return: 0,
         upgraded: 0,
         autoUpgraded: 0,
+    },
+    remember: {
+        neutral: 0,
+        return: 0,
     }
 });
 

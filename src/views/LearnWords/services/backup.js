@@ -6,7 +6,7 @@ function saveSession() {
         progress: progress.value,
         lists
     }));
-    console.log('backup!');
+    // console.log('backup!');
 }
 
 function restoreSession() {

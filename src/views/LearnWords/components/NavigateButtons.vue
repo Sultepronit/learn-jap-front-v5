@@ -16,15 +16,20 @@ import { params } from '../utils/buttonsControls.js';
         @click="params.action(marks.NEUTRAL)"
     />
     <button
+        class="return"
+        v-show="params.showReturn"
+        @click="params.action(marks.RETURN)"
+    />
+    <button
         class="bad"
         v-show="params.showSides"
         @click="params.action(marks.BAD)"
     />
-    <button
+    <!-- <button
         class="reset"
         v-show="params.showReset"
         @click="params.action(marks.RESET)"
-    />
+    /> -->
 </footer>
 </template>
 
@@ -56,7 +61,10 @@ footer button {
     background: red;
 }
 
-.reset {
+/*.reset {
     background: black;
+}*/
+.return {
+    background: yellow;
 }
 </style>

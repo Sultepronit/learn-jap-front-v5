@@ -11,6 +11,7 @@ function nextCard() {
         recognizeList,
         // repeatVariantList,
         repeatList,
+        rememberList
         // problemList
     } = lists;
 
@@ -27,6 +28,7 @@ function nextCard() {
         learnStage === learnStages.LEARN ?      pullRandomElement(learnList) :
         learnStage === learnStages.CONFIRM ?    pullRandomElement(confirmList) :
         learnStage === learnStages.RECOGNIZE ?  pullRandomElement(recognizeList) :
+        learnStage === learnStages.REMEMBER ?   pullRandomElement(rememberList) :
         pullRandomElement(repeatList);
         // pullRandomElement(repeatVariantList) === repeatVariants.NORMAL ?
             // pullRandomElement(repeatList) : pullRandomElement(problemList);
@@ -49,11 +51,17 @@ function nextCard() {
 
 function returnCard(card) {
     console.log("I'll be back!");
-    // const { learnStageList, learnList } = lists;
-    lists.learnStageList.push(learnStages.LEARN);
-    lists.learnList.push(card);
-    // console.log(learnStageList);
-    console.log(lists.learnList);
+    // console.log(card.value);
+    if(card.learnStage === learnStages.LEARN) {
+        lists.learnStageList.push(learnStages.LEARN);
+        lists.learnList.push(card);
+        console.log(lists.learnList);
+    } else {
+        lists.learnStageList.push(learnStages.REMEMBER);
+        lists.rememberList.push(card);
+        console.log(lists.rememberList);
+    }
+    console.log(lists);
 }
 
 function repeatOneMore() {

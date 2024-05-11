@@ -53,6 +53,7 @@ async function fetchData() {
         learnList,
         confirmList,
         repeatList,
+        rememberList: [],
         // problemList,
         recognizeList,
         learnStageList,

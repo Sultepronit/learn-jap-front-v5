@@ -8,9 +8,20 @@ import progress from '../utils/progress.js';
 //     () => Math.round(progress.value.cards / plan.sessionLength * 100) 
 // );
 
-const learnBads = computed(
-    () => progress.value.learn.bad + progress.value.learn.neutral + progress.value.learn.reset
+const learnPass = computed(
+    () => progress.value.learn.bad + progress.value.learn.neutral + progress.value.learn.return
 );
+
+const repeatPass = computed(
+    () => progress.value.repeat.neutral
+        + progress.value.repeat.return
+        + progress.value.remember.neutral
+        + progress.value.remember.return
+);
+
+// const remember = computed(
+//     () => progress.value.remember.neutral + progress.value.remember.return
+// );
 
 </script>
 <template>
@@ -20,7 +31,7 @@ const learnBads = computed(
     {{ progress.cards }} |
     <span class="green">
         l {{ plan.learnNumber }}:
-        <i>{{ learnBads }}</i> {{ progress.learn.good }}
+        <i>{{ learnPass }}</i> {{ progress.learn.good }}
         <strong>{{ progress.learn.upgraded }}</strong>
     </span> |
     <span class="blue">
@@ -30,7 +41,7 @@ const learnBads = computed(
     </span>
     <br>
     rp {{ plan.repeatNumber }}:
-        <i>{{ progress.repeat.neutral }}</i>
+        <i>{{ repeatPass }}</i>
         {{ progress.repeat.good }}<sup>{{ progress.repeat.autoGood+' ' }}</sup>
         <b>{{ progress.repeat.upgraded }}<sup>{{ progress.repeat.autoUpgraded }}</sup>-{{ progress.repeat.bad }}</b>
     | rc {{ plan.recognizeNumber }}

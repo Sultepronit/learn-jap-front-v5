@@ -92,6 +92,10 @@ main {
     border-color: blue;
 }
 
+.remember {
+    border-color: red;
+}
+
 .question-answer {
     text-align: center;
     font-size: 1.6rem;

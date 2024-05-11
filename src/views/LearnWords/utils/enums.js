@@ -2,6 +2,7 @@ const learnStages = {
     LEARN: 'learn',
     CONFIRM: 'confirm',
     REPEAT: 'repeat',
+    REMEMBER: 'remember',
     RECOGNIZE: 'recognize',
     AUTOREPEAT: 'autorepeat'
 };
@@ -20,7 +21,8 @@ const marks = {
     GOOD: 'good',
     BAD: 'bad',
     NEUTRAL: 'neutral',
-    RESET: 'reset',
+    // RESET: 'reset',
+    RETURN: 'return',
     QUESTION: 'question'
 };
 

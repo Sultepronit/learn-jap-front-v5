@@ -20,12 +20,12 @@ const evaluations = {
         basicIncrement(card);
 
         // degrade
-        if(card.mark === marks.RESET) {
+        if(card.mark === marks.BAD) {
             card.fProgress = 0;
             card.bProgress = 0;
         }
         // return
-        if(card.mark === marks.BAD || card.mark === marks.RESET) {
+        if(card.mark === marks.RETURN || card.mark === marks.BAD) {
             returnCard(card);
             progress.value.cards--;
             return;
@@ -71,7 +71,7 @@ const evaluations = {
             return;
         }
         // degrade stats
-        if(card.mark === marks.NEUTRAL) {
+        if(card.mark === marks.NEUTRAL || card.mark === marks.RETURN) {
             card[card.direction+'Stats'] = -1;
         }
         if(card.recogMark === marks.BAD) {
@@ -80,6 +80,11 @@ const evaluations = {
         // improve fStats 
         if(card.fStats < 0 && card.recogMark === marks.GOOD) {
             card.fStats = 0;
+        }
+        // return
+        if(card.mark === marks.RETURN) {
+            returnCard(card);
+            progress.value.cards--;
         }
         // upgrade
         if(card.fProgress > 0 && card.bProgress > 0) {
@@ -97,6 +102,14 @@ const evaluations = {
             if(card.bStats > 1) {
                 card.bAutorepeat = 1;
             }
+        }
+    },
+    remember(card) {
+        basicIncrement(card);
+        
+        if(card.mark === marks.RETURN) {
+            returnCard(card);
+            progress.value.cards--;
         }
     },
     recognize(card) {

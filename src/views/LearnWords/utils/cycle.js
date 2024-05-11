@@ -71,11 +71,6 @@ function question() {
 function showReading() {
     cardDisplay.showReading();
 
-    // if(card.value.learnStage === learnStages.LEARN) {
-    //     buttons.twoButtons();
-    // } else {
-    //     buttons.threeButtons();
-    // }
     buttons.twoButtons();
     buttons.setAction(quickRecognition);
 }
@@ -88,7 +83,11 @@ function quickRecognition(mark) {
 function answer() {
     showAnswerAndPlay();
 
-    if(card.value.learnStage === learnStages.LEARN && card.value.direction === directions.BACKWARD) {
+    // console.log(card.value.mark, marks.RETURN);
+    if(card.value.mark === marks.RETURN /*|| card.value.learnStage === learnStages.REMEMBER*/) {
+        buttons.rememberButtons();
+    } else if(card.value.learnStage === learnStages.LEARN
+        || card.value.learnStage === learnStages.REPEAT) {
         buttons.fourButtons();
     } else {
         buttons.threeButtons();
