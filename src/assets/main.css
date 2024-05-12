@@ -4,6 +4,26 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: 'Zen Kurenaido';
+    src: url('./fonts/ZenKurenaido-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Noto Sans JP';
+    src: url('./fonts/NotoSansJP-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Noto Serif JP';
+    src: url('./fonts/NotoSerifJP-Regular.otf');
+}
+
+@font-face {
+    font-family: 'Zen Maru Gothic';
+    src: url('./fonts/ZenMaruGothic-Regular.ttf');
+}
+
 .gray {
     color: gray;
 }

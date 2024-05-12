@@ -63,11 +63,11 @@ watch(showAnswer, (val) => {
 .serif {
 	font-family: 'Noto Serif JP', serif;
 }
-.kurenaido {
-	font-family: 'Zen Kurenaido', sans-serif;
-}
 .maru {
 	font-family: 'Zen Maru Gothic', sans-serif;
+}
+.kurenaido {
+	font-family: 'Zen Kurenaido', sans-serif;
 }
 
 .the-kanji {
