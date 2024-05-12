@@ -1,5 +1,5 @@
 <script setup>
-import { isSaving, createNewCard, update, deleteCard } from '../services/crud';
+import { refetch, isSaving, createNewCard, update, deleteCard } from '../services/crud';
 import { selectedCard as card, select } from '../utils/displayAndSelect';
 import { searchText } from '../utils/searchAndFilter.js';
 import statsTitles from '../utils/statsTitles.js';
@@ -23,9 +23,6 @@ function resetSearch() {
 <template>
     <section class="edit" :class="{'is-saving': isSaving}">
         <div class="top-line">
-            <button class="new-card" @click="createNewCard">
-                新しい
-            </button>
             <span class="card-number">{{ card.cardNumber }}</span>
             <input
                 type="number"
@@ -51,6 +48,12 @@ function resetSearch() {
             >
             <button class="delete" @click="deleteCard(card.cardNumber)">
                 消す
+            </button>
+            <button class="new-card fl-r" @click="createNewCard">
+                新しい
+            </button>
+            <button class="refresh fl-r" @click="refetch">
+                更新
             </button>
         </div>
         <input
@@ -136,10 +139,13 @@ button {
     font-size: 1.0rem;
     padding: 0 1em 0.1em;
     margin-inline: 1rem;
-    float: right;
+    /* float: right; */
 }
 button.delete {
     color: red;   
+}
+.fl-r {
+    float: right;
 }
 
 input {

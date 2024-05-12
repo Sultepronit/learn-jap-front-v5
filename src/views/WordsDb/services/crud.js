@@ -1,8 +1,6 @@
 import { ref } from "vue";
 import { get, post, patch, deleteApi } from "@/services/commonAPI.js";
 
-// console.time('tt');
-
 const db = ref([]);
 const ready = ref(false);
 
@@ -11,6 +9,11 @@ function startSession() {
         db.value = data;
         ready.value = true;
     });
+}
+
+function refetch() {
+    db.value = [];
+    startSession();
 }
 
 const isSaving = ref(false);
@@ -72,6 +75,7 @@ async function deleteCard(cardNumber) {
 
 export {
     startSession,
+    refetch,
     db,
     ready,
     numberToSelect,

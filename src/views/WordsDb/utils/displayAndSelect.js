@@ -8,6 +8,8 @@ function resetViewList() {
     // sortViewList('learnStatus', true);
 }
 
+watch(db, () => resetViewList());
+
 function sortViewList(field, reverse) {
     console.log('so?');
     viewList.value.sort((a, b) => a[field] - b[field]);
