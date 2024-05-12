@@ -32,7 +32,6 @@ async function post(table, data) {
 }
 
 async function patch(table, card) {
-    // const url = `${apiUrl}${table}?id=${card.id}&real-method=patch`;
     const url = `${apiUrl}${table}?id=${card.id}`;
     console.log(card);
     try {
@@ -50,14 +49,17 @@ async function patch(table, card) {
 
         return true;
     } catch (error) {
-        console.log(table, card);
+        // console.log(table, card);
         console.error(error);
-        alert('Not updated!');
+        alert(`Not updated (${card.id})`);
 
-        setTimeout(() => {
-            patch(table, card);
-        }, 1000);
-        // return patch(table, card);
+        const oneMoreTime = await new Promise(resolve => {
+            setTimeout(async () => {
+                resolve(await patch(table, card));
+            }, 2000);
+        });
+
+        return oneMoreTime;
     }
 }
 

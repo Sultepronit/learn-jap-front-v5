@@ -1,5 +1,6 @@
 import { saveSession } from "../services/backup";
-import update from "../services/update";
+// import update from "../services/update";
+import { patch } from "@/services/commonAPI";
 import { directions, marks } from "./enums";
 import { returnCard, repeatOneMore } from './nextCard';
 import progress from './progress';
@@ -116,13 +117,8 @@ const evaluations = {
         if(card.mark === marks.BAD) {
             card.fStats--;
         } else {
-            // card.fStats < 0 ? card.fStats = 0 : card.fStats++;
             card.fStats = 1;
         }
-        // card.fStats += card.mark.increment;
-        // if(card.fStats < -1 && card.mark.name === marks.GOOD.name) {
-        //     card.fStats = -1;
-        // }
     },
     autorepeat(card) {
         repeatOneMore();
@@ -162,7 +158,8 @@ function evaluateAndSave(cardArg) {
     // console.log('not saved!');
     // return;
     if(Object.keys(changes).length > 0) {
-        update(card.id, changes);
+        // update(card.id, changes);
+        patch('jap', {id: card.id, changes});
     }
 }
 
