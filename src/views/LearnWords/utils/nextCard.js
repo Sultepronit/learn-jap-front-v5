@@ -61,7 +61,7 @@ function returnCard(card) {
         lists.rememberList.push(card);
         console.log(lists.rememberList);
     }
-    console.log(lists);
+    // console.log(lists);
 }
 
 function repeatOneMore() {

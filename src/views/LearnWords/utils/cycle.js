@@ -83,8 +83,7 @@ function quickRecognition(mark) {
 function answer() {
     showAnswerAndPlay();
 
-    // console.log(card.value.mark, marks.RETURN);
-    if(card.value.mark === marks.RETURN /*|| card.value.learnStage === learnStages.REMEMBER*/) {
+    if(card.value.mark === marks.RETURN) {
         buttons.rememberButtons();
     } else if(card.value.learnStage === learnStages.LEARN
         || card.value.learnStage === learnStages.REPEAT) {
