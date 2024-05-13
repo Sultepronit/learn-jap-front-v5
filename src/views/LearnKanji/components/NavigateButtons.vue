@@ -20,6 +20,11 @@ import { params } from '../utils/buttonsControls.js';
         @click="params.action(marks.NEUTRAL)"
     />
     <button
+        class="nav-b return"
+        v-show="params.showReturn"
+        @click="params.action(marks.RETURN)"
+    />
+    <button
         class="nav-b bad"
         v-show="params.showSides"
         @click="params.action(marks.BAD)"
@@ -27,21 +32,6 @@ import { params } from '../utils/buttonsControls.js';
 </template>
 
 <style scoped>
-/* footer {
-    background: white;
-    display: flex;
-    padding: 0.6rem 0 1rem;
-    width: 100%;
-    gap: 1rem;
-    padding-inline: 0.5rem;
-}
-footer button {
-    flex-grow: 1;
-    height: 4.5rem;
-    border-radius: 1rem;
-    border: none;
-    background: gray;
-} */
 .nav-b {
     flex-grow: 1;
     height: 4.5rem;
@@ -55,6 +45,9 @@ footer button {
 }
 .good {
     background: green;
+}
+.return {
+    background: yellow;
 }
 .bad {
     background: red;

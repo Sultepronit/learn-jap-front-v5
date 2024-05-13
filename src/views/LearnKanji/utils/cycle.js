@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { marks } from "./enums";
+import { marks, repeatStages } from "./enums";
 import nextCard from "./nextCard";
 import linksToLists from './linksToLists';
 import { change as buttons } from './buttonsControls.js';
@@ -22,7 +22,6 @@ function nextCycle() {
     }
   
     if(card.value.autorepeat) {
-        // console.log('autorepeat!');
         autorepeat();
     } else {
         question();
@@ -30,7 +29,6 @@ function nextCycle() {
 }
 
 function autorepeat() {
-    // nextCycle();
     evaluateSaveNext(marks.AUTOREPEAT);
 }
 
@@ -47,15 +45,18 @@ function answer() {
     showAnswer.value = true;
 
     buttons.setAction(evaluateSaveNext);
-    buttons.threeButtons();
-    if(card.value.record > 0 && card.value.progress === 0) {
-        buttons.fourthButton();
+    if(card.value.repeatStage === repeatStages.REMEMBER) {
+        buttons.twoButtons();
+    } else {
+        buttons.fourButtons();
+        if(card.value.record > 0) {
+            buttons.bestButton();
+        }
     }
 }
 
 function evaluateSaveNext(mark) {
     console.log(mark);
-    // console.log(marks.GOOD.is(mark));
     card.value.mark = mark;
 
     evaluateAndSave(card);
