@@ -21,7 +21,7 @@
 
 @font-face {
     font-family: 'Zen Maru Gothic';
-    src: url('/public/fonts/ZenMaruGothic-Regular.ttf');
+    src: url('./fonts/ZenMaruGothic-Regular.ttf');
 }
 
 .gray {

@@ -11,7 +11,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       // devOptions: { enabled: true },
-      includeAssets: ['/fonts/*.ttf'],
+      includeAssets: ['/fonts/*.ttf', '/fonts/*.otf'],
       manifest: {
         "name": "Learn Japanese",
         "short_name": "LearnJap",
