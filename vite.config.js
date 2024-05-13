@@ -12,6 +12,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       // devOptions: { enabled: true },
       includeAssets: ['/fonts/*.ttf', '/fonts/*.otf'],
+      workbox: {
+        globPatterns: ['**/*.{ttf,otf}'],
+      },
       manifest: {
         "name": "Learn Japanese",
         "short_name": "LearnJap",
