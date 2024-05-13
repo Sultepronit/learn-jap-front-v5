@@ -56,14 +56,7 @@ footer {
     /* bottom: 0; */
     padding: 0.6rem 0 1rem;
     width: 100%;
-    gap: 1rem;
+    gap: 0.5rem;
     padding-inline: 0.5rem;
 }
-/* footer button {
-    flex-grow: 1;
-    height: 4.5rem;
-    border-radius: 1rem;
-    border: none;
-    background: gray;
-} */
 </style>
