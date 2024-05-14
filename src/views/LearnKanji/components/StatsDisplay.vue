@@ -5,7 +5,7 @@ import { card, showAnswer } from '../utils/cycle.js';
 
 const repeatPass = computed(() => 
     progress.value.repeat.neutral + progress.value.repeat.return
-    + progress.value.remember.neutral + progress.value.remember.return
+    //+ progress.value.remember.neutral + progress.value.remember.return
 );
 const repeatGood = computed(() => progress.value.repeat.good + progress.value.repeat.best);
 
@@ -13,7 +13,15 @@ const learnPass = computed(() =>
     progress.value.learn.neutral + progress.value.learn.return + progress.value.learn.bad
 );
 
-const repeatStage = computed(() => card.value.repeatStatus < 2 ? card.value.repeatStatus : 'R');
+const remember = computed(() => progress.value.remember.neutral + progress.value.remember.return);
+
+const repeatStatus = computed(() =>
+    card.value ? (card.value.repeatStatus < 2 ? card.value.repeatStatus : 'R') : ''
+);
+
+const learning = computed(() => 
+    card.value ? (card.value.repeatStatus < 1 ? true : false) : false
+);
 </script>
 
 <template>
@@ -29,11 +37,12 @@ const repeatStage = computed(() => card.value.repeatStatus < 2 ? card.value.repe
             <span>
                 r: <i>{{ repeatPass }}</i> <b>{{ repeatGood }}<sub>{{ progress.repeat.best }}</sub>
                 <sup>{{ progress.repeat.autorepeat }}</sup>-{{ progress.repeat.bad }}</b>
-            </span>
+            </span> |
+            <i>{{ remember }}</i>
         </p>
 
-        <p class="card-stats" v-show="showAnswer">
-            {{ card?.id }} [{{ repeatStage }}]:
+        <p class="card-stats" :class="{learning}" v-show="showAnswer">
+            {{ card?.id }} [{{ repeatStatus }}]:
             {{ card?.progress }}
             <strong>{{ card?.record }}</strong>
         </p>
@@ -41,11 +50,16 @@ const repeatStage = computed(() => card.value.repeatStatus < 2 ? card.value.repe
 </template>
 
 <style scoped>
-/* header { */
 .stats {
     margin: 0.2rem 0.5rem 0;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
 }
 .card-stats {
-    float: right;
+    border-bottom: 3px solid white;
+}
+.learning {
+    border-color: yellow;
 }
 </style>
