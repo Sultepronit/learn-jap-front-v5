@@ -11,10 +11,11 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       // devOptions: { enabled: true },
-      includeAssets: ['/fonts/*.ttf', '/fonts/*.otf'],
-      workbox: {
-        globPatterns: ['**/*.{ttf,otf}'],
-      },
+      includeAssets: [
+        'favicon.ico',
+        '/fonts/*.ttf',
+        '/fonts/*.otf'
+      ],
       manifest: {
         "name": "Learn Japanese",
         "short_name": "LearnJap",
@@ -49,7 +50,25 @@ export default defineConfig({
         "background_color": "#bc002d",
         "theme_color": "#bc002d",
         "description": "My app for learning Japanese vocabulary"
-      }
+      },
+      workbox: {
+        runtimeCaching: [
+          {
+            urlPattern: ({ request }) => request.destination === 'font',
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'fonts',
+              expiration: {
+                maxEntries: 20,
+                maxAgeSeconds: 60 * 60 * 24 * 365
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          }
+        ]
+      },
     })
   ],
   resolve: {
