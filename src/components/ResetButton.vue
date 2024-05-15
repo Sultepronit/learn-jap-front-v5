@@ -3,6 +3,7 @@ import { isDisplayed } from '../utils/resetButtonDisplay.js';
 
 function reset() {
     localStorage.clear();
+    // localStorage.removeItem
     location.reload();
 }
 </script>

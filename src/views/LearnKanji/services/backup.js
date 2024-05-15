@@ -3,7 +3,7 @@ import { lists } from './data.js';
 import { showResetButton } from "@/utils/resetButtonDisplay";
 
 function saveSession() {
-    localStorage.setItem('kanji_session', JSON.stringify({
+    localStorage.setItem('kanjiSession', JSON.stringify({
         progress: progress.value,
         lists
     }));
@@ -12,19 +12,14 @@ function saveSession() {
 
 function restoreSession() {
     return new Promise(resolve => {
-        const json = localStorage.getItem('kanji_session');
-        if(!json) {
+        const restored = JSON.parse(localStorage.getItem('kanjiSession'));
+        if(restored) {
+            console.log('restored!');
+            showResetButton();
+            resolve(restored);
+        } else {
             resolve(false);
-        }
-
-        const restored = JSON.parse(json);
-        restored.words = JSON.parse(localStorage.getItem('wordsForKanji'));
-
-        showResetButton();
-
-        console.log('restored!');
-        // console.log(restored);
-        resolve(restored);
+        }   
     });
 }
 

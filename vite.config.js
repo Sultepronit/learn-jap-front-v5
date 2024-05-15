@@ -53,7 +53,7 @@ export default defineConfig({
       },
       workbox: {
         runtimeCaching: [
-          {
+          { // fonts
             urlPattern: ({ request }) => request.destination === 'font',
             handler: 'CacheFirst',
             options: {
@@ -66,7 +66,22 @@ export default defineConfig({
                 statuses: [0, 200]
               }
             }
-          }
+          },
+          // { // words for kanji
+          //   urlPattern: ({ url }) => url.search.includes('words_for_kanji'),
+          //   // handler: 'StaleWhileRevalidate',
+          //   handler: 'CacheFirst',
+          //   options: {
+          //     cacheName: 'kanji-words',
+          //     expiration: {
+          //       maxEntries: 10,
+          //       maxAgeSeconds: 60 * 60 * 24
+          //     },
+          //     cacheableResponse: {
+          //       statuses: [0, 200]
+          //     }
+          //   }
+          // }
         ]
       },
     })
