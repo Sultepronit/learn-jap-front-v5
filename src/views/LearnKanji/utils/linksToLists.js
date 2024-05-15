@@ -24,10 +24,7 @@ function makeList(linksJson) {
     const ri = randomInt(0, list.length - 1);
     const firstPart = list.slice(0, ri);
     const secondPart = list.slice(ri);
-    // console.log(firstPart);
-    // console.log(secondPart);
 
-    // return list;
     return [...secondPart, ...firstPart];
 }
 

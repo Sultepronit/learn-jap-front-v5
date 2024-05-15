@@ -16,12 +16,12 @@ function evaluation(card) {
         return;
     }
 
+    progress.value.cards++;
+
     if(card.mark === marks.RETURN) {
-        // progress.value.cards--;
+        progress.value.cards--;
         returnCard(card);
     }
-
-    progress.value.cards++;
 
     if(card.mark === marks.NEUTRAL || card.mark === marks.RETURN) {
         card.progress--;
