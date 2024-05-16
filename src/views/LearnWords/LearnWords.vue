@@ -2,13 +2,13 @@
 import { watch } from 'vue';
 import { startSession, ready } from './services/data.js';
 import { nextCycle, ended } from './utils/cycle.js';
-
+import { removeSession } from './services/backup';
 import LessonStats from './components/LessonStats.vue';
 import CardDisplay from './components/CardDisplay.vue';
 import NavigateButtons from './components/NavigateButtons.vue';
-import HappyEnd from './components/HappyEnd.vue';
-import ResetButton from './components/ResetButton.vue';
 import SpeakMute from './components/SpeakMute.vue';
+import ResetButton from '@/components/ResetButton.vue';
+import HappyEnd from '@/components/HappyEnd.vue';
 
 document.title = 'Learn Jap Words';
 
@@ -25,7 +25,7 @@ watch(ready, () => {
     <template v-if="!ended">
       <SpeakMute />
       <CardDisplay />  
-      <ResetButton />
+      <ResetButton :removeSession="removeSession" />
       <NavigateButtons />
     </template>
     <HappyEnd v-else />

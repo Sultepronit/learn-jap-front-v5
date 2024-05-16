@@ -1,8 +1,9 @@
-import progress from "../utils/progress";
+import { showResetButton } from "@/utils/resetButtonDisplay";
+import progress, { restoreProgress } from "../utils/progress";
 import { lists } from './data.js';
 
 function saveSession() {
-    localStorage.setItem('words_session', JSON.stringify({
+    localStorage.setItem('wordsSession', JSON.stringify({
         progress: progress.value,
         lists
     }));
@@ -11,18 +12,26 @@ function saveSession() {
 
 function restoreSession() {
     return new Promise(resolve => {
-        const json = localStorage.getItem('words_session');
-        if(!json) {
+        const restored = JSON.parse(localStorage.getItem('wordsSession'));
+        if(!restored) {
             resolve(false);
         }
 
-        const restored = JSON.parse(json);
-        restored.plan = JSON.parse(localStorage.getItem('words_plan'));
+        restored.plan = JSON.parse(localStorage.getItem('wordsPlan'));
 
         console.log('restored!');
-        // console.log(restored);
+        console.log(restored);
+
+        restoreProgress(restored.progress);
+        showResetButton();
+
         resolve(restored);
     });
 }
 
-export { saveSession, restoreSession }
+function removeSession() {
+    localStorage.removeItem('wordsSession');
+    localStorage.removeItem('wordsPlan');
+}
+
+export { saveSession, restoreSession, removeSession }

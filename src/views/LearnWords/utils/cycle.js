@@ -5,13 +5,15 @@ import { changeShow as cardDisplay } from "./displayControls";
 import { change as buttons } from './buttonsControls.js';
 import playAudio from "./playAudio";
 import evaluateAndSave from './evaluateAndSave';
+import { removeSession } from "../services/backup";
 
 const card = ref({});
 const ended = ref(false);
 
 function endSession() {
     ended.value = true;
-    localStorage.clear();
+    // localStorage.clear();
+    removeSession();
 }
 
 function nextCycle() {

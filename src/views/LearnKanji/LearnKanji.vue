@@ -2,9 +2,11 @@
 import { watch } from 'vue';
 import { startSession, ready } from './services/data.js';
 import { nextCycle, ended } from './utils/cycle.js';
+import { removeSession } from './services/backup';
 import CardDisplay from './components/CardDisplay.vue';
 import NavigateButtons from './components/NavigateButtons.vue';
 import StatsDisplay from './components/StatsDisplay.vue';
+// import { isDisplayed } from '@/utils/resetButtonDisplay';
 import ResetButton from '@/components/ResetButton.vue';
 import HappyEnd from '@/components/HappyEnd.vue';
 
@@ -24,7 +26,7 @@ watch(ready, () => {
         <template v-if="!ended">
             <main>
                 <CardDisplay />
-                <ResetButton />
+                <ResetButton :removeSession="removeSession" />
             </main>
             <footer>
                 <NavigateButtons />

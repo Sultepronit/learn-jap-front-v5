@@ -7,7 +7,7 @@ function saveSession() {
         progress: progress.value,
         lists
     }));
-    console.log('backup!');
+    // console.log('backup!');
 }
 
 function restoreSession() {
@@ -29,4 +29,9 @@ function restoreSession() {
     });
 }
 
-export { saveSession, restoreSession }
+function removeSession() {
+    localStorage.removeItem('kanjiSession');
+    localStorage.removeItem('kanjiPlan');
+}
+
+export { saveSession, restoreSession, removeSession }

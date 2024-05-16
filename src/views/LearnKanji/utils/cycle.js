@@ -4,6 +4,7 @@ import nextCard from "./nextCard";
 import linksToLists from './linksToLists';
 import { change as buttons } from './buttonsControls.js';
 import evaluateAndSave from './evaluateAndSave';
+import { removeSession } from "../services/backup";
 
 const card = ref({});
 const ended = ref(false);
@@ -11,7 +12,8 @@ const showAnswer = ref(false);
 
 function endSession() {
     ended.value = true;
-    localStorage.clear();
+    // localStorage.clear();
+    removeSession();
 }
 
 function nextCycle() {

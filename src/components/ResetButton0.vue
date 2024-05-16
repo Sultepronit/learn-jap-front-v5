@@ -1,10 +1,9 @@
 <script setup>
-import { isDisplayed } from '@/utils/resetButtonDisplay.js';
-const { removeSession } = defineProps(['removeSession']);
+import { isDisplayed } from '../utils/resetButtonDisplay.js';
 
 function reset() {
-    // localStorage.clear();
-    removeSession();
+    localStorage.clear();
+    // localStorage.removeItem
     location.reload();
 }
 </script>
@@ -17,6 +16,5 @@ function reset() {
 .the-button {
     font-size: 3rem;
     color: red;
-    width: min-content;
 }
 </style>

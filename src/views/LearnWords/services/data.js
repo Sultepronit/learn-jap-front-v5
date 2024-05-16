@@ -2,8 +2,8 @@ import { ref } from "vue";
 import { learnStages, /*repeatVariants*/ } from "../utils/enums.js";
 import { get } from "@/services/commonAPI.js";
 import { restoreSession } from "./backup.js";
-import { restoreProgress } from "../utils/progress.js";
-import { showResetButton } from "../utils/resetButtonDisplay.js";
+// import { restoreProgress } from "../utils/progress.js";
+// import { showResetButton } from "../utils/resetButtonDisplay.js";
 
 let plan = {};
 let lists = {};
@@ -60,7 +60,7 @@ async function fetchData() {
         // repeatVariantList
     }
     
-    localStorage.setItem('words_plan', JSON.stringify(plan));
+    localStorage.setItem('wordsPlan', JSON.stringify(plan));
 }
 
 async function startSession() {
@@ -68,9 +68,9 @@ async function startSession() {
     if(restored) {
         plan = restored.plan;
         lists = restored.lists;
-        restoreProgress(restored.progress);
 
-        showResetButton();
+        // restoreProgress(restored.progress);
+        // showResetButton();
     } else {
         await fetchData();
     }
