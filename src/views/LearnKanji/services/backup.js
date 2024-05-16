@@ -1,4 +1,4 @@
-import progress from "../utils/progress";
+import progress, { restoreProgress } from "../utils/progress";
 import { lists } from './data.js';
 import { showResetButton } from "@/utils/resetButtonDisplay";
 
@@ -14,8 +14,14 @@ function restoreSession() {
     return new Promise(resolve => {
         const restored = JSON.parse(localStorage.getItem('kanjiSession'));
         if(restored) {
+            restored.plan = JSON.parse(localStorage.getItem('kanjiPlan'));
+
             console.log('restored!');
+            console.log(restored);
+
+            restoreProgress(restored.progress);
             showResetButton();
+            
             resolve(restored);
         } else {
             resolve(false);

@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue';
+import { plan } from '../services/data';
 import progress from '../utils/progress.js';
 import { card, showAnswer } from '../utils/cycle.js';
 
@@ -27,15 +28,12 @@ const learning = computed(() =>
 <template>
     <div class="stats">
         <p class="session-stats">
-            <!-- {{ progress.cards }}/{{ progress.problemCards }}:
-            +{{ good }}<sup>{{ progress.best }}</sup>±{{ progress.neutral }}-{{ progress.bad }}
-            <strong>{{ progress.upgraded }}<sup>{{ progress.autorepeat }}</sup></strong> -->
             {{ progress.cards }} |
             <span class="green">
-                l: <i>{{ learnPass }}</i> {{ progress.learn.good }} <b>{{ progress.learn.upgrade }}</b>
+                <b><u>{{ plan.learnNumber }}</u></b> <i>{{ learnPass }}</i> {{ progress.learn.good }} <b>{{ progress.learn.upgrade }}</b>
             </span> |
             <span>
-                r: <i>{{ repeatPass }}</i> <b>{{ repeatGood }}<sub>{{ progress.repeat.best }}</sub>
+                <b><u>{{ plan.repeatNumber }}</u></b> <i>{{ repeatPass }}</i> <b>{{ repeatGood }}<sub>{{ progress.repeat.best }}</sub>
                 <sup>{{ progress.repeat.autorepeat }}</sup>-{{ progress.repeat.bad }}</b>
             </span> |
             <i>{{ remember }}</i>

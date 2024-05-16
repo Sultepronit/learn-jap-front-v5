@@ -2,8 +2,9 @@ import { ref } from 'vue';
 import { get } from '@/services/commonAPI.js';
 import { repeatStages } from '../utils/enums';
 import { restoreSession } from "./backup.js";
-import { restoreProgress } from '../utils/progress';
+// import { restoreProgress } from '../utils/progress';
 
+let plan = {};
 let lists = {};
 let words = {};
 let wordsAreUpdated = false;
@@ -23,8 +24,13 @@ async function fetchData() {
         .fill(repeatStages.REPEAT, learnList.length);
     console.log(repeatStageList);
 
-    // lists = { repeatList, problemList, repeatStageList };
+    plan = {
+        learnNumber: learnList.length,
+        repeatNumber: sessionLength - learnList.length
+    };
     lists = { repeatStageList, learnList, repeatList, rememberList: [] };
+
+    localStorage.setItem('kanjiPlan', JSON.stringify(plan));
 }
 
 async function getTheWords() {
@@ -41,8 +47,8 @@ async function startSession() {
     if(restored) {
         // words = restored.words;
         lists = restored.lists;
-        restoreProgress(restored.progress);
-        console.log(restored);
+        plan = restored.plan;
+        // restoreProgress(restored.progress);
         wordsAreUpdated = true;
     } else {
         await fetchData();
@@ -61,4 +67,4 @@ async function startSession() {
     }
 }
 
-export { startSession, ready, lists, words };
+export { startSession, ready, plan, lists, words };

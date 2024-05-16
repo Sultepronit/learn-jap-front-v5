@@ -32,6 +32,7 @@ function evaluation(card) {
             if(card.progress !== 1) { // first stage
                 card.progress = 1;
             } else { // second stage
+                progress.value.learn.upgrade++;
                 card.progress = 0;
                 card.repeatStatus = 1;
             }

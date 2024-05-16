@@ -15,7 +15,7 @@ function makeList(linksJson) {
         prepareWord(word);
         // console.log(word);
         const item = {
-            articleNumber: link - 1,
+            articleNumber: link,
             article: `${word.parsed.writingsString} : ${word.parsed.readingsString} – ${word.translation}`
         }
         list.push(item);
