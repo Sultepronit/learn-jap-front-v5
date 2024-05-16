@@ -16,9 +16,6 @@ async function fetchData() {
     // const { repeatList, problemList } = data;
     const { learnList, repeatList, sessionLength } = data;
     // sessionLength = data.sessionLength;
-    // words = data.words;
-    // words = await get('words_for_kanji');
-    // words = JSON.parse(localStorage.getItem('wordsForKanji'));
 
     const repeatStageList = Array(sessionLength)
         // .fill(repeatStages.PROBLEM, 0, problemList.length)
@@ -28,12 +25,13 @@ async function fetchData() {
 
     // lists = { repeatList, problemList, repeatStageList };
     lists = { repeatStageList, learnList, repeatList, rememberList: [] };
-
-    // localStorage.setItem('wordsForKanji', JSON.stringify(words));
 }
 
 async function getTheWords() {
-    words = await get('words_for_kanji');
+    const data = await get('words_for_kanji');
+    if(!data) return;
+
+    words = data;
     localStorage.setItem('wordsForKanji', JSON.stringify(words));
     wordsAreUpdated = true;
 }
@@ -63,4 +61,4 @@ async function startSession() {
     }
 }
 
-export { startSession, ready, /* sessionLength, */ lists, words };
+export { startSession, ready, lists, words };
