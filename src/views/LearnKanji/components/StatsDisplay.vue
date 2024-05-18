@@ -50,11 +50,12 @@ const learning = computed(() =>
 <style scoped>
 .stats {
     margin: 0.2rem 0.5rem 0;
-    display: flex;
+    /* display: flex;
     align-items: start;
-    justify-content: space-between;
+    justify-content: space-between; */
 }
 .card-stats {
+    width: max-content;
     border-bottom: 3px solid white;
 }
 .learning {

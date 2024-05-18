@@ -7,7 +7,7 @@ import progress from './progress';
 function evaluation(card) {
     progress.value[card.repeatStage][card.mark]++;
     // console.log(card.repeatStage, {...progress.value[card.repeatStage]});
-    console.log({...progress.value});
+    // console.log({...progress.value});
 
     if(card.mark === marks.AUTOREPEAT) {
         card.autorepeat = 0;
@@ -29,13 +29,16 @@ function evaluation(card) {
 
     if(card.repeatStage === repeatStages.LEARN) {
         if(card.mark === marks.GOOD) {
-            if(card.progress !== 1) { // first stage
-                card.progress = 1;
-            } else { // second stage
-                progress.value.learn.upgrade++;
-                card.progress = 0;
-                card.repeatStatus = 1;
-            }
+            // if(card.progress !== 1) { // first stage
+            //     card.progress = 1;
+            // } else { // second stage
+            //     progress.value.learn.upgrade++;
+            //     card.progress = 0;
+            //     card.repeatStatus = 1;
+            // }
+            progress.value.learn.upgrade++;
+            card.progress = 0;
+            card.repeatStatus = 1;
         } else if(card.mark === marks.BAD) {
             card.progress = 0;
             progress.value.cards--;
