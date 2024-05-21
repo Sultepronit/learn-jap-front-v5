@@ -159,7 +159,7 @@ function evaluateAndSave(cardArg) {
     // return;
     if(Object.keys(changes).length > 0) {
         // update(card.id, changes);
-        patch('jap', {id: card.id, changes});
+        patch('words', {id: card.id, changes});
     }
 }
 

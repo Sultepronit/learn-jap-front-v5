@@ -10,7 +10,7 @@ let lists = {};
 const ready = ref(false);
 
 async function fetchData() {
-    const data = await get('jap_session');
+    const data = await get('/session/words');
     console.log(data);
     const {
         constsAndVars,

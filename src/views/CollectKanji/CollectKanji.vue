@@ -3,9 +3,7 @@ import { ref } from 'vue';
 import { get } from '@/services/commonAPI.js';
 
 const results = ref(null);
-// results.value = await get('select_kanji');
-get('select_kanji').then(data => results.value = data);
-console.log(results.value);
+get('/session/collect-kanji').then(data => results.value = data);
 </script>
 
 <template>

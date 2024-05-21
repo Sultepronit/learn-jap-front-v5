@@ -1,13 +1,11 @@
 const apiUrl = import.meta.env.VITE_API_URL;
 
-async function get(table) { // get all
-    const url = apiUrl + table;
+async function get(request) { // get all
+    // const url = `${apiUrl}/table/${table}`;
+    const url = apiUrl + request;
     try {
-        console.time('get');
         const resp = await fetch(url);
         const data = await resp.json();
-        // console.log(data.length);
-        console.timeEnd('get');
         return data;
     } catch (error) {
         console.log(error);
@@ -16,7 +14,7 @@ async function get(table) { // get all
 }
 
 async function post(table, data) {
-    const url = apiUrl + table;
+    const url = `${apiUrl}/table/${table}`;
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -32,7 +30,7 @@ async function post(table, data) {
 }
 
 async function patch(table, card) {
-    const url = `${apiUrl}${table}?id=${card.id}`;
+    const url = `${apiUrl}/table/${table}/${card.id}`;
     console.log(card);
     try {
         const response = await fetch(url, {
@@ -42,7 +40,7 @@ async function patch(table, card) {
         // console.log(response);
         const results = await response.text();
 
-        if(results !== '{"success": true}') {
+        if(results !== '{"success":true}') {
             throw new Error('Wrong response: ' + results);
         }
         console.log('saved!')
@@ -64,20 +62,17 @@ async function patch(table, card) {
 }
 
 async function deleteApi(table, id) {
-    // const url = `${apiUrl}${table}?id=${id}&real-method=delete`;
-    const url = `${apiUrl}${table}?id=${id}`;
+    const url = `${apiUrl}/table/${table}/${id}`;
     try {
         const response = await fetch(url, {
             method: 'DELETE',
         });
-        // console.log(response);
         const results = await response.text();
-        console.log(results);
+        // console.log(results);
 
-        if(results === '{"success": true}') {
+        if(results === '{"success":true}') {
             return true;
         } else {
-            // alert('Not deleted!');
             throw new Error('Wrong response!');
         }
     } catch (error) {

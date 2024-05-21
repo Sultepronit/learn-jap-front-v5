@@ -4,7 +4,7 @@ import StartMenu from './views/StartMenu/StartMenu.vue';
 import WordsDb from './views/WordsDb/WordsDb.vue';
 import LearnWords from './views/LearnWords/LearnWords.vue';
 import LearnKanji from './views/LearnKanji/LearnKanji.vue';
-import CollectKanji from './views/SelectKanji/SelectKanji.vue';
+import CollectKanji from './views/CollectKanji/CollectKanji.vue';
 import CollectedKanjiDb from './views/CollectedKanjiDb/CollectedKanjiDb.vue';
 
 
@@ -13,7 +13,7 @@ const routes = {
     '#/kanji-tap': LearnKanji,
     '#/words-db': WordsDb,
     '#/collect-kanji': CollectKanji,
-    '#/collected-kanji-db': CollectedKanjiDb
+    '#/kanji-db': CollectedKanjiDb
 };
 
 const currentPath = ref(window.location.hash);

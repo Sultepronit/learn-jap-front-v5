@@ -5,7 +5,7 @@ const db = ref([]);
 const ready = ref(false);
 
 function startSession() {
-    get('jap').then((data) => {
+    get('/table/words').then((data) => {
         db.value = data;
         ready.value = true;
     });
@@ -23,11 +23,13 @@ const numberToSelect = ref(0);
 async function createNewCard() {
     try {
         isSaving.value = true;
+
         const newCardNumber = { cardNumber: db.value.length + 1 };
-        const newCard = await post('jap', newCardNumber);
+        const newCard = await post('words', newCardNumber);
+
         db.value.push(newCard);
         numberToSelect.value = newCard.cardNumber;
-        // console.log(newCard);
+
         isSaving.value = false;
     } catch(e) {
         console.error(e);
@@ -46,30 +48,25 @@ async function update(cardNumber, field, value) {
     }
     data.changes[field] = value;
 
-    const success = await patch('jap', data);
+    const success = await patch('words', data);
     if(success) {
         isSaving.value = false;
     }
 }
 
 async function deleteCard(cardNumber) {
-    const confirmation = confirm(`Do you confrim deleating this card?`);
+    const confirmation = confirm(`Do you confrim deleting this card?`);
     if(!confirmation) {
         return;
     }
+
     isSaving.value = true;
-    try {
-        const id = db.value[cardNumber - 1].id;
-        const success = await deleteApi('jap', id);
-        if(success) {
-            location.reload();
-            isSaving.value = false;
-        } else {
-            // alert('Not deleted!');
-        }
-    } catch(e) {
-        console.error(e);
-        // alert('Error!');
+
+    const id = db.value[cardNumber - 1].id;
+    const success = await deleteApi('words', id);
+    if(success) {
+        location.reload();
+        isSaving.value = false;
     }
 }
 

@@ -12,7 +12,7 @@ let wordsAreUpdated = false;
 const ready = ref(false);
 
 async function fetchData() {
-    const data = await get('kanji_session');
+    const data = await get('/session/kanji');
     console.log(data);
     // const { repeatList, problemList } = data;
     const { learnList, repeatList, sessionLength } = data;
@@ -34,7 +34,7 @@ async function fetchData() {
 }
 
 async function getTheWords() {
-    const data = await get('words_for_kanji');
+    const data = await get('/session/words-for-kanji');
     if(!data) return;
 
     words = data;
