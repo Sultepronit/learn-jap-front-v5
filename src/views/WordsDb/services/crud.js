@@ -65,7 +65,8 @@ async function deleteCard(cardNumber) {
     const id = db.value[cardNumber - 1].id;
     const success = await deleteApi('words', id);
     if(success) {
-        location.reload();
+        // location.reload();
+        refetch();
         isSaving.value = false;
     }
 }
