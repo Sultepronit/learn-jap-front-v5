@@ -3,5 +3,8 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 
-createApp(App).mount('#app')
+import { get } from '@/services/commonAPI';
 
+get('/init');
+
+createApp(App).mount('#app')

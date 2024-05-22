@@ -1,7 +1,8 @@
 import { ref } from "vue";
 import { marks, repeatStages } from "./enums";
 import nextCard from "./nextCard";
-import linksToLists from './linksToLists';
+// import linksToLists from './linksToLists';
+import linksToLists from '@/utils/linksToLists';
 import { change as buttons } from './buttonsControls.js';
 import evaluateAndSave from './evaluateAndSave';
 import { removeSession } from "../services/backup";

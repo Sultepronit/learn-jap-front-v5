@@ -1,4 +1,5 @@
-import { words } from "../services/data";
+// import { words } from "../services/data";
+import { wordsForKanji } from '@/services/wordsForKanji.js';
 import { parseToString as prepareWord } from "@/utils/parseWritingsReadings";
 import { randomInt } from "@/utils/random";
 
@@ -10,7 +11,7 @@ function makeList(linksJson) {
 
     const list = [];
     for(const link of links) {
-        const word = words[link - 1];
+        const word = wordsForKanji[link - 1];
         // console.log(word);
         prepareWord(word);
         // console.log(word);
@@ -28,8 +29,7 @@ function makeList(linksJson) {
     return [...secondPart, ...firstPart];
 }
 
-function linksToLists(card) {    
-    // const links = JSON.parse(card.links);
+function linksToLists(card) {
     card.wordList = makeList(card.links);
     card.otherList = makeList(card.otherLinks);
 }

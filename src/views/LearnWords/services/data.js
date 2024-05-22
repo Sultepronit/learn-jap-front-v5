@@ -1,12 +1,13 @@
 import { ref } from "vue";
-import { learnStages, /*repeatVariants*/ } from "../utils/enums.js";
+import { learnStages } from "../utils/enums.js";
 import { get } from "@/services/commonAPI.js";
 import { restoreSession } from "./backup.js";
-// import { restoreProgress } from "../utils/progress.js";
-// import { showResetButton } from "../utils/resetButtonDisplay.js";
+import { getWordsForKanji } from "@/services/wordsForKanji.js";
 
 let plan = {};
 let lists = {};
+let kanji = [];
+let kanjiAreUpdated = false;
 const ready = ref(false);
 
 async function fetchData() {
@@ -17,10 +18,9 @@ async function fetchData() {
         learnList,
         confirmList,
         repeatList,
-        // problemList,
         recognizeList
     } = data;
-    const { sessionLength, confirmDivisor, /*problemDivisor*/ } = constsAndVars;
+    const { sessionLength, confirmDivisor } = constsAndVars;
 
     const learnNumber = learnList.length - 1;
     const confirmNumber = Math.round(confirmList.length / confirmDivisor);
@@ -35,18 +35,11 @@ async function fetchData() {
     console.log(learnStageList);
     
     const repeatNumber = sessionLength - nextStop;
-    // const problemNumber = Math.round(problemList.length / problemDivisor);
-
-    // const repeatVariantList = Array(repeatNumber)
-    //     .fill(repeatVariants.PROBLEM)
-    //     .fill(repeatVariants.NORMAL, problemNumber);
 
     plan = {
-        // sessionLength,
         learnNumber,
         confirmNumber,
         repeatNumber,
-        // problemNumber,
         recognizeNumber
     };
     lists = {
@@ -54,13 +47,20 @@ async function fetchData() {
         confirmList,
         repeatList,
         rememberList: [],
-        // problemList,
         recognizeList,
         learnStageList,
-        // repeatVariantList
     }
     
     localStorage.setItem('wordsPlan', JSON.stringify(plan));
+}
+
+async function getTheKanji() {
+    const data = await get('/session/kanji-for-words');
+    if(!data) return;
+
+    kanji = data;
+    localStorage.setItem('kanjiForWords', JSON.stringify(kanji));
+    kanjiAreUpdated = true;
 }
 
 async function startSession() {
@@ -68,15 +68,24 @@ async function startSession() {
     if(restored) {
         plan = restored.plan;
         lists = restored.lists;
-
-        // restoreProgress(restored.progress);
-        // showResetButton();
     } else {
         await fetchData();
+    }
+
+    kanji = JSON.parse(localStorage.getItem('kanjiForWords'));
+    
+    if(!kanji) {
+        await getTheKanji();
     }
     
     console.log(lists);
     ready.value = true;
+
+    if(!kanjiAreUpdated) {
+        getTheKanji();
+    }
+
+    getWordsForKanji();
 }
 
 export { startSession, ready, plan, lists };

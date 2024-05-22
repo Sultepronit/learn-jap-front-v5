@@ -29,14 +29,6 @@ function evaluation(card) {
 
     if(card.repeatStage === repeatStages.LEARN) {
         if(card.mark === marks.GOOD) {
-            // if(card.progress !== 1) { // first stage
-            //     card.progress = 1;
-            // } else { // second stage
-            //     progress.value.learn.upgrade++;
-            //     card.progress = 0;
-            //     card.repeatStatus = 1;
-            // }
-            progress.value.learn.upgrade++;
             card.progress = 0;
             card.repeatStatus = 1;
         } else if(card.mark === marks.BAD) {

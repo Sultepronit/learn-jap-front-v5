@@ -2,13 +2,12 @@ import { ref } from 'vue';
 import { get } from '@/services/commonAPI.js';
 import { repeatStages } from '../utils/enums';
 import { restoreSession } from "./backup.js";
-// import { restoreProgress } from '../utils/progress';
+import { getWordsForKanji, restoreOrGetWordsForKanji } from '@/services/wordsForKanji.js';
 
 let plan = {};
 let lists = {};
-let words = {};
+let words = [];
 let wordsAreUpdated = false;
-// let sessionLength = 0;
 const ready = ref(false);
 
 async function fetchData() {
@@ -33,37 +32,37 @@ async function fetchData() {
     localStorage.setItem('kanjiPlan', JSON.stringify(plan));
 }
 
-async function getTheWords() {
-    const data = await get('/session/words-for-kanji');
-    if(!data) return;
+// async function getTheWords() {
+//     const data = await get('/session/words-for-kanji');
+//     if(!data) return;
 
-    words = data;
-    localStorage.setItem('wordsForKanji', JSON.stringify(words));
-    wordsAreUpdated = true;
-}
+//     words = data;
+//     localStorage.setItem('wordsForKanji', JSON.stringify(words));
+//     wordsAreUpdated = true;
+// }
 
 async function startSession() {
     const restored = await restoreSession();
     if(restored) {
-        // words = restored.words;
         lists = restored.lists;
         plan = restored.plan;
-        // restoreProgress(restored.progress);
         wordsAreUpdated = true;
     } else {
         await fetchData();
     }
 
-    words = JSON.parse(localStorage.getItem('wordsForKanji'));
-    // console.log(words);
-    if(!words) {
-        await getTheWords();
-    }
+    // words = JSON.parse(localStorage.getItem('wordsForKanji'));
+    
+    // if(!words) {
+    //     await getTheWords();
+    // }
+
+    wordsAreUpdated = await restoreOrGetWordsForKanji();
     
     ready.value = true;
 
     if(!wordsAreUpdated) {
-        getTheWords();
+        getWordsForKanji();
     }
 }
 

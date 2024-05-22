@@ -30,7 +30,7 @@ const learning = computed(() =>
         <p class="session-stats">
             {{ progress.cards }} |
             <span class="green">
-                <b><u>{{ plan.learnNumber }}</u></b> <i>{{ learnPass }}</i> {{ progress.learn.good }} <b>{{ progress.learn.upgrade }}</b>
+                <b><u>{{ plan.learnNumber }}</u></b> <i>{{ learnPass }}</i> <b>{{ progress.learn.good }}</b>
             </span> |
             <span>
                 <b><u>{{ plan.repeatNumber }}</u></b> <i>{{ repeatPass }}</i> <b>{{ repeatGood }}<sub>{{ progress.repeat.best }}</sub>
