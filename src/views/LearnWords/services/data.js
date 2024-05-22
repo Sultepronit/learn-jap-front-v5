@@ -2,11 +2,11 @@ import { ref } from "vue";
 import { learnStages } from "../utils/enums.js";
 import { get } from "@/services/commonAPI.js";
 import { restoreSession } from "./backup.js";
-import { getWordsForKanji } from "@/services/wordsForKanji.js";
+import { restoreOrGetWordsForKanji } from "@/services/wordsForKanji.js";
 
 let plan = {};
 let lists = {};
-let kanji = [];
+let kanji = {};
 let kanjiAreUpdated = false;
 const ready = ref(false);
 
@@ -68,24 +68,21 @@ async function startSession() {
     if(restored) {
         plan = restored.plan;
         lists = restored.lists;
+        kanjiAreUpdated = true;
     } else {
         await fetchData();
     }
 
     kanji = JSON.parse(localStorage.getItem('kanjiForWords'));
     
-    if(!kanji) {
-        await getTheKanji();
-    }
-    
     console.log(lists);
     ready.value = true;
 
-    if(!kanjiAreUpdated) {
+    if(!kanjiAreUpdated || !kanji) {
         getTheKanji();
     }
 
-    getWordsForKanji();
+    restoreOrGetWordsForKanji();
 }
 
-export { startSession, ready, plan, lists };
+export { startSession, ready, plan, lists, kanji };

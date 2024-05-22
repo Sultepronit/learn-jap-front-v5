@@ -2,6 +2,7 @@ import { pullRandomElement } from "@/utils/random";
 import { learnStages, /*repeatVariants,*/ directions } from "./enums";
 import { lists } from "../services/data";
 import { parseToStringAndArray } from "@/utils/parseWritingsReadings";
+import { getKanjiList } from './kanji.js';
 
 function nextCard() {
     const {
@@ -44,6 +45,7 @@ function nextCard() {
     Object.assign(card, {learnStage, direction});
 
     parseToStringAndArray(card);
+    getKanjiList(card);
 
     console.log(card);
     return card;

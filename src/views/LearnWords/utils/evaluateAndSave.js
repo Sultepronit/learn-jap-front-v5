@@ -155,8 +155,8 @@ function evaluateAndSave(cardArg) {
     saveSession();
 
     console.log(changes);
-    // console.log('not saved!');
-    // return;
+    console.log('not saved!');
+    return;
     if(Object.keys(changes).length > 0) {
         // update(card.id, changes);
         patch('words', {id: card.id, changes});

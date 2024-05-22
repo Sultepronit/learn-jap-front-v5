@@ -1,10 +1,18 @@
 <script setup>
-import { computed } from 'vue';
+import WordList from '@/components/WordList.vue';
+import { watch, computed } from 'vue';
 import { randomInt } from '@/utils/random.js';
 import { show } from '../utils/displayControls.js';
 import { card } from '../utils/cycle.js';
 import { learnStages } from '../utils/enums';
 import { toKatakana } from "wanakana";
+import { getWordsList, selectedKanji } from '../utils/kanji.js';
+
+watch(show, () => {
+    if(!show.value.answer) {
+        selectedKanji.value = null;
+    }
+});
 
 const randomWriting = computed(() => {
     const ri = randomInt(0, card.value.parsed.writingsArray.length - 1);
@@ -34,6 +42,16 @@ const randomReading = computed(() => {
         class="question-answer"
         :class="{ autorep: card.learnStage === learnStages.AUTOREPEAT }"
     >
+        <p id="kanji" v-show="show.answer">
+            <span
+                v-for="kanji in card.parsed.kanjis"
+                :key="kanji"
+                @click="getWordsList(kanji, card.cardNumber)"
+            >
+                {{ kanji }}
+            </span>
+        </p>
+        
         <p class="writing" :class="card.recogMark">
             <span
                 v-show="show.writing"
@@ -44,6 +62,7 @@ const randomReading = computed(() => {
                 v-html="card.parsed.writingsString"
             />
         </p>
+
         <p id="reading">
             <span
                 v-show="show.reading"
@@ -54,16 +73,22 @@ const randomReading = computed(() => {
                 v-html="card.parsed.readingsString"
             />
         </p>
+
         <p
             id="translation"    
             v-show="show.translation"
             v-html="card.translation"
         />
+
         <p
             id="example"    
             v-show="show.answer"
             v-html="card.example"
         />
+    </section>
+
+    <section id="word-list">
+        <WordList :card="selectedKanji" />
     </section>
 </main>
 </template>
@@ -108,6 +133,10 @@ main {
     color: red;
     font-weight: bold;
 }
+#kanji span {
+    margin-inline: 0.4em;
+}
+
 .writing {
     font-size: 3rem;
     border-bottom: 5px solid white;
@@ -117,6 +146,11 @@ main {
 #example {
     margin-top: 1rem;
 }
+
+#word-list {
+    font-size: 1rem;
+}
+
 .good {
     border-color: green;
 }
