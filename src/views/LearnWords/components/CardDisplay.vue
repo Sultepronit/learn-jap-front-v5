@@ -6,7 +6,7 @@ import { show } from '../utils/displayControls.js';
 import { card } from '../utils/cycle.js';
 import { learnStages } from '../utils/enums';
 import { toKatakana } from "wanakana";
-import { getWordsList, selectedKanji } from '../utils/kanji.js';
+import { selectKanji, selectedKanji } from '../utils/kanji.js';
 
 watch(show, () => {
     if(!show.value.answer) {
@@ -46,7 +46,7 @@ const randomReading = computed(() => {
             <span
                 v-for="kanji in card.parsed.kanjis"
                 :key="kanji"
-                @click="getWordsList(kanji, card.cardNumber)"
+                @click="selectKanji(kanji, card.cardNumber)"
             >
                 {{ kanji }}
             </span>

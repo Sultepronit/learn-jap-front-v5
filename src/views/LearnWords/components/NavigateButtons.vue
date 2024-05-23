@@ -37,7 +37,7 @@ import { params } from '../utils/buttonsControls.js';
 footer {
     display: flex;
     position: fixed;
-    /* bottom: 0.5rem; */
+    background: white;
     bottom: 0;
     padding: 0.4rem 0 0.5rem;
     width: 100%;
