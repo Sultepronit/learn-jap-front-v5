@@ -57,19 +57,6 @@ watch(showAnswer, (val) => {
 </template>
 
 <style scoped>
-.sans {
-	font-family: 'Noto Sans JP', sans-serif;
-}
-.serif {
-	font-family: 'Noto Serif JP', serif;
-}
-.maru {
-	font-family: 'Zen Maru Gothic', sans-serif;
-}
-.kurenaido {
-	font-family: 'Zen Kurenaido', sans-serif;
-}
-
 .the-kanji {
     font-size: 4rem;
     text-align: center;

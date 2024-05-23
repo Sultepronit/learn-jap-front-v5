@@ -24,6 +24,19 @@
     src: url('./fonts/ZenMaruGothic-Regular.ttf');
 }
 
+.sans {
+	font-family: 'Noto Sans JP', sans-serif;
+}
+.serif {
+	font-family: 'Noto Serif JP', serif;
+}
+.maru {
+	font-family: 'Zen Maru Gothic', sans-serif;
+}
+.kurenaido {
+	font-family: 'Zen Kurenaido', sans-serif;
+}
+
 .gray {
     color: gray;
 }

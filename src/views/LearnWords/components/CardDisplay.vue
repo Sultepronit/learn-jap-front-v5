@@ -1,6 +1,6 @@
 <script setup>
 import WordList from '@/components/WordList.vue';
-import { watch, computed } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { randomInt } from '@/utils/random.js';
 import { show } from '../utils/displayControls.js';
 import { card } from '../utils/cycle.js';
@@ -8,7 +8,12 @@ import { learnStages } from '../utils/enums';
 import { toKatakana } from "wanakana";
 import { selectKanji, selectedKanji } from '../utils/kanji.js';
 
+const fonts = ['sans', 'serif', 'maru', 'kurenaido'];
+const fontNumber = ref(0);
+
 watch(show, () => {
+    fontNumber.value = randomInt(0, 3);
+
     if(!show.value.answer) {
         selectedKanji.value = null;
     }
@@ -52,7 +57,7 @@ const randomReading = computed(() => {
             </span>
         </p>
         
-        <p class="writing" :class="card.recogMark">
+        <p class="writing" :class="[card.recogMark, fonts[fontNumber]]">
             <span
                 v-show="show.writing"
                 v-html="randomWriting"
