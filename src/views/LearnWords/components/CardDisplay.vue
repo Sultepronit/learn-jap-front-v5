@@ -44,7 +44,7 @@ const randomReading = computed(() => {
     >
         <p id="kanji" v-show="show.answer">
             <span
-                v-for="kanji in card.parsed.kanjis"
+                v-for="kanji in card.kanjis"
                 :key="kanji"
                 @click="selectKanji(kanji, card.cardNumber)"
             >

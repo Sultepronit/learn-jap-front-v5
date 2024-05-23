@@ -3,7 +3,7 @@ import { toKatakana } from "wanakana";
 
 function parseToString(card) {
     if(card.parsed) {
-        console.log('I was here already!');
+        // console.log('I was here already!');
         return;
     }
 
