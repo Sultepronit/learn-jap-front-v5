@@ -16,7 +16,6 @@ async function fetchData() {
 
     plan = data.plan;
     session = data.session;
-    session.rememberList = [];
     
     localStorage.setItem('wordsPlan', JSON.stringify(plan));
 }

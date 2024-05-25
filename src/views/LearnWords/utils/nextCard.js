@@ -12,13 +12,14 @@ function nextCard() {
     const card = session.shift();
     const direction = (card.fProgress > card.bProgress)
         ? directions.BACKWARD : directions.FORWARD;
-    console.log(direction);
+    // console.log(direction);
 
     card.direction = direction;
 
     parseToStringAndArray(card);
     getKanjiList(card);
 
+    console.log(session);
     console.log(card);
     return card;
 }
@@ -26,9 +27,11 @@ function nextCard() {
 function returnCard(card) {
     console.log("I'll be back!");
     if(card.learnStage === learnStages.REPEAT) {
-        card.learnStage = learnStages.REMEMBER;
+        // card.learnStage = learnStages.REMEMBER;
+        session.push({...card, learnStage: learnStages.REMEMBER});
+    } else {
+        session.push(card);
     }
-    session.push(card);
 }
 
 export default nextCard;
