@@ -2,7 +2,7 @@ import { saveSession } from "../services/backup";
 // import update from "../services/update";
 import { patch } from "@/services/commonAPI";
 import { directions, marks } from "./enums";
-import { returnCard } from './nextCard';
+import { returnCard, repeatOneMore } from './nextCard';
 import progress from './progress';
 
 function basicIncrement(card) {
@@ -120,6 +120,7 @@ const evaluations = {
         }
     },
     autorepeat(card) {
+        repeatOneMore();
         progress.value.cards--;
 
         card[`${card.direction}Autorepeat`] = 0;

@@ -12,7 +12,6 @@ const ended = ref(false);
 
 function endSession() {
     ended.value = true;
-    // localStorage.clear();
     removeSession();
 }
 
@@ -26,7 +25,7 @@ function nextCycle() {
         return;
     }
   
-    if(card.value[`${card.value.direction}Autorepeat`]) {
+    if(card.value.learnStage === learnStages.AUTOREPEAT) {
         autorepeat();
     } else if(card.value.learnStage === learnStages.RECOGNIZE) {
         recognition();
@@ -39,8 +38,6 @@ function nextCycle() {
 function autorepeat() {
     showAnswerAndPlay();
 
-    // card.value.autorepeated = true; // adds black border
-    card.value.learnStage = learnStages.AUTOREPEAT;
     evaluateAndSave(card);
 
     buttons.setAction(nextCycle);

@@ -25,11 +25,25 @@ function nextCard() {
 
 function returnCard(card) {
     console.log("I'll be back!");
-    if(card.learnStage === learnStages.REPEAT) {
-        card.learnStage = learnStages.REMEMBER;
+    // console.log(card.value);
+    if(card.learnStage === learnStages.LEARN) {
+        lists.learnStageList.push(learnStages.LEARN);
+        lists.learnList.push(card);
+        console.log(lists.learnList);
+    } else {
+        lists.learnStageList.push(learnStages.REMEMBER);
+        lists.rememberList.push(card);
+        console.log(lists.rememberList);
     }
-    session.push(card);
+    // console.log(lists);
+}
+
+function repeatOneMore() {
+    console.log("repeat more!");
+    // const { learnStageList, repeatVariantList } = lists;
+    lists.learnStageList.push(learnStages.REPEAT);
+    // repeatVariantList.push(repeatVariants.NORMAL);
 }
 
 export default nextCard;
-export { returnCard };
+export { returnCard, repeatOneMore };
