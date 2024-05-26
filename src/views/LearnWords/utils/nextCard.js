@@ -1,4 +1,3 @@
-// import { pullRandomElement } from "@/utils/random";
 import { learnStages, directions } from "./enums";
 import { session } from "../services/data";
 import { parseToStringAndArray } from "@/utils/parseWritingsReadings";
@@ -10,11 +9,8 @@ function nextCard() {
     }
 
     const card = session.shift();
-    const direction = (card.fProgress > card.bProgress)
+    card.direction = (card.fProgress > card.bProgress)
         ? directions.BACKWARD : directions.FORWARD;
-    // console.log(direction);
-
-    card.direction = direction;
 
     parseToStringAndArray(card);
     getKanjiList(card);

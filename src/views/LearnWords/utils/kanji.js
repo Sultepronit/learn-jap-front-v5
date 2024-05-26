@@ -6,6 +6,7 @@ const selectedKanji = ref(null);
 const previousCases = {};
 
 function getKanjiList(card) {
+    selectedKanji.value = null;
     if(card.kanjis) return;
 
     const unique = new Set();
