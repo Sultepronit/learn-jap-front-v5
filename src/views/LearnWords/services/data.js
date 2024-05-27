@@ -1,55 +1,21 @@
 import { ref } from "vue";
-import { learnStages } from "../utils/enums.js";
+// import { learnStages } from "../utils/enums.js";
 import { get } from "@/services/commonAPI.js";
 import { restoreSession } from "./backup.js";
 import { restoreOrGetWordsForKanji } from "@/services/wordsForKanji.js";
 
 let plan = {};
-let lists = {};
+let session = [];
 let kanji = {};
 let kanjiAreUpdated = false;
 const ready = ref(false);
 
 async function fetchData() {
-    const data = await get('/session/words');
+    const data = await get('/session/words-ready');
     console.log(data);
-    const {
-        constsAndVars,
-        learnList,
-        confirmList,
-        repeatList,
-        recognizeList
-    } = data;
-    const { sessionLength, confirmDivisor } = constsAndVars;
 
-    const learnNumber = learnList.length - 1;
-    const confirmNumber = Math.round(confirmList.length / confirmDivisor);
-    const recognizeNumber = Math.ceil(recognizeList?.length / 5);
-
-    let nextStop = learnNumber;
-    const learnStageList = Array(sessionLength)
-        .fill(learnStages.LEARN, 0, nextStop)
-        .fill(learnStages.CONFIRM, nextStop)
-        .fill(learnStages.RECOGNIZE, nextStop += confirmNumber)
-        .fill(learnStages.REPEAT, nextStop += recognizeNumber);
-    console.log(learnStageList);
-    
-    const repeatNumber = sessionLength - nextStop;
-
-    plan = {
-        learnNumber,
-        confirmNumber,
-        repeatNumber,
-        recognizeNumber
-    };
-    lists = {
-        learnList,
-        confirmList,
-        repeatList,
-        rememberList: [],
-        recognizeList,
-        learnStageList,
-    }
+    plan = data.plan;
+    session = data.session;
     
     localStorage.setItem('wordsPlan', JSON.stringify(plan));
 }
@@ -67,7 +33,7 @@ async function startSession() {
     const restored = await restoreSession();
     if(restored) {
         plan = restored.plan;
-        lists = restored.lists;
+        session = restored.session;
         kanjiAreUpdated = true;
     } else {
         await fetchData();
@@ -75,7 +41,7 @@ async function startSession() {
 
     kanji = JSON.parse(localStorage.getItem('kanjiForWords'));
     
-    console.log(lists);
+    console.log(session);
     ready.value = true;
 
     if(!kanjiAreUpdated || !kanji) {
@@ -85,4 +51,4 @@ async function startSession() {
     restoreOrGetWordsForKanji();
 }
 
-export { startSession, ready, plan, lists, kanji };
+export { startSession, ready, plan, session, kanji };
