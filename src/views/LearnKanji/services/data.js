@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 import { get } from '@/services/commonAPI.js';
 import progress from '../utils/progress.js';
-import { restoreSession } from "./backup.js";
+import { saveSession, restoreSession } from "./backup.js";
 import { getWordsForKanji, restoreOrGetWordsForKanji } from '@/services/wordsForKanji.js';
 
 let plan = {};
@@ -18,7 +18,8 @@ async function fetchData() {
     session = data.session;
     progress.value.autorepeat = plan.autorepeated;
 
-    localStorage.setItem('kanjiPlan', JSON.stringify(plan));
+    // localStorage.setItem('kanjiPlan', JSON.stringify(plan));
+    saveSession(plan);
 }
 
 async function startSession() {

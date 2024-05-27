@@ -2,12 +2,15 @@ import progress, { restoreProgress } from "../utils/progress";
 import { session } from './data.js';
 import { showResetButton } from "@/utils/resetButtonDisplay";
 
-function saveSession() {
+function saveSession(plan) {
     localStorage.setItem('kanjiSession', JSON.stringify({
         progress: progress.value,
         session
     }));
-    // console.log('backup!');
+    
+    if(plan) {
+        localStorage.setItem('kanjiPlan', JSON.stringify(plan));
+    }
 }
 
 function restoreSession() {
