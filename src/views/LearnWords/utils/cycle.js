@@ -87,12 +87,14 @@ function answer() {
 
     if(card.value.mark === marks.RETURN) {
         buttons.rememberButtons();
-    } else if(card.value.learnStage === learnStages.LEARN
-        || card.value.learnStage === learnStages.REPEAT) {
-        buttons.fourButtons();
-    } else {
+    } else if(card.value.learnStage === learnStages.CONFIRM) {
         buttons.threeButtons();
+    } else if(card.value.recogMark !== marks.BAD) {
+        buttons.notGoodButtons();
+    } else {
+        buttons.fourButtons();
     }
+    
     buttons.setAction(evaluateSaveNext);
 }
 

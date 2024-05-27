@@ -1,6 +1,5 @@
 <script setup>
 import { marks } from '../utils/enums';
-// defineProps(['params']);
 import { params } from '../utils/buttonsControls.js';
 </script>
 
@@ -8,7 +7,7 @@ import { params } from '../utils/buttonsControls.js';
 <footer>
     <button
         class="good"
-        v-show="params.showSides"
+        v-show="params.showGood"
         @click="params.action(marks.GOOD)"
     />
     <button
@@ -22,14 +21,9 @@ import { params } from '../utils/buttonsControls.js';
     />
     <button
         class="bad"
-        v-show="params.showSides"
+        v-show="params.showBad"
         @click="params.action(marks.BAD)"
     />
-    <!-- <button
-        class="reset"
-        v-show="params.showReset"
-        @click="params.action(marks.RESET)"
-    /> -->
 </footer>
 </template>
 
