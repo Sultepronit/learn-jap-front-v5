@@ -16,11 +16,6 @@ function evaluation(card) {
 
     progress.value.cards++;
 
-    if(card.mark === marks.RETURN) {
-        progress.value.cards--;
-        returnCard(card);
-    }
-
     if(card.mark === marks.NEUTRAL || card.mark === marks.RETURN) {
         card.progress--;
     }
@@ -34,7 +29,7 @@ function evaluation(card) {
             progress.value.cards--;
             returnCard(card);
         }
-        return;
+        // return;
     }
     
     if(card.repeatStage === repeatStages.REPEAT) {
@@ -54,6 +49,11 @@ function evaluation(card) {
                 card.progress = 0;
             }
         }
+    }
+
+    if(card.mark === marks.RETURN) {
+        progress.value.cards--;
+        returnCard(card);
     }
 }
 
