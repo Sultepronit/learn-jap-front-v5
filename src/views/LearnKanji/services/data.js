@@ -1,61 +1,34 @@
 import { ref } from 'vue';
 import { get } from '@/services/commonAPI.js';
-import { repeatStages } from '../utils/enums';
+// import { repeatStages } from '../utils/enums';
 import { restoreSession } from "./backup.js";
 import { getWordsForKanji, restoreOrGetWordsForKanji } from '@/services/wordsForKanji.js';
 
 let plan = {};
-let lists = {};
+let session = [];
 let words = [];
 let wordsAreUpdated = false;
 const ready = ref(false);
 
 async function fetchData() {
-    const data = await get('/session/kanji');
+    const data = await get('/session/kanji-ready');
     console.log(data);
-    // const { repeatList, problemList } = data;
-    const { learnList, repeatList, sessionLength } = data;
-    // sessionLength = data.sessionLength;
 
-    const repeatStageList = Array(sessionLength)
-        // .fill(repeatStages.PROBLEM, 0, problemList.length)
-        .fill(repeatStages.LEARN, 0, learnList.length)
-        .fill(repeatStages.REPEAT, learnList.length);
-    console.log(repeatStageList);
-
-    plan = {
-        learnNumber: learnList.length,
-        repeatNumber: sessionLength - learnList.length
-    };
-    lists = { repeatStageList, learnList, repeatList, rememberList: [] };
+    plan = data.plan;
+    session = data.session;
 
     localStorage.setItem('kanjiPlan', JSON.stringify(plan));
 }
 
-// async function getTheWords() {
-//     const data = await get('/session/words-for-kanji');
-//     if(!data) return;
-
-//     words = data;
-//     localStorage.setItem('wordsForKanji', JSON.stringify(words));
-//     wordsAreUpdated = true;
-// }
-
 async function startSession() {
     const restored = await restoreSession();
     if(restored) {
-        lists = restored.lists;
+        session = restored.session;
         plan = restored.plan;
         wordsAreUpdated = true;
     } else {
         await fetchData();
     }
-
-    // words = JSON.parse(localStorage.getItem('wordsForKanji'));
-    
-    // if(!words) {
-    //     await getTheWords();
-    // }
 
     wordsAreUpdated = await restoreOrGetWordsForKanji();
     
@@ -66,4 +39,4 @@ async function startSession() {
     }
 }
 
-export { startSession, ready, plan, lists, words };
+export { startSession, ready, plan, session, words };

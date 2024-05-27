@@ -1,11 +1,11 @@
 import progress, { restoreProgress } from "../utils/progress";
-import { lists } from './data.js';
+import { session } from './data.js';
 import { showResetButton } from "@/utils/resetButtonDisplay";
 
 function saveSession() {
     localStorage.setItem('kanjiSession', JSON.stringify({
         progress: progress.value,
-        lists
+        session
     }));
     // console.log('backup!');
 }
