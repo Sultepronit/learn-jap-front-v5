@@ -17,11 +17,7 @@ function nextCard() {
 function returnCard(card) {
     console.log('I\'ll be back!');
 
-    lists.repeatStageList.push(repeatStages.REMEMBER);
-    // console.log(lists.repeatStageList);
-
-    lists.rememberList.push(card);
-    console.log(lists.rememberList);
+    session.push({...card, repeatStage: repeatStages.REMEMBER});
 }
 
 export default nextCard;

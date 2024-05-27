@@ -18,24 +18,21 @@ function endSession() {
 
 function nextCycle() {
     card.value = nextCard();
-    
     if(!card.value) {
         endSession();
         return;
     }
   
-    question();
-
-    // if(card.value.autorepeat) {
-    //     autorepeat();
-    // } else {
-    //     question();
-    // }    
+    if(card.value.autorepeat) {
+        autorepeat();
+    } else {
+        question();
+    }    
 }
 
-// function autorepeat() {
-//     evaluateSaveNext(marks.AUTOREPEAT);
-// }
+function autorepeat() {
+    evaluateSaveNext(marks.AUTOREPEAT);
+}
 
 function question() {
     showAnswer.value = false;

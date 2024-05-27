@@ -1,18 +1,20 @@
 import { saveSession } from '../services/backup';
 import { patch } from '@/services/commonAPI.js';
 import { marks, repeatStages } from './enums';
-import { returnCard } from './nextCard';
+import { returnCard, repeatOneMore } from './nextCard';
 import progress from './progress';
 
 function evaluation(card) {
     progress.value[card.repeatStage][card.mark]++;
+    // console.log(card.repeatStage, {...progress.value[card.repeatStage]});
+    // console.log({...progress.value});
 
-    // if(card.mark === marks.AUTOREPEAT) {
-    //     card.autorepeat = 0;
-    //     card.repeatStatus = 33; // to be changed on server's side
-    //     repeatOneMore();
-    //     return;
-    // }
+    if(card.mark === marks.AUTOREPEAT) {
+        card.autorepeat = 0;
+        card.repeatStatus = 33; // to be changed on server's side
+        repeatOneMore();
+        return;
+    }
 
     progress.value.cards++;
 
@@ -59,14 +61,14 @@ function evaluation(card) {
 
 function evaluateAndSave(cardArg) {
     const card = { ...cardArg.value };
-    const frozen = { ...cardArg.value };
+    const freezed = { ...cardArg.value };
 
     evaluation(card);
     // console.log(progress.value);
 
     const changes = {};
     for(const key in card) {
-        if(card[key] !== frozen[key]) {
+        if(card[key] !== freezed[key]) {
             changes[key] = card[key];
         }
     }

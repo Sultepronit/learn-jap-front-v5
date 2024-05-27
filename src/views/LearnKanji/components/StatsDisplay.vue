@@ -6,7 +6,6 @@ import { card, showAnswer } from '../utils/cycle.js';
 
 const repeatPass = computed(() => 
     progress.value.repeat.neutral + progress.value.repeat.return
-    //+ progress.value.remember.neutral + progress.value.remember.return
 );
 const repeatGood = computed(() => progress.value.repeat.good + progress.value.repeat.best);
 
@@ -34,7 +33,7 @@ const learning = computed(() =>
             </span> |
             <span>
                 <b><u>{{ plan.repeatNumber }}</u></b> <i>{{ repeatPass }}</i> <b>{{ repeatGood }}<sub>{{ progress.repeat.best }}</sub>
-                <sup>{{ progress.repeat.autorepeat }}</sup>-{{ progress.repeat.bad }}</b>
+                <sup>{{ progress.autorepeat }}</sup>-{{ progress.repeat.bad }}</b>
             </span> |
             <i>{{ remember }}</i>
         </p>
