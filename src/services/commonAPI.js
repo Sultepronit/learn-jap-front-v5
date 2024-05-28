@@ -1,3 +1,5 @@
+import { setStatus } from '@/utils/statusBarControl.js';
+
 const apiUrl = import.meta.env.VITE_API_URL;
 
 async function get(request) { // get all
@@ -30,6 +32,7 @@ async function post(table, data) {
 }
 
 async function patch(table, card) {
+    setStatus.loading();
     const url = `${apiUrl}/table/${table}/${card.id}`;
     console.log(card);
     try {
@@ -43,11 +46,13 @@ async function patch(table, card) {
         if(results !== '{"success":true}') {
             throw new Error('Wrong response: ' + results);
         }
-        console.log('saved!')
+        // console.log('saved!')
+        setStatus.clear();
 
         return true;
     } catch (error) {
         // console.log(table, card);
+        setStatus.failed();
         console.error(error);
         alert(`Not updated (${card.id})`);
 

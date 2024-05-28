@@ -1,8 +1,8 @@
 import { saveSession } from "../services/backup";
-// import update from "../services/update";
 import { patch } from "@/services/commonAPI";
 import { directions, marks } from "./enums";
 import { returnCard } from './nextCard';
+import { setStatus } from '@/utils/statusBarControl.js';
 import progress from './progress';
 
 function basicIncrement(card) {
@@ -156,7 +156,13 @@ function evaluateAndSave(cardArg) {
     // console.log('not saved!');
     // return;
     if(Object.keys(changes).length > 0) {
-        // update(card.id, changes);
+        // setStatus.loading();
+        // const success = await patch('words', {id: card.id, changes});
+        // if(success) {
+        //     setStatus.clear();
+        // } else {
+        //     setStatus.failed();
+        // }
         patch('words', {id: card.id, changes});
     }
 }

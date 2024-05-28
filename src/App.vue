@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue';
+import StatusBar from '@/components/StatusBar.vue';
 import StartMenu from './views/StartMenu/StartMenu.vue';
 import WordsDb from './views/WordsDb/WordsDb.vue';
 import LearnWords from './views/LearnWords/LearnWords.vue';
@@ -27,5 +28,6 @@ const currentView = computed(() => {
 </script>
 
 <template>
+    <StatusBar />
     <component :is="currentView" />     
 </template>
