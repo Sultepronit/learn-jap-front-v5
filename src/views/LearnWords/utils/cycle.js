@@ -75,8 +75,8 @@ function showReading() {
 }
 
 function quickRecognition(mark) {
-    answer();
     card.value.recogMark = mark;
+    answer();
 }
 
 function answer() {
