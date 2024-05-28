@@ -87,6 +87,15 @@ const updateOrder = {
             localStorage.removeItem('updateOrder');
         }
     },
+    restoreBackup() {
+        const restored = JSON.parse(localStorage.getItem('updateOrder'));
+        if(!restored) return;
+        console.log('saving:', restored);
+
+        this.theOrder = restored;
+        const query = this.theOrder[0];
+        patch(query.table, query.card);
+    },
     add(query) {
         this.theOrder.push(query);
         this.backup();
@@ -139,5 +148,7 @@ async function deleteApi(table, id) {
         alert('Not deleted!');
     }
 }
+
+updateOrder.restoreBackup();
 
 export { get, post, update, patch, deleteApi };
