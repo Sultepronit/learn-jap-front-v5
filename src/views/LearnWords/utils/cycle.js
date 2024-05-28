@@ -86,7 +86,7 @@ function answer() {
         buttons.rememberButtons();
     } else if(card.value.learnStage === learnStages.CONFIRM) {
         buttons.threeButtons();
-    } else if(card.value.recogMark !== marks.BAD) {
+    } else if(card.value.recogMark === marks.BAD) {
         buttons.notGoodButtons();
     } else {
         buttons.fourButtons();
