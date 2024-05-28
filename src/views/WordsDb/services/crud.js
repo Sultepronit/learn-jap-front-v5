@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { get, post, patch, deleteApi } from "@/services/commonAPI.js";
+import { get, post, update, patch, deleteApi } from "@/services/commonAPI.js";
 
 const db = ref([]);
 const ready = ref(false);
@@ -36,8 +36,8 @@ async function createNewCard() {
     }
 }
 
-async function update(cardNumber, field, value) {
-    isSaving.value = true;
+async function updateCard(cardNumber, field, value) {
+    // isSaving.value = true;
 
     const editedCard = db.value[cardNumber - 1];
     editedCard[field] = value;
@@ -48,10 +48,11 @@ async function update(cardNumber, field, value) {
     }
     data.changes[field] = value;
 
-    const success = await patch('words', data);
-    if(success) {
-        isSaving.value = false;
-    }
+    // const success = await patch('words', data);
+    const success = await update('words', data);
+    // if(success) {
+    //     isSaving.value = false;
+    // }
 }
 
 async function deleteCard(cardNumber) {
@@ -79,6 +80,6 @@ export {
     numberToSelect,
     isSaving,
     createNewCard,
-    update,
+    updateCard as update,
     deleteCard
 };

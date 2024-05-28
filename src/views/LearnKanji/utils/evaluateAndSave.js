@@ -1,5 +1,5 @@
 import { saveSession } from '../services/backup';
-import { patch } from '@/services/commonAPI.js';
+import { patch, update } from '@/services/commonAPI.js';
 import { marks, repeatStages } from './enums';
 import { returnCard } from './nextCard';
 import progress from './progress';
@@ -78,7 +78,8 @@ function evaluateAndSave(cardArg) {
     // return;
 
     if(Object.keys(changes).length > 0) {
-        patch('kanji', { id: card.id, changes });
+        // patch('kanji', { id: card.id, changes });
+        update('kanji', { id: card.id, changes });
     }
 }
 

@@ -1,17 +1,22 @@
-import { setStatus } from '@/utils/statusBarControl.js';
+import { status, setStatus } from '@/utils/statusBarControl.js';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 async function get(request) { // get all
-    // const url = `${apiUrl}/table/${table}`;
     const url = apiUrl + request;
     try {
+        setStatus.loading();
+
         const resp = await fetch(url);
         const data = await resp.json();
+
+        setStatus.clear();
+
         return data;
     } catch (error) {
         console.log(error);
-        alert('Data not recieved!');
+        // alert('Data not recieved!');
+        setStatus.failed();
     }
 }
 
@@ -32,38 +37,87 @@ async function post(table, data) {
 }
 
 async function patch(table, card) {
-    setStatus.loading();
+    console.log('saving:', table, card);
+    console.log(card.changes);
+
     const url = `${apiUrl}/table/${table}/${card.id}`;
-    console.log(card);
+    
     try {
         const response = await fetch(url, {
             method: 'PATCH',
             body: JSON.stringify(card.changes)
         });
-        // console.log(response);
+        
         const results = await response.text();
 
         if(results !== '{"success":true}') {
             throw new Error('Wrong response: ' + results);
         }
         // console.log('saved!')
-        setStatus.clear();
+        updateOrder.remove();
 
         return true;
     } catch (error) {
         // console.log(table, card);
         setStatus.failed();
         console.error(error);
-        alert(`Not updated (${card.id})`);
+        // alert(`Not updated (${card.id})`);
 
-        const oneMoreTime = await new Promise(resolve => {
-            setTimeout(async () => {
-                resolve(await patch(table, card));
-            }, 2000);
-        });
-
-        return oneMoreTime;
+        return repatch(table, card);
     }
+}
+
+let retryTime = 1; 
+async function repatch(table, card) {
+    retryTime = retryTime < 10 ? retryTime * 2 : retryTime;
+    
+    return new Promise(resolve => {
+        setTimeout(async () => {
+            resolve(await patch(table, card));
+        }, retryTime * 1000);
+    });
+}
+
+const updateOrder = {
+    theOrder: [],
+    backup() {
+        if(this.theOrder.length > 0) {
+            localStorage.setItem('updateOrder', JSON.stringify(this.theOrder));
+        } else {
+            localStorage.removeItem('updateOrder');
+        }
+    },
+    add(query) {
+        this.theOrder.push(query);
+        this.backup();
+        console.log('added:', this.theOrder);
+
+        if(this.theOrder.length === 1) {
+            setStatus.loading();
+            patch(query.table, query.card);
+        }
+    },
+    remove() {
+        this.theOrder.shift();
+        this.backup();
+        console.log('removed:', this.theOrder);
+
+        if(this.theOrder.length < 1) {
+            setStatus.clear();
+        } else {
+            if(status.value === 'failed') {
+                setStatus.loading();
+                retryTime = 1;
+            }
+
+            const query = this.theOrder[0];
+            patch(query.table, query.card);
+        }
+    }
+};
+
+async function update(table, card) {
+    updateOrder.add({table, card});
 }
 
 async function deleteApi(table, id) {
@@ -86,4 +140,4 @@ async function deleteApi(table, id) {
     }
 }
 
-export { get, post, patch, deleteApi };
+export { get, post, update, patch, deleteApi };

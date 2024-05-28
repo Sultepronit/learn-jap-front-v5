@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 
-const status = ref('loading');
+const status = ref('');
 
 const setStatus = {
     loading() {

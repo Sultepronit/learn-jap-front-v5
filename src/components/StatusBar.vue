@@ -9,12 +9,14 @@ import { status } from '@/utils/statusBarControl.js';
 <style scoped>
 #status-bar {
     width: 100%;
-    height: 5px;
+    height: 3px;
     /* background: yellow; */
 }
+
 .loading {
     background: yellow;
 }
+
 .failed {
     background: red;
 }

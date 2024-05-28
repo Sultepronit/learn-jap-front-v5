@@ -28,7 +28,7 @@ async function startSession() {
     
     ready.value = true;
 
-    setStatus.clear();
+    // setStatus.clear();
 
     if(!restored) {
         kanji = await getKanjiForWords();

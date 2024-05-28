@@ -1,5 +1,5 @@
 import { saveSession } from "../services/backup";
-import { patch } from "@/services/commonAPI";
+import { patch, update } from "@/services/commonAPI";
 import { directions, marks } from "./enums";
 import { returnCard } from './nextCard';
 import { setStatus } from '@/utils/statusBarControl.js';
@@ -156,14 +156,8 @@ function evaluateAndSave(cardArg) {
     // console.log('not saved!');
     // return;
     if(Object.keys(changes).length > 0) {
-        // setStatus.loading();
-        // const success = await patch('words', {id: card.id, changes});
-        // if(success) {
-        //     setStatus.clear();
-        // } else {
-        //     setStatus.failed();
-        // }
-        patch('words', {id: card.id, changes});
+        // patch('words', {id: card.id, changes});
+        update('words', {id: card.id, changes});
     }
 }
 
