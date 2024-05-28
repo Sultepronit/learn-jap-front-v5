@@ -2,12 +2,15 @@ import { showResetButton } from "@/utils/resetButtonDisplay";
 import progress, { restoreProgress } from "../utils/progress";
 import { session } from './data.js';
 
-function saveSession() {
+function saveSession(plan) {
     localStorage.setItem('wordsSession', JSON.stringify({
         progress: progress.value,
         session
     }));
-    // console.log('backup!');
+
+    if(plan) {
+        localStorage.setItem('wordsPlan', JSON.stringify(plan));
+    }
 }
 
 function restoreSession() {
