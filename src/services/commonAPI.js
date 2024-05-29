@@ -67,14 +67,11 @@ async function patch(table, card) {
     }
 }
 
-let retryTime = 1; 
-async function repatch(table, card) {
-    retryTime = retryTime < 10 ? retryTime * 2 : retryTime;
-    
+async function repatch(table, card) {   
     return new Promise(resolve => {
         setTimeout(async () => {
             resolve(await patch(table, card));
-        }, retryTime * 1000);
+        }, 5 * 1000);
     });
 }
 
@@ -93,6 +90,10 @@ const updateOrder = {
         console.log('saving:', restored);
 
         this.theOrder = restored;
+        this.patchNext();
+    },
+    patchNext() {
+        setStatus.loading();
         const query = this.theOrder[0];
         patch(query.table, query.card);
     },
@@ -114,13 +115,7 @@ const updateOrder = {
         if(this.theOrder.length < 1) {
             setStatus.clear();
         } else {
-            if(status.value === 'failed') {
-                setStatus.loading();
-                retryTime = 1;
-            }
-
-            const query = this.theOrder[0];
-            patch(query.table, query.card);
+            this.patchNext();
         }
     }
 };
