@@ -74,17 +74,17 @@ const evaluations = {
         if(card.mark === marks.NEUTRAL || card.mark === marks.RETURN) {
             card[card.direction+'Stats'] = -1;
         }
-        // if(card.recogMark === marks.BAD) {
-        //     card.fStats = -1;
-        // }
-        // improve fStats 
-        // if(card.fStats < 0 && card.recogMark === marks.GOOD) {
-        //     card.fStats = 0;
-        // }
         // return
         if(card.mark === marks.RETURN) {
             returnCard(card);
             progress.value.cards--;
+        }
+        //
+        if(card.mark === marks.GOOD && card.direction === directions.FORWARD) {
+            card.fStats++;
+            if(card.fStats > 1) {
+                card.fAutorepeat = 1;
+            }
         }
         // upgrade
         if(card.fProgress > 0 && card.bProgress > 0) {
@@ -93,12 +93,8 @@ const evaluations = {
             card.fProgress = 0;
             card.bProgress = 0;
 
-            card.fStats++;
             card.bStats++;
 
-            if(card.fStats > 1) {
-                card.fAutorepeat = 1;
-            }
             if(card.bStats > 1) {
                 card.bAutorepeat = 1;
             }
