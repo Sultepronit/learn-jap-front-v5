@@ -1,6 +1,14 @@
-import { status, setStatus } from '@/utils/statusBarControl.js';
+import { setStatus } from '@/utils/statusBarControl.js';
 
 const apiUrl = import.meta.env.VITE_API_URL;
+
+async function retry(callback, ...args) {   
+    return new Promise(resolve => {
+        setTimeout(async () => {
+            resolve(await callback(...args));
+        }, 5 * 1000);
+    });
+}
 
 async function get(request) { // get all
     const url = apiUrl + request;
@@ -17,6 +25,8 @@ async function get(request) { // get all
         console.log(error);
         // alert('Data not recieved!');
         setStatus.failed();
+
+        return retry(get, request);
     }
 }
 
@@ -63,17 +73,18 @@ async function patch(table, card) {
         console.error(error);
         // alert(`Not updated (${card.id})`);
 
-        return repatch(table, card);
+        // return repatch(table, card);
+        return retry(patch, table, card);
     }
 }
 
-async function repatch(table, card) {   
-    return new Promise(resolve => {
-        setTimeout(async () => {
-            resolve(await patch(table, card));
-        }, 5 * 1000);
-    });
-}
+// async function repatch(table, card) {   
+//     return new Promise(resolve => {
+//         setTimeout(async () => {
+//             resolve(await patch(table, card));
+//         }, 5 * 1000);
+//     });
+// }
 
 const updateOrder = {
     theOrder: [],
