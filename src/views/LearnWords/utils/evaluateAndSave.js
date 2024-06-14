@@ -1,8 +1,7 @@
 import { saveSession } from "../services/backup";
-import { patch, update } from "@/services/commonAPI";
+import { update } from "@/services/commonAPI";
 import { directions, marks } from "./enums";
 import { returnCard } from './nextCard';
-import { setStatus } from '@/utils/statusBarControl.js';
 import progress from './progress';
 
 function basicIncrement(card) {
@@ -112,7 +111,7 @@ const evaluations = {
         if(card.mark === marks.BAD) {
             card.fStats--;
         } else {
-            card.fStats = 1;
+            card.fStats = 0;
         }
     },
     autorepeat(card) {
@@ -152,7 +151,6 @@ function evaluateAndSave(cardArg) {
     // console.log('not saved!');
     // return;
     if(Object.keys(changes).length > 0) {
-        // patch('words', {id: card.id, changes});
         update('words', {id: card.id, changes});
     }
 }
