@@ -2,7 +2,6 @@
 import { startSession, ready } from './services/crud';
 import EditSelected from './components/EditSelected.vue';
 import SearchBar from './components/SearchBar.vue';
-// import DbList from './components/DbList.vue';
 import DbList from '@/components/DbList.vue';
 import TableRow from './components/TableRow.vue';
 
@@ -32,14 +31,10 @@ startSession();
             :current="lastDisplayedRow"
             :increment-last-row="incrementLastDisplayedRow"
             :set-last-row="setLastDisplayedRow"
-        >
-            <TableRow
-                v-for="row in displayedRange"
-                :key="row.id"
-                :row="row"
-                @click="select(row.cardNumber)"
-                :class="{selected: selectedNumber === row.cardNumber}"
-            />
-        </DbList>
+            :TableRow="TableRow"
+            :displayedRange="displayedRange"
+            :select="select"
+            :selectedNumber="selectedNumber"
+        />
     </template>
 </template>

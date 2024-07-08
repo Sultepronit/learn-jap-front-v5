@@ -1,23 +1,14 @@
 <script setup>
-// import TableRow from './TableRow.vue';
-
-// import {
-//     // displayedRange as range,
-//     // selectedNumber,
-//     // select,
-//     // incrementLastDisplayedRow as incrementLastRow,
-//     // setLastDisplayedRow as setLastRow,
-//     // rowNumber as min,
-//     // viewList,
-//     // lastDisplayedRow as lastRow
-// } from '../utils/displayAndSelect';
-
 const { incrementLastRow } = defineProps([
     'min',
     'max',
     'current',
     'incrementLastRow',
-    'setLastRow'
+    'setLastRow',
+    'TableRow',
+    'displayedRange',
+    'select',
+    'selectedNumber'
 ]);
 
 function handleWheel(event) {
@@ -29,13 +20,14 @@ function handleWheel(event) {
 
 <template>
     <section id="table" @wheel="handleWheel">
-        <!-- <table>
-            <tbody>
-                <slot />
-            </tbody>
-        </table> -->
         <section id="rows">
-            <slot />
+            <TableRow
+                v-for="row in displayedRange"
+                :key="row.id"
+                :row="row"
+                :select="select"
+                :selectedNumber="selectedNumber"
+            />
         </section>
         <input
             id="scroller"
@@ -61,9 +53,7 @@ function handleWheel(event) {
     border-right: 1px solid;
 }
 #scroller {
-    /* width: 2%; */
-    writing-mode: vertical-rl;
-    /* transform: rotate(180deg); */
+    writing-mode: vertical-rl
 }
 .selected {
     background-color: #90ffef;

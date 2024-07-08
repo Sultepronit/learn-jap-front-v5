@@ -1,14 +1,13 @@
 <script setup>
 import { startSession, ready } from './services/crud';
 import SearchBar from './components/SearchBar.vue';
-// import DbList from './components/DbList.vue';
 import DbList from '@/components/DbList.vue';
 import TableRow from './components/TableRow.vue';
 
 document.title = 'Collected Kanji DB';
 
 import {
-    displayedRange as range,
+    displayedRange, //as range,
     selectedNumber,
     select,
     incrementLastDisplayedRow, // as incrementLastRow,
@@ -30,14 +29,10 @@ startSession();
             :current="lastDisplayedRow"
             :incrementLastRow="incrementLastDisplayedRow"
             :setLastRow="setLastDisplayedRow"
-        >
-            <TableRow
-                v-for="row in range"
-                :key="row.id"
-                :row="row"
-                @click="select(row.id)"
-                :class="{selected: selectedNumber === row.id}"
-            />
-        </DbList>
+            :TableRow="TableRow"
+            :displayedRange="displayedRange"
+            :select="select"
+            :selectedNumber="selectedNumber"
+        />
     </template>
 </template>

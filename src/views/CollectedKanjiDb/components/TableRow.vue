@@ -1,33 +1,37 @@
 <script setup>
-defineProps(['row']);
+defineProps(['row', 'select', 'selectedNumber']);
 </script>
 <template>
-    <div id="row">
-        <p class="cell id-col">
-            {{ row.id }}
-        </p>
-        <p class="cell">
-            {{ row.kanji }}
-        </p>
-        <p class="cell status-col">
-            {{ row.repeatStatus }}
-        </p>
-        <p class="cell width-2sym">
-            {{ row.progress }}
-        </p>
-        <p class="cell width-2sym" :class="{auto: row.autorepeat}">
-            {{ row.record }}
-        </p>
-        <p class="cell">
-            {{ row.readings }}
-        </p>
-        <p class="cell">
-            {{ row.links }}
-        </p>
-        <p class="cell">
-            {{ row.otherLinks }}
-        </p>
-    </div>
+<div
+    id="row"
+    @click="select(row.id)"
+    :class="{selected: selectedNumber === row.id}"
+>
+    <p class="cell id-col">
+        {{ row.id }}
+    </p>
+    <p class="cell">
+        {{ row.kanji }}
+    </p>
+    <p class="cell status-col">
+        {{ row.repeatStatus }}
+    </p>
+    <p class="cell width-2sym">
+        {{ row.progress }}
+    </p>
+    <p class="cell width-2sym" :class="{auto: row.autorepeat}">
+        {{ row.record }}
+    </p>
+    <p class="cell">
+        {{ row.readings }}
+    </p>
+    <p class="cell">
+        {{ row.links }}
+    </p>
+    <p class="cell">
+        {{ row.otherLinks }}
+    </p>
+</div>
 </template>
 
 <style scoped>

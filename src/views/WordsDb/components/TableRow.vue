@@ -1,46 +1,50 @@
 <script setup>
-defineProps(['row']);
+defineProps(['row', 'select', 'selectedNumber']);
 </script>
 <template>
-    <div id="row">
-        <!-- <td class="width-4em">
-            {{ row.id }}
-        </td> -->
-        <p class="cell id-col">
-            {{ row.cardNumber }}
-        </p>
-        <p class="cell statuc-col">
-            {{ row.learnStatus }}
-        </p>
-        <p class="cell width-2sym">
-            {{ row.fProgress }}
-        </p>
-        <p class="cell width-2sym">
-            {{ row.bProgress }}
-        </p>
-        <p class="cell width-2sym" :class="{auto: row.fAutorepeat}">
-            {{ row.fStats }}
-        </p>
-        <p class="cell width-2sym" :class="{auto: row.bAutorepeat}">
-            {{ row.bStats }}
-        </p>
-        <p class="cell width-jap sans">
-            <span :class="{'blue': row.altWriting}">{{row.writings}}</span> 
-            <span class="gray">　{{row.rareWritings}}</span>
-        </p>
-        <p class="cell width-jap">
-            <span>{{row.readings}}</span> 
-            <span class="gray">　{{row.rareReadings}}</span>
-        </p>
-        <p
-            class="cell"
-            v-html="row.translation"
-        />
-        <p
-            class="cell"
-            v-html="row.example"
-        />
-    </div>
+<div
+    id="row"
+    @click="select(row.cardNumber)"
+    :class="{selected: selectedNumber === row.cardNumber}"
+>
+    <!-- <td class="width-4em">
+        {{ row.id }}
+    </td> -->
+    <p class="cell id-col">
+        {{ row.cardNumber }}
+    </p>
+    <p class="cell statuc-col">
+        {{ row.learnStatus }}
+    </p>
+    <p class="cell width-2sym">
+        {{ row.fProgress }}
+    </p>
+    <p class="cell width-2sym">
+        {{ row.bProgress }}
+    </p>
+    <p class="cell width-2sym" :class="{auto: row.fAutorepeat}">
+        {{ row.fStats }}
+    </p>
+    <p class="cell width-2sym" :class="{auto: row.bAutorepeat}">
+        {{ row.bStats }}
+    </p>
+    <p class="cell width-jap sans">
+        <span :class="{'blue': row.altWriting}">{{row.writings}}</span> 
+        <span class="gray">　{{row.rareWritings}}</span>
+    </p>
+    <p class="cell width-jap">
+        <span>{{row.readings}}</span> 
+        <span class="gray">　{{row.rareReadings}}</span>
+    </p>
+    <p
+        class="cell"
+        v-html="row.translation"
+    />
+    <p
+        class="cell"
+        v-html="row.example"
+    />
+</div>
 </template>
 
 <style scoped>
