@@ -5,9 +5,21 @@ const db = ref([]);
 const ready = ref(false);
 
 function startSession() {
+    // dev mode
+    const restored = JSON.parse(localStorage.getItem('wordsDb'));
+    if(restored) {
+        db.value = restored;
+        console.log(restored);
+        // setTimeout(() => ready.value = true, 1000);
+        ready.value = true;
+        return;
+    }
+
     get('/table/words').then((data) => {
         db.value = data;
         ready.value = true;
+
+        localStorage.setItem('wordsDb', JSON.stringify(data)); // for the dev mode
     });
 }
 

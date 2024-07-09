@@ -1,8 +1,10 @@
 <script setup>
+import { ref, computed } from 'vue';
+
 const { incrementLastRow } = defineProps([
     'min',
     'max',
-    'current',
+    'scrollerValue',
     'incrementLastRow',
     'setLastRow',
     'TableRow',
@@ -11,16 +13,32 @@ const { incrementLastRow } = defineProps([
     'selectedNumber'
 ]);
 
-function handleWheel(event) {
-    const delta = Math.sign(event.deltaY) * 5;
-    incrementLastRow(delta);
-}        
+// const lastDisplayedRow = ref(0);
+// function setLastDisplayedRow(newVal) {
+//     lastDisplayedRow.value = newVal < rowNumber.value ? rowNumber.value
+//         : newVal > viewList.value.length ? viewList.value.length : newVal;
+// }
+
+// function incrementLastDisplayedRow(delta) {
+//     setLastDisplayedRow(Number(lastDisplayedRow.value) + delta);
+// }
+
+
+// const displayedRange = computed(() => {
+//     return viewList.value.slice(
+//         (lastDisplayedRow.value - rowNumber.value),
+//         lastDisplayedRow.value
+//     );
+// });
 
 </script>
 
 <template>
-    <section id="table" @wheel="handleWheel">
-        <section id="rows">
+    <section
+        id="table"
+        @wheel="incrementLastRow(Math.round($event.deltaY) / 16)"
+    >
+        <div id="rows">
             <TableRow
                 v-for="row in displayedRange"
                 :key="row.id"
@@ -28,15 +46,15 @@ function handleWheel(event) {
                 :select="select"
                 :selectedNumber="selectedNumber"
             />
-            {{ console.log(current) }}
-        </section>
+            {{ console.log(scrollerValue, min, max) }}
+        </div>
         <input
             id="scroller"
             v-show="min < max"
             type="range"
             :min="min"
             :max="max"
-            :value="current"
+            :value="scrollerValue"
             @change="setLastRow($event.target.value)"
         >
     </section>
