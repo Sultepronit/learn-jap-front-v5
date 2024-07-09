@@ -3,7 +3,7 @@ function calculateDefaultRowNumber(ounterSpace) {
 }
 
 function sortData(data, column, reverse) {
-    console.log('sort!');
+    // console.log('sort!');
     if(!column) return data;
 
     data.sort((a, b) => a[column] - b[column]);

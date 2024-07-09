@@ -5,7 +5,7 @@ import DbList from '@/components/DbList.vue';
 import DbTable from '@/components/DbTable.vue';
 import TableRow from './components/TableRow.vue';
 
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, watchEffect } from 'vue';
 import { startSession, ready, db } from '@/views/WordsDb/services/crud.js';
 import { calculateDefaultRowNumber, sortData } from '@/utils/tableControls.js';
 import {
@@ -29,27 +29,27 @@ const sortOptions = ref({
     reverse: false
 });
 function setSortOptions(newVal) {
-    console.log('here we go!');
     sortOptions.value = newVal;
 }
 
 const viewList = computed(() =>
     sortData(localList.value, sortOptions.value.column, sortOptions.value.reverse)
 );
-// watch(sortOptions, () => {
-//     sortData(localList, ...sortOptions)
-// });
 
 const defaultRowNumber = calculateDefaultRowNumber(6);
-// console.log(defaultRowNumber);
-// console.log(displayedRange);
-// console.log(viewList);
 const rowNumber = computed(() =>
     viewList.value.length > defaultRowNumber ? defaultRowNumber : viewList.value.length
 );
 // console.log(rowNumber.value);
 
-const lastDisplayedRow = ref(viewList.value.length);
+// const lastDisplayedRow = ref(viewList.value.length);
+const lastDisplayedRow = ref(0);
+
+watchEffect(() => {
+    console.log('change!');
+    lastDisplayedRow.value = viewList.value.length;
+});
+
 function setLastDisplayedRow(newVal) {
     lastDisplayedRow.value = newVal < rowNumber.value ? rowNumber.value
         : newVal > viewList.value.length ? viewList.value.length : newVal;
@@ -58,6 +58,7 @@ function setLastDisplayedRow(newVal) {
 function incrementLastDisplayedRow(delta) {
     setLastDisplayedRow(Number(lastDisplayedRow.value) + delta);
 }
+
 
 const displayedRange = computed(() => {
     return viewList.value.slice(

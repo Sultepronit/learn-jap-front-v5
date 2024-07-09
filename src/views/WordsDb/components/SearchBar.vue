@@ -33,9 +33,7 @@ const sort = reactive({
 });
 
 watch(sort, () => {
-    console.log(sort);
     if(!sort.column) return;
-    // sortViewList(sort.column, sort.reverse);
     props.setSortOptions(sort);
 });
 
