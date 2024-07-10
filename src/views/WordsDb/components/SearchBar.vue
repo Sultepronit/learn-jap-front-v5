@@ -1,11 +1,13 @@
 <script setup>
 import { ref, watch, reactive } from 'vue';
 import { db } from '../services/crud';
-import { selectedNumber, select, /*sortViewList*/ } from '../utils/displayAndSelect';
+// import { selectedNumber, select, /*sortViewList*/ } from '../utils/displayAndSelect';
 import { searchText, searchInStats } from '../utils/searchAndFilter.js';
 import statsTitles from '../utils/statsTitles.js';
 
-const props = defineProps(['sortOptions', 'setSortOptions']);
+const props = defineProps(
+    ['selectedNumber', 'select', 'sortOptions', 'setSortOptions']
+);
 
 const titles = ['learnStatus', ...statsTitles];
 const sortTitles = ['cardNumber', ...titles];

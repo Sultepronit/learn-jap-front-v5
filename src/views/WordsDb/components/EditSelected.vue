@@ -1,23 +1,24 @@
 <script setup>
 import { refetch, isSaving, createNewCard, update, deleteCard } from '../services/crud';
-import { selectedCard as card, select } from '../utils/displayAndSelect';
+// import { selectedCard as card, select } from '../utils/displayAndSelect';
 import { searchText } from '../utils/searchAndFilter.js';
 import statsTitles from '../utils/statsTitles.js';
 
+const props = defineProps(['card']);
+
 function checkInput(value, field) {
-    if(card.value.learnStatus < 0) {
-        card.value[field] = value;
-        searchText(value, false);
-    }
+    // if(card.value.learnStatus < 0) {
+    //     card.value[field] = value;
+    //     searchText(value, false);
+    // }
 }
 function resetSearch() {
-    if(card.value.learnStatus < 0) {
-        const cn = card.value.cardNumber;
-        searchText('');
-        select(cn);
-    }
+    // if(card.value.learnStatus < 0) {
+    //     searchText('');
+    //     select(card.value.cardNumber);
+    // }
 }
-// const statsTitles = ['fProgress', 'bProgress', 'fStats', 'fAutorepeat', 'bStats', 'bAutorepeat'];
+
 </script>
 
 <template>

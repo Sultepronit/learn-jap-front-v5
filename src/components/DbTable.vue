@@ -13,24 +13,6 @@ const { incrementLastRow } = defineProps([
     'selectedNumber'
 ]);
 
-// const lastDisplayedRow = ref(0);
-// function setLastDisplayedRow(newVal) {
-//     lastDisplayedRow.value = newVal < rowNumber.value ? rowNumber.value
-//         : newVal > viewList.value.length ? viewList.value.length : newVal;
-// }
-
-// function incrementLastDisplayedRow(delta) {
-//     setLastDisplayedRow(Number(lastDisplayedRow.value) + delta);
-// }
-
-
-// const displayedRange = computed(() => {
-//     return viewList.value.slice(
-//         (lastDisplayedRow.value - rowNumber.value),
-//         lastDisplayedRow.value
-//     );
-// });
-
 </script>
 
 <template>
@@ -46,7 +28,8 @@ const { incrementLastRow } = defineProps([
                 :select="select"
                 :selectedNumber="selectedNumber"
             />
-            {{ console.log(scrollerValue, min, max) }}
+            <!-- {{ console.log(selectedNumber) }} -->
+            <!-- {{ console.log(scrollerValue, min, max) }} -->
         </div>
         <input
             id="scroller"

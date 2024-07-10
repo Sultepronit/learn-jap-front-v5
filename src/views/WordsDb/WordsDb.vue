@@ -7,17 +7,17 @@ import TableRow from './components/TableRow.vue';
 
 import { ref, computed, watch, watchEffect } from 'vue';
 import { startSession, ready, db } from '@/views/WordsDb/services/crud.js';
-import { calculateDefaultRowNumber, sortData } from '@/utils/tableControls.js';
-import {
-    // displayedRange, 
-    selectedNumber,
-    select,
-    // incrementLastDisplayedRow, 
-    // setLastDisplayedRow, 
-    // rowNumber, 
-    // viewList,
-    // lastDisplayedRow 
-} from './utils/displayAndSelect';
+import { calculateDefaultRowNumber, sortData, select } from '@/utils/tableControls.js';
+// import {
+//     // displayedRange, 
+//     // selectedNumber,
+//     // select,
+//     // incrementLastDisplayedRow, 
+//     // setLastDisplayedRow, 
+//     // rowNumber, 
+//     // viewList,
+//     // lastDisplayedRow 
+// } from './utils/displayAndSelect';
 
 document.title = 'Japanese words DB';
 startSession();
@@ -59,22 +59,35 @@ function incrementLastDisplayedRow(delta) {
     setLastDisplayedRow(Number(lastDisplayedRow.value) + delta);
 }
 
-
 const displayedRange = computed(() => {
     return viewList.value.slice(
         (lastDisplayedRow.value - rowNumber.value),
         lastDisplayedRow.value
     );
 });
+
+const selectedNumber = ref(0);
+const selectedCard = ref({});
+
+function selectWord(cardNumber, changeDisplay) {
+    // console.log('here?');
+    selectedNumber.value = Number(cardNumber);
+    selectedCard.value = select(viewList, cardNumber);
+}
 </script>
 
 <template>
     <template v-if="ready">
-        <EditSelected />
+        <EditSelected
+            :card="selectedCard"
+        />
         <SearchBar
+            :selectedNumber="selectedNumber"
+            :select="selectWord"
             :sortOptions="sortOptions"
             :setSortOptions="setSortOptions"
         />
+        <!-- {{ console.log(selectedNumber) }} -->
         <DbTable
             :min="rowNumber"
             :max="viewList.length"
@@ -83,7 +96,7 @@ const displayedRange = computed(() => {
             :set-last-row="setLastDisplayedRow"
             :TableRow="TableRow"
             :displayedRange="displayedRange"
-            :select="select"
+            :select="selectWord"
             :selectedNumber="selectedNumber"
         />
         <!-- <DbList
