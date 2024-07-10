@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, watchEffect } from 'vue';
-import { calculateDefaultRowNumber, sortData, select } from '@/utils/tableControls.js';
+import { sortData, select, searchInStats } from '@/utils/tableControls.js';
 
 const props = defineProps([
     'db',
@@ -11,19 +11,23 @@ const props = defineProps([
 ]);
 
 const localList = computed(() => props.db.slice());
-// console.log(localList.value);
 
-const sortOptions = ref({
-    column: '',
-    reverse: false
-});
+const sortOptions = ref({});
 function setSortOptions(newVal) {
     sortOptions.value = newVal;
 }
-
-const viewList = computed(() =>
-    sortData(localList.value, sortOptions.value.column, sortOptions.value.reverse)
+const sortedList = computed(() =>
+    sortData(localList.value, sortOptions.value)
 );
+
+const filterStatsOptions = ref({});
+function setFilterStatsOptions(newVal) {
+    filterStatsOptions.value = newVal;
+}
+const viewList = computed(() =>
+    searchInStats(sortedList.value, filterStatsOptions.value) || sortedList.value
+);
+// console.log(viewList.value);
 
 const defaultRowNumber = Math.round((window.innerHeight / 33) - props.outerSpace);
 const rowNumber = computed(() =>
@@ -70,8 +74,8 @@ function selectItem(cardNumber, changeDisplay) {
     <SearchBar
         :selectedNumber="selectedNumber"
         :select="selectItem"
-        :sortOptions="sortOptions"
         :setSortOptions="setSortOptions"
+        :setFilterStatsOptions="setFilterStatsOptions"
     />
     <section
         id="table"

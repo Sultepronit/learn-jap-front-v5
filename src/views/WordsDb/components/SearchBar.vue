@@ -6,7 +6,7 @@ import { searchText, searchInStats } from '../utils/searchAndFilter.js';
 import statsTitles from '../utils/statsTitles.js';
 
 const props = defineProps(
-    ['selectedNumber', 'select', 'sortOptions', 'setSortOptions']
+    ['selectedNumber', 'select', 'setSortOptions', 'setFilterStatsOptions']
 );
 
 const titles = ['learnStatus', ...statsTitles];
@@ -26,7 +26,8 @@ watch(filter, () => {
     console.log(filter);
     
     if(!filter.column) return;
-    searchInStats(filter.query, filter.column);
+    // searchInStats(filter.query, filter.column);
+    props.setFilterStatsOptions(filter);
 });
 
 const sort = reactive({
@@ -35,6 +36,7 @@ const sort = reactive({
 });
 
 watch(sort, () => {
+    console.log(sort);
     if(!sort.column) return;
     props.setSortOptions(sort);
 });
