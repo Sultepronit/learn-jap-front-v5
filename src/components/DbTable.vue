@@ -4,12 +4,15 @@ import { sortData, select, searchInStats } from '@/utils/tableControls.js';
 
 const props = defineProps([
     'db',
+    'cardNumber',
     'outerSpace',
     'setSelectedCard',
     'TableRow',
-    'SearchBar'
+    'SearchBar',
+    'findText'
 ]);
 
+//--- get view list ---//
 const localList = computed(() => props.db.slice());
 
 const sortOptions = ref({});
@@ -24,23 +27,27 @@ const filterStatsOptions = ref({});
 function setFilterStatsOptions(newVal) {
     filterStatsOptions.value = newVal;
 }
-const viewList = computed(() =>
+const filtered1 = computed(() =>
     searchInStats(sortedList.value, filterStatsOptions.value) || sortedList.value
+);
+
+const findTextOptions = ref({});
+function setFindTextOptions(newVal) {
+    findTextOptions.value = newVal;
+}
+const viewList = computed(() =>
+    props.findText(filtered1.value, findTextOptions.value) || filtered1.value
 );
 // console.log(viewList.value);
 
+
+//--- show the range of the list ---//
 const defaultRowNumber = Math.round((window.innerHeight / 33) - props.outerSpace);
 const rowNumber = computed(() =>
     viewList.value.length > defaultRowNumber ? defaultRowNumber : viewList.value.length
 );
-//console.log(rowNumber.value);
 
 const lastDisplayedRow = ref(0);
-
-watchEffect(() => {
-    console.log('change!');
-    lastDisplayedRow.value = viewList.value.length;
-});
 
 function setLastDisplayedRow(newVal) {
     lastDisplayedRow.value = newVal < rowNumber.value ? rowNumber.value
@@ -58,16 +65,31 @@ const displayedRange = computed(() => {
     );
 });
 
+//--- select item ---//
 const selectedNumber = ref(0);
 
 function selectItem(cardNumber, changeDisplay) {
-    const selectedCard = select(viewList, cardNumber);
+    const selectedCard = select(props.db, cardNumber);
     if(!selectedCard) return;
 
     selectedNumber.value = Number(cardNumber);
     props.setSelectedCard(selectedCard);
+
+    console.log(changeDisplay, 'do something!');
+    if(changeDisplay) {
+        // do something
+        // setLastDisplayedRow(cardNumber);
+    }
 }
 
+//--- react to cahanges ---//
+watchEffect(() => {
+    console.log('change!');
+    lastDisplayedRow.value = viewList.value.length;
+
+    if(viewList.value.length < 1) return;
+    selectItem(viewList.value[viewList.value.length - 1][props.cardNumber])
+});
 </script>
 
 <template>
@@ -76,6 +98,7 @@ function selectItem(cardNumber, changeDisplay) {
         :select="selectItem"
         :setSortOptions="setSortOptions"
         :setFilterStatsOptions="setFilterStatsOptions"
+        :setFindTextOptions="setFindTextOptions"
     />
     <section
         id="table"

@@ -5,15 +5,24 @@ import { db } from '../services/crud';
 import { searchText, searchInStats } from '../utils/searchAndFilter.js';
 import statsTitles from '../utils/statsTitles.js';
 
-const props = defineProps(
-    ['selectedNumber', 'select', 'setSortOptions', 'setFilterStatsOptions']
-);
+const props = defineProps([
+    'selectedNumber',
+    'select',
+    'setSortOptions',
+    'setFilterStatsOptions',
+    'setFindTextOptions'
+]);
 
 const titles = ['learnStatus', ...statsTitles];
 const sortTitles = ['cardNumber', ...titles];
 
 const searchInTranslation = ref(false);
 const searchQuery = ref('');
+
+const findTextOptions = ref({
+    query: '',
+    inTranslation: false
+});
 
 // const filterColumn = ref('');
 // const filterValue = ref('');
@@ -63,15 +72,15 @@ function newSortDirection() {
 
         <input
             type="text"
-            v-model="searchQuery"
-            @input="searchText(searchQuery, searchInTranslation)"
+            v-model="findTextOptions.query"
+            @input="setFindTextOptions(findTextOptions)"
         >
         <label for="translation">
             <input
                 type="checkbox"
                 name="translation"
-                v-model="searchInTranslation"
-                @change="searchText(searchQuery, searchInTranslation)"
+                v-model="findTextOptions.inTranslation"
+                @change="setFindTextOptions(findTextOptions)"
             >
             Translation
         </label>

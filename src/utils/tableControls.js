@@ -15,20 +15,20 @@ function sortData(data, options) {
     return data;
 }
 
-function select(data, cardNumber) {
+function select(db, cardNumber) {
     const index = cardNumber - 1;
-    if(index < 0 || index >= data.value.length) return;
+    if(index < 0 || index >= db.length) return;
     
-    const card = data.value[index];
+    const card = db[index];
     console.log(card);
 
     return card;
 }
 
 function searchInStats(data, options) {
-    console.log('filter', options);
+    // console.log('filter', options);
     if(!options.query) return null;
-    console.log(options.query);
+    // console.log(options.query);
     const { query, column } = options;
     if(query !== '' && !isNaN(query)) {
         return data.filter((row) => row[column] == query);
