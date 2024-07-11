@@ -2,12 +2,14 @@
 import { ref, watch, reactive } from 'vue';
 import { db } from '../services/crud';
 // import { selectedNumber, select, /*sortViewList*/ } from '../utils/displayAndSelect';
-import { searchText, searchInStats } from '../utils/searchAndFilter.js';
+// import { searchText, searchInStats } from '../utils/searchAndFilter.js';
 import statsTitles from '../utils/statsTitles.js';
 
 const props = defineProps([
     'selectedNumber',
     'select',
+    'viewListPosition',
+    'viewListLength',
     'setSortOptions',
     'setFilterStatsOptions',
     'setFindTextOptions'
@@ -16,8 +18,8 @@ const props = defineProps([
 const titles = ['learnStatus', ...statsTitles];
 const sortTitles = ['cardNumber', ...titles];
 
-const searchInTranslation = ref(false);
-const searchQuery = ref('');
+// const searchInTranslation = ref(false);
+// const searchQuery = ref('');
 
 const findTextOptions = ref({
     query: '',
@@ -67,6 +69,10 @@ function newSortDirection() {
             :value="selectedNumber"
             @input="select($event.target.value, true)"
         >
+
+        <span class="space"></span>
+
+        <span>{{ viewListPosition }}/{{ viewListLength }}</span>
 
         <span class="space"></span>
 

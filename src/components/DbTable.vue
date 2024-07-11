@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watchEffect } from 'vue';
+import { ref, computed, watch, watchEffect } from 'vue';
 import { sortData, select, searchInStats } from '@/utils/tableControls.js';
 
 const props = defineProps([
@@ -35,11 +35,16 @@ const findTextOptions = ref({});
 function setFindTextOptions(newVal) {
     findTextOptions.value = newVal;
 }
-const viewList = computed(() =>
+const filtered2 = computed(() =>
     props.findText(filtered1.value, findTextOptions.value) || filtered1.value
 );
-// console.log(viewList.value);
 
+const viewList = computed(() => {
+    if(filtered2.value.length === 1) {
+        return sortedList.value;
+    }
+    return filtered2.value;
+});
 
 //--- show the range of the list ---//
 const defaultRowNumber = Math.round((window.innerHeight / 33) - props.outerSpace);
@@ -50,6 +55,7 @@ const rowNumber = computed(() =>
 const lastDisplayedRow = ref(0);
 
 function setLastDisplayedRow(newVal) {
+    // console.log(newVal);
     lastDisplayedRow.value = newVal < rowNumber.value ? rowNumber.value
         : newVal > viewList.value.length ? viewList.value.length : newVal;
 }
@@ -67,6 +73,7 @@ const displayedRange = computed(() => {
 
 //--- select item ---//
 const selectedNumber = ref(0);
+const viewListPosition = ref(0);
 
 function selectItem(cardNumber, changeDisplay) {
     const selectedCard = select(props.db, cardNumber);
@@ -75,27 +82,37 @@ function selectItem(cardNumber, changeDisplay) {
     selectedNumber.value = Number(cardNumber);
     props.setSelectedCard(selectedCard);
 
-    console.log(changeDisplay, 'do something!');
-    if(changeDisplay) {
-        // do something
-        // setLastDisplayedRow(cardNumber);
+    viewListPosition.value = viewList.value.findIndex(item => item.id === selectedCard.id) + 1;
+    console.log(viewListPosition.value);
+
+    if(changeDisplay && viewListPosition.value > 0) {
+        setLastDisplayedRow(viewListPosition.value);
     }
 }
 
 //--- react to cahanges ---//
-watchEffect(() => {
+function change() {
     console.log('change!');
     lastDisplayedRow.value = viewList.value.length;
 
     if(viewList.value.length < 1) return;
-    selectItem(viewList.value[viewList.value.length - 1][props.cardNumber])
-});
+
+    if(filtered2.value.length === 1) {
+        selectItem(filtered2.value[0][props.cardNumber], true);
+    } else {
+        selectItem(viewList.value[viewList.value.length - 1][props.cardNumber]);
+    }
+}
+change();
+watch([viewList, viewList.value[0]], () => change());
 </script>
 
 <template>
     <SearchBar
         :selectedNumber="selectedNumber"
         :select="selectItem"
+        :viewListPosition="viewListPosition"
+        :viewListLength="viewList.length"
         :setSortOptions="setSortOptions"
         :setFilterStatsOptions="setFilterStatsOptions"
         :setFindTextOptions="setFindTextOptions"

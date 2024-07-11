@@ -49,6 +49,9 @@ function searchInStats(data, options) {
     }
 }
 
+// const arr = [1,2,3];
+// arr.find()
+
 export {
     calculateDefaultRowNumber,
     sortData,
