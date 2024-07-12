@@ -14,38 +14,73 @@ const props = defineProps([
 ]);
 
 //--- get view list ---//
-const localList = computed(() => props.db.slice());
+// const localList = computed(() => props.db.slice());
+
+// const sortOptions = ref({});
+// function setSortOptions(newVal) {
+//     sortOptions.value = newVal;
+// }
+// const sortedList = computed(() =>
+//     sortData(localList.value, sortOptions.value)
+// );
+
+// const filterStatsOptions = ref({});
+// function setFilterStatsOptions(newVal) {
+//     filterStatsOptions.value = newVal;
+// }
+// const filtered1 = computed(() =>
+//     searchInStats(sortedList.value, filterStatsOptions.value) || sortedList.value
+// );
+
+// const findTextOptions = ref({});
+// function setFindTextOptions(newVal) {
+//     findTextOptions.value = newVal;
+// }
+// const filtered2 = computed(() =>
+//     props.findText(filtered1.value, findTextOptions.value) || filtered1.value
+// );
+
+// const viewList = computed(() => {
+//     if(props.enforcedList) return props.enforcedList;
+
+//     if(filtered2.value.length === 1) return sortedList.value;
+
+//     return filtered2.value;
+// });
 
 const sortOptions = ref({});
 function setSortOptions(newVal) {
     sortOptions.value = newVal;
 }
-const sortedList = computed(() =>
-    sortData(localList.value, sortOptions.value)
-);
 
 const filterStatsOptions = ref({});
 function setFilterStatsOptions(newVal) {
     filterStatsOptions.value = newVal;
 }
-const filtered1 = computed(() =>
-    searchInStats(sortedList.value, filterStatsOptions.value) || sortedList.value
-);
 
 const findTextOptions = ref({});
 function setFindTextOptions(newVal) {
     findTextOptions.value = newVal;
 }
-const filtered2 = computed(() =>
-    props.findText(filtered1.value, findTextOptions.value) || filtered1.value
-);
+
+let preselected = null;
+function preselect(val) {
+    preselected = val;
+}
 
 const viewList = computed(() => {
     if(props.enforcedList) return props.enforcedList;
 
-    if(filtered2.value.length === 1) return sortedList.value;
+    const sortedList = sortData(props.db.slice(), sortOptions.value);
+    const filtered1 = searchInStats(sortedList, filterStatsOptions.value) || sortedList
+    const filtered2 = props.findText(filtered1, findTextOptions.value) || filtered1;
 
-    return filtered2.value;
+    if(filtered2.length === 1) {
+        preselect(filtered2[0]);
+        return sortedList;
+    }
+
+    return filtered2;
 });
 
 //--- show the range of the list ---//
@@ -99,14 +134,16 @@ function change() {
 
     if(viewList.value.length < 1) return;
 
-    if(filtered2.value.length === 1) {
-        selectItem(filtered2.value[0][props.cardNumber], true);
+    // if(filtered2.value.length === 1) {
+        // selectItem(filtered2.value[0][props.cardNumber], true);
+    if(preselected) {
+        selectItem(preselected[props.cardNumber], true);
     } else if(!props.enforcedList) {
         selectItem(viewList.value[viewList.value.length - 1][props.cardNumber]);
     }
 }
 change();
-watch([viewList, viewList.value[0]], () => change());
+watch([viewList, /*viewList.value[0]*/], () => change());
 </script>
 
 <template>

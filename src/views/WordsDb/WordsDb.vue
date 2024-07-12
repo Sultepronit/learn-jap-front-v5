@@ -1,14 +1,12 @@
 <script setup>
 import EditSelected from './components/EditSelected.vue';
 import SearchBar from './components/SearchBar.vue';
-// import DbList from '@/components/DbList.vue';
 import DbTable from '@/components/DbTable.vue';
 import TableRow from './components/TableRow.vue';
 
 import { ref } from 'vue';
 import { startSession, ready, db } from '@/views/WordsDb/services/crud.js';
 import findText from './utils/findText.js';
-// import { calculateDefaultRowNumber, sortData, select } from '@/utils/tableControls.js';
 
 document.title = 'Japanese words DB';
 startSession();

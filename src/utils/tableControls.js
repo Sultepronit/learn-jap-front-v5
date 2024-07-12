@@ -1,7 +1,3 @@
-function calculateDefaultRowNumber(ounterSpace) {
-    return Math.round((window.innerHeight / 33) - ounterSpace);
-}
-
 function sortData(data, options) {
     // console.log('sort!');
     if(!options.column) return data;
@@ -49,11 +45,7 @@ function searchInStats(data, options) {
     }
 }
 
-// const arr = [1,2,3];
-// arr.find()
-
 export {
-    calculateDefaultRowNumber,
     sortData,
     select,
     searchInStats
