@@ -1,19 +1,19 @@
 import { ref } from "vue";
-import { get, post, update, patch, deleteApi } from "@/services/commonAPI.js";
+import { get, post, update, deleteApi } from "@/services/commonAPI.js";
 
 const db = ref([]);
 const ready = ref(false);
 
 function startSession() {
     // dev mode
-    const restored = JSON.parse(localStorage.getItem('wordsDb'));
-    if(restored) {
-        db.value = restored;
-        console.log(restored);
-        // setTimeout(() => ready.value = true, 1000);
-        ready.value = true;
-        return;
-    }
+    // const restored = JSON.parse(localStorage.getItem('wordsDb'));
+    // if(restored) {
+    //     db.value = restored;
+    //     console.log(restored);
+    //     // setTimeout(() => ready.value = true, 1000);
+    //     ready.value = true;
+    //     return;
+    // }
 
     get('/table/words').then((data) => {
         db.value = data;
@@ -49,8 +49,6 @@ async function createNewCard() {
 }
 
 async function updateCard(cardNumber, field, value) {
-    // isSaving.value = true;
-
     const editedCard = db.value[cardNumber - 1];
     editedCard[field] = value;
 
@@ -60,11 +58,7 @@ async function updateCard(cardNumber, field, value) {
     }
     data.changes[field] = value;
 
-    // const success = await patch('words', data);
-    const success = await update('words', data);
-    // if(success) {
-    //     isSaving.value = false;
-    // }
+    await update('words', data);
 }
 
 async function deleteCard(cardNumber) {

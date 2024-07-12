@@ -22,7 +22,7 @@ function searchInTranslation(row, query) {
 }
 
 function findText(data, options) {
-    console.log('find', options)
+    // console.log('find', options)
     if(!options.query) return null;
 
     const { query, inTranslation } = options;

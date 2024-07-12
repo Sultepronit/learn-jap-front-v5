@@ -18,23 +18,18 @@ const props = defineProps([
 const titles = ['learnStatus', ...statsTitles];
 const sortTitles = ['cardNumber', ...titles];
 
-// const searchInTranslation = ref(false);
-// const searchQuery = ref('');
-
 const findTextOptions = ref({
     query: '',
     inTranslation: false
 });
 
-// const filterColumn = ref('');
-// const filterValue = ref('');
 const filter = reactive({
     column: '',
     query: ''
 });
 
 watch(filter, () => {
-    console.log(filter);
+    // console.log(filter);
     
     if(!filter.column) return;
     // searchInStats(filter.query, filter.column);
@@ -47,7 +42,7 @@ const sort = reactive({
 });
 
 watch(sort, () => {
-    console.log(sort);
+    // console.log(sort);
     if(!sort.column) return;
     props.setSortOptions(sort);
 });
