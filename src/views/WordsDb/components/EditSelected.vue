@@ -1,24 +1,22 @@
 <script setup>
 import { refetch, isSaving, createNewCard, update, deleteCard } from '../services/crud';
-// import { selectedCard as card, select } from '../utils/displayAndSelect';
-import { searchText } from '../utils/searchAndFilter.js';
 import statsTitles from '../utils/statsTitles.js';
 
-const props = defineProps(['card']);
+const props = defineProps(['card', 'db', 'findInDb', 'displayMatches']);
 
-function checkInput(value, field) {
-    // if(card.value.learnStatus < 0) {
-    //     card.value[field] = value;
-    //     searchText(value, false);
-    // }
+function checkInput(value) {
+    if(props.card.learnStatus < 0) {
+        const matches = props.findInDb(props.db, { query: value });
+        // console.log(matches);
+        if(matches?.length > 1) {
+            props.displayMatches(matches);
+        } else if(matches?.length === 1 && matches[0].cardNumber !== props.card.cardNumber) {
+            props.displayMatches(matches);
+        } else {
+            props.displayMatches(null);
+        }
+    }
 }
-function resetSearch() {
-    // if(card.value.learnStatus < 0) {
-    //     searchText('');
-    //     select(card.value.cardNumber);
-    // }
-}
-
 </script>
 
 <template>
@@ -63,8 +61,8 @@ function resetSearch() {
             :class="{'blue' : card.altWriting}"
             :value="card.writings"
             @change="update(card.cardNumber, 'writings', $event.target.value)"
-            @input="checkInput($event.target.value, 'writings')"
-            @blur="resetSearch"
+            @input="checkInput($event.target.value)"
+            @blur="displayMatches(null)"
             placeholder="言葉"
         >
         <div
@@ -88,8 +86,8 @@ function resetSearch() {
             class="jap-field"
             :value="card.readings"
             @change="update(card.cardNumber, 'readings', $event.target.value)"
-            @input="checkInput($event.target.value, 'readings')"
-            @blur="resetSearch"
+            @input="checkInput($event.target.value)"
+            @blur="displayMatches(null)"
             placeholder="ことば"
         >
         <input

@@ -7,9 +7,10 @@ const props = defineProps([
     'cardNumber',
     'outerSpace',
     'setSelectedCard',
+    'enforcedList',
+    'findText',
     'TableRow',
     'SearchBar',
-    'findText'
 ]);
 
 //--- get view list ---//
@@ -40,9 +41,10 @@ const filtered2 = computed(() =>
 );
 
 const viewList = computed(() => {
-    if(filtered2.value.length === 1) {
-        return sortedList.value;
-    }
+    if(props.enforcedList) return props.enforcedList;
+
+    if(filtered2.value.length === 1) return sortedList.value;
+
     return filtered2.value;
 });
 
@@ -99,7 +101,7 @@ function change() {
 
     if(filtered2.value.length === 1) {
         selectItem(filtered2.value[0][props.cardNumber], true);
-    } else {
+    } else if(!props.enforcedList) {
         selectItem(viewList.value[viewList.value.length - 1][props.cardNumber]);
     }
 }

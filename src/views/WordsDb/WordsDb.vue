@@ -5,7 +5,7 @@ import SearchBar from './components/SearchBar.vue';
 import DbTable from '@/components/DbTable.vue';
 import TableRow from './components/TableRow.vue';
 
-import { ref, computed, watch, watchEffect } from 'vue';
+import { ref } from 'vue';
 import { startSession, ready, db } from '@/views/WordsDb/services/crud.js';
 import findText from './utils/findText.js';
 // import { calculateDefaultRowNumber, sortData, select } from '@/utils/tableControls.js';
@@ -13,6 +13,11 @@ import findText from './utils/findText.js';
 document.title = 'Japanese words DB';
 startSession();
 
+const enforcedList = ref(null);
+function setEnforcedList(newVal) {
+    // console.log(newVal);
+    enforcedList.value = newVal;
+}
 
 const selectedCard = ref({});
 function setSelectedCard(newVal) {
@@ -24,21 +29,19 @@ function setSelectedCard(newVal) {
     <template v-if="ready">
         <EditSelected
             :card="selectedCard"
+            :db="db"
+            :findInDb="findText"
+            :displayMatches="setEnforcedList"
         />
-        <!-- <SearchBar
-            :selectedNumber="selectedNumber"
-            :select="selectWord"
-            :sortOptions="sortOptions"
-            :setSortOptions="setSortOptions"
-        /> -->
         <DbTable
             :db="db"
             cardNumber="cardNumber"
             outerSpace="6"
             :setSelectedCard="setSelectedCard"
+            :enforcedList="enforcedList"
+            :findText="findText"
             :TableRow="TableRow"
             :SearchBar="SearchBar"
-            :findText="findText"
         />
     </template>
 </template>
