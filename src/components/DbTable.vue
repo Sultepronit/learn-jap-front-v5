@@ -13,41 +13,6 @@ const props = defineProps([
     'SearchBar',
 ]);
 
-//--- get view list ---//
-// const localList = computed(() => props.db.slice());
-
-// const sortOptions = ref({});
-// function setSortOptions(newVal) {
-//     sortOptions.value = newVal;
-// }
-// const sortedList = computed(() =>
-//     sortData(localList.value, sortOptions.value)
-// );
-
-// const filterStatsOptions = ref({});
-// function setFilterStatsOptions(newVal) {
-//     filterStatsOptions.value = newVal;
-// }
-// const filtered1 = computed(() =>
-//     searchInStats(sortedList.value, filterStatsOptions.value) || sortedList.value
-// );
-
-// const findTextOptions = ref({});
-// function setFindTextOptions(newVal) {
-//     findTextOptions.value = newVal;
-// }
-// const filtered2 = computed(() =>
-//     props.findText(filtered1.value, findTextOptions.value) || filtered1.value
-// );
-
-// const viewList = computed(() => {
-//     if(props.enforcedList) return props.enforcedList;
-
-//     if(filtered2.value.length === 1) return sortedList.value;
-
-//     return filtered2.value;
-// });
-
 const sortOptions = ref({});
 function setSortOptions(newVal) {
     sortOptions.value = newVal;
@@ -63,14 +28,12 @@ function setFindTextOptions(newVal) {
     findTextOptions.value = newVal;
 }
 
-let preselected = null;
+const preselected = ref(null);
 function preselect(val) {
-    preselected = val;
+    preselected.value = val;
 }
 
-const viewList = computed(() => {
-    if(props.enforcedList) return props.enforcedList;
-
+const mainList = computed(() => {
     const sortedList = sortData(props.db.slice(), sortOptions.value);
     const filtered1 = searchInStats(sortedList, filterStatsOptions.value) || sortedList
     const filtered2 = props.findText(filtered1, findTextOptions.value) || filtered1;
@@ -80,7 +43,16 @@ const viewList = computed(() => {
         return sortedList;
     }
 
+    preselect(null);
     return filtered2;
+});
+
+const viewList = computed(() => {
+    if(props.enforcedList) {
+        return props.enforcedList;
+    }
+
+    return mainList.value;
 });
 
 //--- show the range of the list ---//
@@ -128,22 +100,26 @@ function selectItem(cardNumber, changeDisplay) {
 }
 
 //--- react to cahanges ---//
-function change() {
+function changeView() {
     console.log('change!');
     lastDisplayedRow.value = viewList.value.length;
+}
 
+function selectDefault() {
     if(viewList.value.length < 1) return;
 
-    // if(filtered2.value.length === 1) {
-        // selectItem(filtered2.value[0][props.cardNumber], true);
-    if(preselected) {
-        selectItem(preselected[props.cardNumber], true);
+    if(preselected.value) {
+        selectItem(preselected.value[props.cardNumber], true);
     } else if(!props.enforcedList) {
         selectItem(viewList.value[viewList.value.length - 1][props.cardNumber]);
     }
 }
-change();
-watch([viewList, /*viewList.value[0]*/], () => change());
+
+changeView();
+selectDefault();
+
+watch(viewList, () => changeView());
+watch([mainList, preselected], () => selectDefault());
 </script>
 
 <template>
