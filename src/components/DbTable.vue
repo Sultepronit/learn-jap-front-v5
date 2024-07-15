@@ -1,5 +1,7 @@
 <script setup>
-import { ref, computed, watch, watchEffect } from 'vue';
+import CommonSearchBar from './CommonSearchBar.vue';
+
+import { ref, computed, watch } from 'vue';
 import { sortData, select, searchInStats } from '@/utils/tableControls.js';
 
 const props = defineProps([
@@ -9,8 +11,10 @@ const props = defineProps([
     'setSelectedCard',
     'enforcedList',
     'findText',
+    'filterColumns',
+    'sortColumns',
     'TableRow',
-    'SearchBar',
+    'SearchText',
 ]);
 
 const sortOptions = ref({});
@@ -92,7 +96,7 @@ function selectItem(cardNumber, changeDisplay) {
     props.setSelectedCard(selectedCard);
 
     viewListPosition.value = viewList.value.findIndex(item => item.id === selectedCard.id) + 1;
-    console.log(viewListPosition.value);
+    // console.log(viewListPosition.value);
 
     if(changeDisplay && viewListPosition.value > 0) {
         setLastDisplayedRow(viewListPosition.value);
@@ -106,7 +110,10 @@ function changeView() {
 }
 
 function selectDefault() {
-    if(viewList.value.length < 1) return;
+    if(viewList.value.length < 1) {
+        viewListPosition.value = 0;
+        return;
+    }
 
     if(preselected.value) {
         selectItem(preselected.value[props.cardNumber], true);
@@ -123,14 +130,17 @@ watch([mainList, preselected], () => selectDefault());
 </script>
 
 <template>
-    <SearchBar
+    <CommonSearchBar
         :selectedNumber="selectedNumber"
         :select="selectItem"
         :viewListPosition="viewListPosition"
         :viewListLength="viewList.length"
+        :filterColumns="filterColumns"
+        :sortColumns="sortColumns"
         :setSortOptions="setSortOptions"
         :setFilterStatsOptions="setFilterStatsOptions"
         :setFindTextOptions="setFindTextOptions"
+        :SearchText="SearchText"
     />
     <section
         id="table"
@@ -144,8 +154,6 @@ watch([mainList, preselected], () => selectDefault());
                 :select="selectItem"
                 :selectedNumber="selectedNumber"
             />
-            <!-- {{ console.log(selectedNumber) }} -->
-            <!-- {{ console.log(scrollerValue, min, max) }} -->
         </div>
         <input
             id="scroller"
