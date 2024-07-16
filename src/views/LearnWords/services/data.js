@@ -2,7 +2,6 @@ import { ref } from "vue";
 import { fetchData, getKanjiForWords } from './fetchFromDb.js';
 import { restoreSession, saveSession } from "./backup.js";
 import { restoreOrGetWordsForKanji } from "@/services/wordsForKanji.js";
-import { setStatus } from '@/utils/statusBarControl.js';
 
 let plan = {};
 let session = [];
@@ -27,8 +26,6 @@ async function startSession() {
     kanji = JSON.parse(localStorage.getItem('kanjiForWords'));
     
     ready.value = true;
-
-    // setStatus.clear();
 
     if(!restored) {
         kanji = await getKanjiForWords();

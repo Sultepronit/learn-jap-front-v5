@@ -6,20 +6,13 @@ import { getWordsForKanji, restoreOrGetWordsForKanji } from '@/services/wordsFor
 
 let plan = {};
 let session = [];
-let words = [];
-let wordsAreUpdated = false;
 const ready = ref(false);
 
 async function fetchData() {
     const data = await get('/session/kanji-ready');
     console.log(data);
 
-    plan = data.plan;
-    session = data.session;
-    progress.value.autorepeat = plan.autorepeated;
-
-    // localStorage.setItem('kanjiPlan', JSON.stringify(plan));
-    saveSession(plan);
+    return data;
 }
 
 async function startSession() {
@@ -27,18 +20,23 @@ async function startSession() {
     if(restored) {
         session = restored.session;
         plan = restored.plan;
-        wordsAreUpdated = true;
     } else {
-        await fetchData();
+        const data = await fetchData();
+        if(!data) return;
+
+        session = data.session;
+        plan = data.plan;
+        progress.value.autorepeat = plan.autorepeated;
+
+        saveSession(plan);
     }
 
-    wordsAreUpdated = await restoreOrGetWordsForKanji();
-    
-    ready.value = true;
-
-    if(!wordsAreUpdated) {
+    let wordsAreUpdated = await restoreOrGetWordsForKanji();
+    if(!restored && !wordsAreUpdated) {
         getWordsForKanji();
     }
+
+    ready.value = true;
 }
 
-export { startSession, ready, plan, session, words };
+export { startSession, ready, plan, session };
