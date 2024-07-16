@@ -1,84 +1,32 @@
 import { ref } from "vue";
-import { get, post, patch, deleteApi } from "@/services/commonAPI.js";
-
-// console.time('tt');
+import { get } from "@/services/commonAPI.js";
 
 const db = ref([]);
 const ready = ref(false);
 
 function startSession() {
+    // dev mode
+    const restored = JSON.parse(localStorage.getItem('kanjiDb'));
+    if(restored) {
+        db.value = restored;
+        console.log('restored!', restored);
+        ready.value = true;
+        return;
+    }
+
     get('/table/kanji').then((data) => {
         db.value = data;
         ready.value = true;
+
+        localStorage.setItem('kanjiDb', JSON.stringify(data)); // for the dev mode
     });
 }
 
-// const isSaving = ref(false);
-
-const numberToSelect = ref(0);
-
-// async function createNewCard() {
-//     try {
-//         isSaving.value = true;
-//         const newCardNumber = { cardNumber: db.value.length + 1 };
-//         const newCard = await post('jap', newCardNumber);
-//         db.value.push(newCard);
-//         numberToSelect.value = newCard.cardNumber;
-//         // console.log(newCard);
-//         isSaving.value = false;
-//     } catch(e) {
-//         console.error(e);
-//     }
-// }
-
-// async function update(cardNumber, field, value) {
-//     isSaving.value = true;
-
-//     const editedCard = db.value[cardNumber - 1];
-//     editedCard[field] = value;
-
-//     const data = {
-//         id: editedCard.id,
-//         changes: {}
-//     }
-//     data.changes[field] = value;
-
-//     const success = await patch('jap', data);
-//     if(success) {
-//         isSaving.value = false;
-//     } else {
-//         // add possibility to try and save again
-//     }
-// }
-
-// async function deleteCard(cardNumber) {
-//     const confirmation = confirm(`Do you confrim deleating this card?`);
-//     if(!confirmation) {
-//         return;
-//     }
-//     isSaving.value = true;
-//     try {
-//         const id = db.value[cardNumber - 1].id;
-//         const success = await deleteApi('jap', id);
-//         if(success) {
-//             location.reload();
-//             isSaving.value = false;
-//         } else {
-//             // alert('Not deleted!');
-//         }
-//     } catch(e) {
-//         console.error(e);
-//         // alert('Error!');
-//     }
-// }
+// const numberToSelect = ref(0);
 
 export {
     startSession,
     db,
     ready,
-    numberToSelect,
-    // isSaving,
-    // createNewCard,
-    // update,
-    // deleteCard
+    // numberToSelect,
 };

@@ -1,5 +1,5 @@
 import { ref, watch, computed } from 'vue';
-import { db, ready, numberToSelect } from '../services/crud.js';
+import { db, ready, /*numberToSelect*/ } from '../services/crud.js';
 
 const viewList = ref([]);
 function resetViewList() {
@@ -69,9 +69,9 @@ function select(cardNumber, changeDisplay) {
     }
 }
 
-watch(numberToSelect, (num) => {
-    select(num, true);
-});
+// watch(numberToSelect, (num) => {
+//     select(num, true);
+// });
 
 function goToTheBottom() {
     setLastDisplayedRow(db.value.length);

@@ -1,6 +1,5 @@
 <script setup>
 import EditSelected from './components/EditSelected.vue';
-// import SearchBar from './components/SearchBar.vue';
 import DbTable from '@/components/DbTable.vue';
 import TableRow from './components/TableRow.vue';
 import SearchText from './components/SearchText.vue';

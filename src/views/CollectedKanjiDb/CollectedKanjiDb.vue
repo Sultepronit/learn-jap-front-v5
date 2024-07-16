@@ -1,38 +1,41 @@
 <script setup>
-import { startSession, ready } from './services/crud';
-import SearchBar from './components/SearchBar.vue';
-import DbList from '@/components/DbList.vue';
+// import SearchBar from './components/SearchBar.vue';
+// import DbList from '@/components/DbList.vue';
+import DbTable from '@/components/DbTable.vue';
 import TableRow from './components/TableRow.vue';
+import SearchText from './components/SearchText.vue';
 
-document.title = 'Collected Kanji DB';
+import { startSession, ready, db } from './services/crud';
+// import statsTitles from './utils/statsTitles.js';
+import findText from './utils/findText.js';
 
-import {
-    displayedRange, //as range,
-    selectedNumber,
-    select,
-    incrementLastDisplayedRow, // as incrementLastRow,
-    setLastDisplayedRow, // as setLastRow,
-    rowNumber, // as min,
-    viewList,
-    lastDisplayedRow // as lastRow
-} from './utils/displayAndSelect';
-
+document.title = 'Kanji DB';
 startSession();
+
+const statsTitles = [
+    'repeatStatus', 
+    'progress', 
+    'record', 
+    'autorepeat'
+];
+
+const sortColumns = ['id', ...statsTitles];
+
 </script>
 
 <template>
     <template v-if="ready">
-        <SearchBar />
-        <DbList 
-            :min="rowNumber"
-            :max="viewList.length"
-            :current="lastDisplayedRow"
-            :incrementLastRow="incrementLastDisplayedRow"
-            :setLastRow="setLastDisplayedRow"
+        <DbTable
+            :db="db"
+            cardNumber="id"
+            outerSpace="1"
+            :setSelectedCard="() => {}"
+            :enforcedList="null"
+            :findText="findText"
+            :filterColumns="statsTitles"
+            :sortColumns="sortColumns"
             :TableRow="TableRow"
-            :displayedRange="displayedRange"
-            :select="select"
-            :selectedNumber="selectedNumber"
+            :SearchText="SearchText"
         />
     </template>
 </template>
