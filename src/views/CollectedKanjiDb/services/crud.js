@@ -6,19 +6,19 @@ const ready = ref(false);
 
 function startSession() {
     // dev mode
-    const restored = JSON.parse(localStorage.getItem('kanjiDb'));
-    if(restored) {
-        db.value = restored;
-        console.log('restored!', restored);
-        ready.value = true;
-        return;
-    }
+    // const restored = JSON.parse(localStorage.getItem('kanjiDb'));
+    // if(restored) {
+    //     db.value = restored;
+    //     console.log('restored!', restored);
+    //     ready.value = true;
+    //     return;
+    // }
 
     get('/table/kanji').then((data) => {
         db.value = data;
         ready.value = true;
 
-        localStorage.setItem('kanjiDb', JSON.stringify(data)); // for the dev mode
+        // localStorage.setItem('kanjiDb', JSON.stringify(data)); // for the dev mode
     });
 }
 
