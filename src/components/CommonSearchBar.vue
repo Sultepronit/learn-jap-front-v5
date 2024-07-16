@@ -99,6 +99,7 @@ function changeSortDirection() {
 }
 .the-bar {
     margin-top: 5px;
+    /* display: flex; */
 }
 .space {
     display: inline-block;

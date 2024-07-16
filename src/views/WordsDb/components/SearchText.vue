@@ -10,20 +10,20 @@ const findTextOptions = ref({
 </script>
 
 <template>
-<input
-    type="text"
-    v-model="findTextOptions.query"
-    @input="setFindTextOptions(findTextOptions)"
->
-<label for="translation">
     <input
-        type="checkbox"
-        name="translation"
-        v-model="findTextOptions.inTranslation"
-        @change="setFindTextOptions(findTextOptions)"
+        type="text"
+        v-model="findTextOptions.query"
+        @input="setFindTextOptions(findTextOptions)"
     >
-    Translation
-</label>
+    <label for="translation">
+        <input
+            type="checkbox"
+            name="translation"
+            v-model="findTextOptions.inTranslation"
+            @change="setFindTextOptions(findTextOptions)"
+        >
+        Translation
+    </label>
 </template>
 
 <style scoped>
