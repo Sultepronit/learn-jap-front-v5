@@ -13,10 +13,6 @@ const fontNumber = ref(0);
 
 watch(show, () => {
     fontNumber.value = randomInt(0, 3);
-
-    // if(!show.value.answer) {
-    //     selectedKanji.value = null;
-    // }
 });
 
 const randomWriting = computed(() => {
@@ -165,7 +161,7 @@ main {
 .neutral {
     border-color: yellow;
 }
-.question {
+/* .question {
     border-color: black;
-}
+} */
 </style>

@@ -107,13 +107,13 @@ const evaluations = {
             progress.value.cards--;
         }
     },
-    recognize(card) {
-        if(card.mark === marks.BAD) {
-            card.fStats--;
-        } else {
-            card.fStats = 0;
-        }
-    },
+    // recognize(card) {
+    //     if(card.mark === marks.BAD) {
+    //         card.fStats--;
+    //     } else {
+    //         card.fStats = 0;
+    //     }
+    // },
     autorepeat(card) {
         progress.value.cards--;
 

@@ -23,7 +23,6 @@ function nextCard() {
 function returnCard(card) {
     console.log("I'll be back!");
     if(card.learnStage === learnStages.REPEAT) {
-        // card.learnStage = learnStages.REMEMBER;
         session.push({...card, learnStage: learnStages.REMEMBER});
     } else {
         session.push(card);

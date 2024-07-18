@@ -3,14 +3,9 @@ const learnStages = {
     CONFIRM: 'confirm',
     REPEAT: 'repeat',
     REMEMBER: 'remember',
-    RECOGNIZE: 'recognize',
+    // RECOGNIZE: 'recognize',
     AUTOREPEAT: 'autorepeat'
 };
-
-// const repeatVariants = {
-//     NORMAL: 'n',
-//     PROBLEM: 'p'
-// };
 
 const directions = {
     FORWARD: 'f',
@@ -21,17 +16,9 @@ const marks = {
     GOOD: 'good',
     BAD: 'bad',
     NEUTRAL: 'neutral',
-    // RESET: 'reset',
     RETURN: 'return',
-    QUESTION: 'question'
+    // QUESTION: 'question'
 };
 
-// const marks = {
-//     GOOD: { name: 'good', increment: 1 },
-//     BAD: { name: 'bad', increment: -1 },
-//     NEUTRAL: { name: 'neutral', increment: 0 },
-//     RETURN: { name: 'return', increment: 0 },
-//     QUESTION: { name: 'question', increment: 0 }
-// };
 
-export { learnStages, /*repeatVariants,*/ directions, marks };
+export { learnStages, directions, marks };

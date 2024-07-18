@@ -27,8 +27,6 @@ function nextCycle() {
   
     if(card.value.learnStage === learnStages.AUTOREPEAT) {
         autorepeat();
-    } else if(card.value.learnStage === learnStages.RECOGNIZE) {
-        recognition();
     } else {
         question();
     }    
@@ -44,17 +42,17 @@ function autorepeat() {
 }
 
 // recognition //-----------------------------------------
-function recognition() {
-    cardDisplay.showWriting();
-    card.value.recogMark = marks.QUESTION;
-    buttons.setAction(recognitionAnswer);
-}
+// function recognition() {
+//     cardDisplay.showWriting();
+//     card.value.recogMark = marks.QUESTION;
+//     buttons.setAction(recognitionAnswer);
+// }
   
-function recognitionAnswer() {
-    showAnswerAndPlay();
-    buttons.twoButtons();
-    buttons.setAction(evaluateSaveNext);
-} 
+// function recognitionAnswer() {
+//     showAnswerAndPlay();
+//     buttons.twoButtons();
+//     buttons.setAction(evaluateSaveNext);
+// } 
 
 // learn/confrim/repeat //-----------------------------------------
 function question() {
