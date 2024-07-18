@@ -1,7 +1,8 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { card, showAnswer } from '../utils/cycle.js';
-import WordCard from './WordCard.vue';
+// import WordCard from './WordCard.vue';
+import WordList from '@/components/WordList.vue';
 
 const wordList = ref(null);
 const font = ref();
@@ -38,7 +39,14 @@ watch(showAnswer, (val) => {
         {{ card.readings }}
     </p>
 
-    <div class="word-list" v-show="showAnswer" ref="wordList">
+    <WordList
+        :card="card"
+        class="word-list"
+        v-show="showAnswer"
+        ref="wordList"
+    />
+
+    <!-- <div class="word-list" v-show="showAnswer" ref="wordList">
         <WordCard
             v-for="item in card.wordList"
             :key="item.articleNumber"
@@ -53,7 +61,7 @@ watch(showAnswer, (val) => {
             :number="item.articleNumber"
             :additional="true"
         />
-    </div>
+    </div> -->
 </template>
 
 <style scoped>

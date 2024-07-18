@@ -4,6 +4,7 @@ defineProps(['card']);
 </script>
 
 <template>
+<section>
     <WordListCard
         v-for="item in card?.wordList"
         :key="item.articleNumber"
@@ -18,4 +19,5 @@ defineProps(['card']);
         :number="item.articleNumber"
         :additional="true"
     />
+</section>
 </template>
