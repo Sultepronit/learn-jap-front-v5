@@ -39,29 +39,9 @@ watch(showAnswer, (val) => {
         {{ card.readings }}
     </p>
 
-    <WordList
-        :card="card"
-        class="word-list"
-        v-show="showAnswer"
-        ref="wordList"
-    />
-
-    <!-- <div class="word-list" v-show="showAnswer" ref="wordList">
-        <WordCard
-            v-for="item in card.wordList"
-            :key="item.articleNumber"
-            :article="item.article"
-            :number="item.articleNumber"
-        />
-        <br>
-        <WordCard
-            v-for="item in card.otherList"
-            :key="item.articleNumber"
-            :article="item.article"
-            :number="item.articleNumber"
-            :additional="true"
-        />
-    </div> -->
+    <div class="word-list" v-show="showAnswer" ref="wordList">
+        <WordList :card="card" />
+    </div>
 </template>
 
 <style scoped>
