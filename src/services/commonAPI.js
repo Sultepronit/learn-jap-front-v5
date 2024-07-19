@@ -23,7 +23,6 @@ async function get(request) { // get all
         return data;
     } catch (error) {
         console.log(error);
-        // alert('Data not recieved!');
         setStatus.failed();
 
         return retry(get, request);
@@ -33,16 +32,23 @@ async function get(request) { // get all
 async function post(table, data) {
     const url = `${apiUrl}/table/${table}`;
     try {
+        setStatus.loading();
+
         const response = await fetch(url, {
             method: 'POST',
             body: JSON.stringify(data)
         });
         const results = await response.text();
-        console.log(results);
+        // console.log(results);
+
+        setStatus.clear();
+
         return JSON.parse(results);
     } catch (error) {
         console.error(error);
-        alert('Not posted!');
+        setStatus.failed();
+        // alert('Not posted!');
+        return retry(post, table, data);
     }
 }
 
@@ -63,28 +69,17 @@ async function patch(table, card) {
         if(results !== '{"success":true}') {
             throw new Error('Wrong response: ' + results);
         }
-        // console.log('saved!')
+        
         updateOrder.remove();
 
         return true;
     } catch (error) {
-        // console.log(table, card);
         setStatus.failed();
         console.error(error);
-        // alert(`Not updated (${card.id})`);
 
-        // return repatch(table, card);
         return retry(patch, table, card);
     }
 }
-
-// async function repatch(table, card) {   
-//     return new Promise(resolve => {
-//         setTimeout(async () => {
-//             resolve(await patch(table, card));
-//         }, 5 * 1000);
-//     });
-// }
 
 const updateOrder = {
     theOrder: [],
@@ -111,7 +106,7 @@ const updateOrder = {
     add(query) {
         this.theOrder.push(query);
         this.backup();
-        console.log('added:', this.theOrder);
+        console.log('save order:', this.theOrder);
 
         if(this.theOrder.length === 1) {
             setStatus.loading();
@@ -121,7 +116,7 @@ const updateOrder = {
     remove() {
         this.theOrder.shift();
         this.backup();
-        console.log('removed:', this.theOrder);
+        console.log('save order:', this.theOrder);
 
         if(this.theOrder.length < 1) {
             setStatus.clear();
@@ -138,20 +133,29 @@ async function update(table, card) {
 async function deleteApi(table, id) {
     const url = `${apiUrl}/table/${table}/${id}`;
     try {
+        setStatus.loading();
+
         const response = await fetch(url, {
             method: 'DELETE',
         });
         const results = await response.text();
-        // console.log(results);
 
         if(results === '{"success":true}') {
+            setStatus.clear();
+
             return true;
         } else {
-            throw new Error('Wrong response!');
+            setStatus.failed();
+            console.error(results);
+            alert('Wrong response!');
+            // throw new Error('Wrong response!');
         }
     } catch (error) {
         console.error(error);
-        alert('Not deleted!');
+        setStatus.failed();
+        // alert('Not deleted!');
+
+        return retry(deleteApi, table, id);
     }
 }
 

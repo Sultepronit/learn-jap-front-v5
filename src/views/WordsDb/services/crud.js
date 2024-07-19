@@ -19,7 +19,7 @@ function startSession() {
         db.value = data;
         ready.value = true;
 
-        localStorage.setItem('wordsDb', JSON.stringify(data)); // for the dev mode
+        // localStorage.setItem('wordsDb', JSON.stringify(data)); // for the dev mode
     });
 }
 
@@ -28,24 +28,9 @@ function refetch() {
     startSession();
 }
 
-const isSaving = ref(false);
-
-const numberToSelect = ref(0);
-
 async function createNewCard() {
-    try {
-        isSaving.value = true;
-
-        const newCardNumber = { cardNumber: db.value.length + 1 };
-        const newCard = await post('words', newCardNumber);
-
-        db.value.push(newCard);
-        numberToSelect.value = newCard.cardNumber;
-
-        isSaving.value = false;
-    } catch(e) {
-        console.error(e);
-    }
+    const newCard = await post('words', { cardNumber: db.value.length + 1 });
+    db.value.push(newCard);
 }
 
 async function updateCard(cardNumber, field, value) {
@@ -62,19 +47,12 @@ async function updateCard(cardNumber, field, value) {
 }
 
 async function deleteCard(cardNumber) {
-    const confirmation = confirm(`Do you confrim deleting this card?`);
-    if(!confirmation) {
-        return;
-    }
-
-    isSaving.value = true;
+    if(!confirm(`Do you confrim deleting this card?`)) return;
 
     const id = db.value[cardNumber - 1].id;
     const success = await deleteApi('words', id);
     if(success) {
-        // location.reload();
         refetch();
-        isSaving.value = false;
     }
 }
 
@@ -83,8 +61,6 @@ export {
     refetch,
     db,
     ready,
-    numberToSelect,
-    isSaving,
     createNewCard,
     updateCard as update,
     deleteCard

@@ -1,5 +1,5 @@
 <script setup>
-import { refetch, isSaving, createNewCard, update, deleteCard } from '../services/crud';
+import { refetch, createNewCard, update, deleteCard } from '../services/crud';
 import statsTitles from '../utils/statsTitles.js';
 
 const props = defineProps(['card', 'db', 'findInDb', 'displayMatches']);
@@ -20,7 +20,7 @@ function checkInput(value) {
 </script>
 
 <template>
-    <section class="edit" :class="{'is-saving': isSaving}">
+    <section class="edit">
         <div class="top-line">
             <span class="card-number">{{ card.cardNumber }}</span>
             <input
@@ -120,10 +120,7 @@ function checkInput(value) {
 }
 .edit {
     margin: 2px;
-    border: 3px solid white;
-}
-.is-saving {
-    border-color: red;
+    /* border: 3px solid white; */
 }
 .top-line {
     height: 2rem;
