@@ -4,7 +4,7 @@ import { ref, watch, computed } from 'vue';
 import { randomInt } from '@/utils/random.js';
 import { show } from '../utils/displayControls.js';
 import { card } from '../utils/cycle.js';
-import { learnStages } from '../utils/enums';
+import { repeatStages } from '../utils/enums';
 import { toKatakana } from "wanakana";
 import { selectKanji, selectedKanji } from '../utils/kanji.js';
 
@@ -29,19 +29,19 @@ const randomReading = computed(() => {
 
 <template>
 <main>
-    <p class="card-stats" :class="card.learnStage">
-        {{ card.id }} [{{ card.learnStatus }}]: 
+    <p class="card-stats" :class="card.repeatStage">
+        {{ card.id }} [{{ card.repeatStatus }}]: 
         {{ card.fProgress }} {{ card.bProgress }} | 
         <span :class="{ auto: card.fAutorepeat }">
-            {{ card.fStats }}
+            {{ card.fRecord }}
         </span>&nbsp;<span :class="{ auto: card.bAutorepeat }">
-            {{ card.bStats }}
+            {{ card.bRecord }}
         </span>
     </p>
 
     <section
         class="question-answer"
-        :class="{ autorep: card.learnStage === learnStages.AUTOREPEAT }"
+        :class="{ autorep: card.repeatStage === repeatStages.AUTOREPEAT }"
     >
         <p id="kanji" v-show="show.answer">
             <span

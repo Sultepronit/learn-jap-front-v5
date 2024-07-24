@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { learnStages, directions, marks } from "./enums";
+import { repeatStages, directions, marks } from "./enums";
 import nextCard from "./nextCard";
 import { changeShow as cardDisplay } from "./displayControls";
 import { change as buttons } from './buttonsControls.js';
@@ -25,7 +25,7 @@ function nextCycle() {
         return;
     }
   
-    if(card.value.learnStage === learnStages.AUTOREPEAT) {
+    if(card.value.repeatStage === repeatStages.AUTOREPEAT) {
         autorepeat();
     } else {
         question();
@@ -82,7 +82,7 @@ function answer() {
 
     if(card.value.mark === marks.RETURN) {
         buttons.rememberButtons();
-    } else if(card.value.learnStage === learnStages.CONFIRM) {
+    } else if(card.value.repeatStage === repeatStages.CONFIRM) {
         buttons.threeButtons();
     } else if(card.value.recogMark === marks.BAD) {
         buttons.notGoodButtons();

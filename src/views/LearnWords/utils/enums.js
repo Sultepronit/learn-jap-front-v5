@@ -1,4 +1,4 @@
-const learnStages = {
+const repeatStages = {
     LEARN: 'learn',
     CONFIRM: 'confirm',
     REPEAT: 'repeat',
@@ -21,4 +21,4 @@ const marks = {
 };
 
 
-export { learnStages, directions, marks };
+export { repeatStages, directions, marks };

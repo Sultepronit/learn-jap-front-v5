@@ -12,7 +12,7 @@ import statsTitles from './utils/statsTitles.js';
 document.title = 'Japanese words DB';
 startSession();
 
-const filterColumns = ['learnStatus', ...statsTitles];
+const filterColumns = ['repeatStatus', ...statsTitles];
 const sortColumns = ['cardNumber', ...filterColumns];
 
 const enforcedList = ref(null);

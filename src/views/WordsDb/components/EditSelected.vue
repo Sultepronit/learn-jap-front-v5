@@ -5,7 +5,7 @@ import statsTitles from '../utils/statsTitles.js';
 const props = defineProps(['card', 'db', 'findInDb', 'displayMatches']);
 
 function checkInput(value) {
-    if(props.card.learnStatus < 0) {
+    if(props.card.repeatStatus < 0) {
         const matches = props.findInDb(props.db, { query: value });
         // console.log(matches);
         if(matches?.length > 1) {
@@ -26,10 +26,10 @@ function checkInput(value) {
             <input
                 type="number"
                 class="status"
-                :value="card.learnStatus"
+                :value="card.repeatStatus"
                 @change="update(
                     card.cardNumber,
-                    'learnStatus',
+                    'repeatStatus',
                     Number($event.target.value)
                 )"
             >

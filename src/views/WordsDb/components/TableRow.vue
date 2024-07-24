@@ -14,7 +14,7 @@ defineProps(['row', 'select', 'selectedNumber']);
         {{ row.cardNumber }}
     </p>
     <p class="cell statuc-col">
-        {{ row.learnStatus }}
+        {{ row.repeatStatus }}
     </p>
     <p class="cell width-2sym">
         {{ row.fProgress }}
@@ -23,10 +23,10 @@ defineProps(['row', 'select', 'selectedNumber']);
         {{ row.bProgress }}
     </p>
     <p class="cell width-2sym" :class="{auto: row.fAutorepeat}">
-        {{ row.fStats }}
+        {{ row.fRecord }}
     </p>
     <p class="cell width-2sym" :class="{auto: row.bAutorepeat}">
-        {{ row.bStats }}
+        {{ row.bRecord }}
     </p>
     <p class="cell width-jap sans">
         <span :class="{'blue': row.altWriting}">{{row.writings}}</span> 

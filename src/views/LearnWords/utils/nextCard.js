@@ -1,4 +1,4 @@
-import { learnStages, directions } from "./enums";
+import { repeatStages, directions } from "./enums";
 import { session } from "../services/data";
 import { parseToStringAndArray } from "@/utils/parseWritingsReadings";
 import { getKanjiList } from './kanji.js';
@@ -22,8 +22,8 @@ function nextCard() {
 
 function returnCard(card) {
     console.log("I'll be back!");
-    if(card.learnStage === learnStages.REPEAT) {
-        session.push({...card, learnStage: learnStages.REMEMBER});
+    if(card.repeatStage === repeatStages.REPEAT) {
+        session.push({...card, repeatStage: repeatStages.REMEMBER});
     } else {
         session.push(card);
     }

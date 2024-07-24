@@ -5,7 +5,7 @@ import { returnCard } from './nextCard';
 import progress from './progress';
 
 function basicIncrement(card) {
-    progress.value[card.learnStage][card.mark]++;
+    progress.value[card.repeatStage][card.mark]++;
 
     if(card.mark === marks.GOOD) {
         card[card.direction+'Progress'] = 1;
@@ -32,7 +32,7 @@ const evaluations = {
         // upgrade
         if(card.fProgress > 0 && card.bProgress > 0) {
             progress.value.learn.upgraded++;
-            card.learnStatus = 1;
+            card.repeatStatus = 1;
             card.fProgress = 0;
             card.bProgress = 0;
         }
@@ -42,7 +42,7 @@ const evaluations = {
 
         // degrade
         if(card.mark === marks.BAD) {
-            card.learnStatus = 0;
+            card.repeatStatus = 0;
             card.fProgress = 0;
             card.bProgress = 0;
             return;
@@ -50,7 +50,7 @@ const evaluations = {
         // upgrade
         if(card.fProgress > 0 && card.bProgress > 0) {
             progress.value.confirm.upgraded++;
-            card.learnStatus = 2;
+            card.repeatStatus = 2;
             card.fProgress = 0;
             card.bProgress = 0;
         }
@@ -60,11 +60,11 @@ const evaluations = {
 
         // degrade
         if(card.mark === marks.BAD) {
-            card.learnStatus = 0;
+            card.repeatStatus = 0;
             card.fProgress = 0;
             card.bProgress = 0;
-            card.fStats = 0;
-            card.bStats = 0;
+            card.fRecord = 0;
+            card.bRecord = 0;
             card.fAutorepeat = 0;
             card.bAutorepeat = 0;
             return;
@@ -80,21 +80,21 @@ const evaluations = {
         }
         //
         if(card.mark === marks.GOOD && card.direction === directions.FORWARD) {
-            card.fStats++;
-            if(card.fStats > 1) {
+            card.fRecord++;
+            if(card.fRecord > 1) {
                 card.fAutorepeat = 1;
             }
         }
         // upgrade
         if(card.fProgress > 0 && card.bProgress > 0) {
             progress.value.repeat.upgraded++;
-            card.learnStatus = 33; // to be changed on server's side
+            card.repeatStatus = 33; // to be changed on server's side
             card.fProgress = 0;
             card.bProgress = 0;
 
-            card.bStats++;
+            card.bRecord++;
 
-            if(card.bStats > 1) {
+            if(card.bRecord > 1) {
                 card.bAutorepeat = 1;
             }
         }
@@ -109,9 +109,9 @@ const evaluations = {
     },
     // recognize(card) {
     //     if(card.mark === marks.BAD) {
-    //         card.fStats--;
+    //         card.fRecord--;
     //     } else {
-    //         card.fStats = 0;
+    //         card.fRecord = 0;
     //     }
     // },
     autorepeat(card) {
@@ -124,7 +124,7 @@ const evaluations = {
             card.fProgress = 1;
         } else {
             progress.value.repeat.autoUpgraded++;
-            card.learnStatus = 33; // to be changed on server's side
+            card.repeatStatus = 33; // to be changed on server's side
             card.fProgress = 0;
         }
     }
@@ -136,7 +136,7 @@ function evaluateAndSave(cardArg) {
     const card = { ...cardArg.value };
     const freezed = { ...cardArg.value };
     
-    evaluations[card.learnStage](card);    
+    evaluations[card.repeatStage](card);    
 
     const changes = {};
     for(const key in card) {
