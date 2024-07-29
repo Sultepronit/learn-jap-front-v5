@@ -69,9 +69,9 @@ const evaluations = {
             card.bAutorepeat = 0;
             return;
         }
-        // degrade stats
+        // degrade record
         if(card.mark === marks.NEUTRAL || card.mark === marks.RETURN) {
-            card[card.direction+'Stats'] = -1;
+            card[card.direction+'Record'] = -1;
         }
         // return
         if(card.mark === marks.RETURN) {
