@@ -1,7 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { card, showAnswer } from '../utils/cycle.js';
-// import WordCard from './WordCard.vue';
 import WordList from '@/components/WordList.vue';
 
 const wordList = ref(null);

@@ -24,18 +24,8 @@ function nextCycle() {
         return;
     }
   
-    question();
-
-    // if(card.value.autorepeat) {
-    //     autorepeat();
-    // } else {
-    //     question();
-    // }    
+    question();  
 }
-
-// function autorepeat() {
-//     evaluateSaveNext(marks.AUTOREPEAT);
-// }
 
 function question() {
     showAnswer.value = false;
