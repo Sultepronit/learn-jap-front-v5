@@ -58,12 +58,21 @@ export default defineConfig({
             handler: 'CacheFirst',
             options: {
               cacheName: 'fonts',
+              // expiration: {
+              //   maxEntries: 20,
+              //   maxAgeSeconds: 60 * 60 * 24 * 365
+              // },
+              // cacheableResponse: {
+              //   statuses: [0, 200]
+            }
+          },
+          { // audio
+            urlPattern: ({ request }) => request.destination === 'audio',
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'audio',
               expiration: {
-                maxEntries: 20,
-                maxAgeSeconds: 60 * 60 * 24 * 365
-              },
-              cacheableResponse: {
-                statuses: [0, 200]
+                maxAgeSeconds: 60 * 60 * 24 * 365 * 2
               }
             }
           }
