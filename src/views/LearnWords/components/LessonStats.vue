@@ -33,7 +33,6 @@ const repeatPass = computed(
         <i>{{ repeatPass }}</i>
         {{ progress.repeat.good }}<sup>{{ progress.repeat.autoGood+' ' }}</sup>
         <b>{{ progress.repeat.upgraded }}<sup>{{ progress.repeat.autoUpgraded }}</sup>-{{ progress.repeat.bad }}</b>
-    | rc {{ plan.recognizeNumber }}
 </header>
 </template>
 

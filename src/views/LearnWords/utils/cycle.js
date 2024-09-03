@@ -41,19 +41,6 @@ function autorepeat() {
     buttons.setAction(nextCycle);
 }
 
-// recognition //-----------------------------------------
-// function recognition() {
-//     cardDisplay.showWriting();
-//     card.value.recogMark = marks.QUESTION;
-//     buttons.setAction(recognitionAnswer);
-// }
-  
-// function recognitionAnswer() {
-//     showAnswerAndPlay();
-//     buttons.twoButtons();
-//     buttons.setAction(evaluateSaveNext);
-// } 
-
 // learn/confrim/repeat //-----------------------------------------
 function question() {
     if(card.value.direction === directions.FORWARD) {
@@ -81,10 +68,11 @@ function answer() {
     showAnswerAndPlay();
 
     if(card.value.mark === marks.RETURN) {
-        buttons.rememberButtons();
+        // buttons.rememberButtons();
+        buttons.notGoodButtons();
     } else if(card.value.repeatStage === repeatStages.CONFIRM) {
         buttons.threeButtons();
-    } else if(card.value.recogMark === marks.BAD) {
+    } else if(card.value.recogMark === marks.BAD && !card.value.altWriting) {
         buttons.notGoodButtons();
     } else {
         buttons.fourButtons();
