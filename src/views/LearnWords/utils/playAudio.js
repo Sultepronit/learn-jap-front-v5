@@ -3,7 +3,7 @@ import { card } from './cycle.js';
 
 const audio = new Audio();
 const url = 'https://assets.languagepod101.com/dictionary/japanese/audiomp3.php?kana=';
-const isMute = ref(false);
+const isMute = ref(true);
 
 audio.oncanplay = () => {
     if(audio.duration > 5) {
