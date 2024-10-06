@@ -15,36 +15,36 @@ const change = {
         params.value.showReturn = false;
         params.value.showBad = false;
     },
-    twoButtons() {
+    goodBad() {
         params.value.showGood = true;
         params.value.showCentral = false;
         params.value.showReturn = false;
         params.value.showBad = true;
     },
-    threeButtons() {
+    goodPassBad() {
         params.value.showGood = true;
         params.value.showCentral = true;
         params.value.showReturn = false;
         params.value.showBad = true;
     },
-    fourButtons() {
+    goodReturnBad() {
         params.value.showGood = true;
-        params.value.showCentral = true;
+        params.value.showCentral = false;
         params.value.showReturn = true;
         params.value.showBad = true;
     },
-    notGoodButtons() {
+    returnBad() {
+        params.value.showGood = false;
+        params.value.showCentral = false;
+        params.value.showReturn = true;
+        params.value.showBad = true;
+    },
+    passReturn() {
         params.value.showGood = false;
         params.value.showCentral = true;
         params.value.showReturn = true;
         params.value.showBad = true;
     },
-    // rememberButtons() {
-    //     params.value.showGood = false;
-    //     params.value.showCentral = true;
-    //     params.value.showReturn = true;
-    //     params.value.showBad = false;
-    // },
     setAction(fn) {
         params.value.action = fn;
     }

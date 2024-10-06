@@ -14,6 +14,16 @@ function basicIncrement(card) {
     }
 }
 
+function nullyfyCard(card) {
+    card.repeatStatus = 0;
+    card.fProgress = 0;
+    card.bProgress = 0;
+    card.fRecord = 0;
+    card.bRecord = 0;
+    card.fAutorepeat = 0;
+    card.bAutorepeat = 0;
+}
+
 const evaluations = {    
     learn(card) {
         basicIncrement(card);
@@ -60,13 +70,7 @@ const evaluations = {
 
         // degrade
         if(card.mark === marks.BAD) {
-            card.repeatStatus = 0;
-            card.fProgress = 0;
-            card.bProgress = 0;
-            card.fRecord = 0;
-            card.bRecord = 0;
-            card.fAutorepeat = 0;
-            card.bAutorepeat = 0;
+            nullyfyCard(card);
             return;
         }
         // degrade record
@@ -77,8 +81,9 @@ const evaluations = {
         if(card.mark === marks.RETURN) {
             returnCard(card);
             progress.value.cards--;
+            return;
         }
-        //
+        // upgrade fRecord
         if(card.mark === marks.GOOD && card.direction === directions.FORWARD) {
             card.fRecord++;
             if(card.fRecord > 1) {
@@ -102,18 +107,18 @@ const evaluations = {
     remember(card) {
         basicIncrement(card);
         
+        // return
         if(card.mark === marks.RETURN) {
             returnCard(card);
             progress.value.cards--;
         }
+
+        // degrade
+        if(card.mark === marks.BAD) {
+            nullyfyCard(card);
+            return;
+        }
     },
-    // recognize(card) {
-    //     if(card.mark === marks.BAD) {
-    //         card.fRecord--;
-    //     } else {
-    //         card.fRecord = 0;
-    //     }
-    // },
     autorepeat(card) {
         progress.value.cards--;
 

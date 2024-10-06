@@ -55,7 +55,7 @@ function question() {
 function showReading() {
     cardDisplay.showReading();
 
-    buttons.twoButtons();
+    buttons.goodBad();
     buttons.setAction(quickRecognition);
 }
 
@@ -68,14 +68,13 @@ function answer() {
     showAnswerAndPlay();
 
     if(card.value.mark === marks.RETURN) {
-        // buttons.rememberButtons();
-        buttons.notGoodButtons();
+        buttons.passReturn();
     } else if(card.value.repeatStage === repeatStages.CONFIRM) {
-        buttons.threeButtons();
+        buttons.goodPassBad();
     } else if(card.value.recogMark === marks.BAD && !card.value.altWriting) {
-        buttons.notGoodButtons();
+        buttons.returnBad();
     } else {
-        buttons.fourButtons();
+        buttons.goodReturnBad();
     }
     
     buttons.setAction(evaluateSaveNext);
