@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { marks, repeatStages } from "./enums";
+import { repeatStages } from "./enums";
 import nextCard from "./nextCard";
 // import linksToLists from './linksToLists';
 import linksToLists from '@/utils/linksToLists';
@@ -32,7 +32,8 @@ function question() {
 
     linksToLists(card.value);
 
-    buttons.singleButton();
+    // buttons.singleButton();
+    buttons.setButtons(false, false, true);
     buttons.setAction(answer);
 }
 
@@ -41,12 +42,14 @@ function answer() {
 
     buttons.setAction(evaluateSaveNext);
     if(card.value.repeatStage === repeatStages.REMEMBER) {
-        buttons.twoButtons();
+        // buttons.twoButtons();
+        buttons.setButtons(false, false, true, true, card.value.repeatStatus > 0);
     } else {
-        buttons.fourButtons();
-        if(card.value.record > 0) {
-            buttons.bestButton();
-        }
+        buttons.setButtons(card.value.record > 0, true, false, true, card.value.repeatStatus > 0);
+        // buttons.fourButtons();
+        // if(card.value.record > 0) {
+        //     buttons.bestButton();
+        // }
     }
 }
 

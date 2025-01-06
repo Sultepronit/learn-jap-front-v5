@@ -7,26 +7,27 @@ import { params } from '../utils/buttonsControls.js';
 <template>
     <button
         class="nav-b best"
-        v-show="params.showBest"
+        v-show="params.show.best"
         @click="params.action(marks.BEST)"
     />
     <button
         class="nav-b good"
-        v-show="params.showSides"
+        v-show="params.show.good"
         @click="params.action(marks.GOOD)"
     />
     <button
         class="nav-b"
+        v-show="params.show.pass"
         @click="params.action(marks.NEUTRAL)"
     />
     <button
         class="nav-b return"
-        v-show="params.showReturn"
+        v-show="params.show.retry"
         @click="params.action(marks.RETURN)"
     />
     <button
         class="nav-b bad"
-        v-show="params.showSides"
+        v-show="params.show.bad"
         @click="params.action(marks.BAD)"
     />
 </template>
