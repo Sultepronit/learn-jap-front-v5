@@ -20,7 +20,8 @@ const progress = ref({
     autorepeat: 0,
     remember: {
         neutral: 0,
-        return: 0
+        return: 0,
+        bad: 0
     }
 });
 

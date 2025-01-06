@@ -35,7 +35,7 @@ const learning = computed(() =>
                 <b><u>{{ plan.repeatNumber }}</u></b> <i>{{ repeatPass }}</i> <b>{{ repeatGood }}<sub>{{ progress.repeat.best }}</sub>
                 <sup>{{ progress.autorepeat }}</sup>-{{ progress.repeat.bad }}</b>
             </span> |
-            <i>{{ remember }}</i>
+            <i>{{ remember }}</i> <b>-{{ progress.remember.bad }}</b>
         </p>
 
         <p class="card-stats" :class="{learning}" v-show="showAnswer">
