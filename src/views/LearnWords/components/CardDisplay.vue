@@ -13,8 +13,6 @@ const randomFontNumber = () => randomInt(0, show.value.answer ? 3 : 1);
 const fontNumber = ref(randomFontNumber());
 
 watch(show, () => {
-    console.log(show.value);
-    console.log(randomInt(0, show.value.answer ? 30 : 1))
     fontNumber.value = randomFontNumber();
 });
 
