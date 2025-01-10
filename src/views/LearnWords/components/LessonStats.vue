@@ -19,20 +19,17 @@ const repeatPass = computed(
 <header>
     {{ progress.cards }} |
     <span class="green">
-        l {{ plan.learnNumber }}:
-        <i>{{ learnPass }}</i> {{ progress.learn.good }}
+        <b><u>{{ plan.learnNumber }}</u></b> <i>{{ learnPass }}</i> {{ progress.learn.good }}
         <strong>{{ progress.learn.upgraded }}</strong>
     </span> |
     <span class="blue">
-        c {{ plan.confirmNumber }}:
-        <i>{{ progress.confirm.neutral }}</i> {{ progress.confirm.good }}
+        <b><u>{{ plan.confirmNumber }}</u></b> <i>{{ progress.confirm.neutral }}</i> {{ progress.confirm.good }}
         <strong>{{ progress.confirm.upgraded }}-{{ progress.confirm.bad }}</strong>
     </span>
     <br>
-    rp {{ plan.repeatNumber }}:
-        <i>{{ repeatPass }}</i>
-        {{ progress.repeat.good }}<sup>{{ progress.repeat.autoGood+' ' }}</sup>
-        <b>{{ progress.repeat.upgraded }}<sup>{{ progress.repeat.autoUpgraded }}</sup>-{{ progress.repeat.bad }}</b>
+    <b><u>{{ plan.repeatNumber }}</u></b> <i>{{ repeatPass }}</i>
+    {{ progress.repeat.good }}<sup>{{ progress.repeat.autoGood+' ' }}</sup>
+    <b>{{ progress.repeat.upgraded }}<sup>{{ progress.repeat.autoUpgraded }}</sup>-{{ progress.repeat.bad }}</b>
 </header>
 </template>
 

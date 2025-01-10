@@ -9,10 +9,13 @@ import { toKatakana } from "wanakana";
 import { selectKanji, selectedKanji } from '../utils/kanji.js';
 
 const fonts = ['sans', 'serif', 'maru', 'kurenaido'];
-const fontNumber = ref(0);
+const randomFontNumber = () => randomInt(0, show.value.answer ? 3 : 1);
+const fontNumber = ref(randomFontNumber());
 
 watch(show, () => {
-    fontNumber.value = randomInt(0, 3);
+    console.log(show.value);
+    console.log(randomInt(0, show.value.answer ? 30 : 1))
+    fontNumber.value = randomFontNumber();
 });
 
 const randomWriting = computed(() => {
