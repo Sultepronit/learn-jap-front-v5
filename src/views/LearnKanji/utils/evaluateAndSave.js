@@ -12,11 +12,6 @@ function evaluation(card) {
     if(card.mark === marks.NEUTRAL || card.mark === marks.RETURN) {
         card.progress--;
     } 
-    
-    if(card.mark === marks.RETURN) {
-        progress.value.cards--;
-        returnCard(card);
-    }
 
     if(card.repeatStage === repeatStages.LEARN) {
         if(card.mark === marks.GOOD) {
@@ -50,6 +45,12 @@ function evaluation(card) {
         }
 
         return;
+    }
+
+    // if it would be above REPEAT, card stage would change to the REMEMBER!!!
+    if(card.mark === marks.RETURN) {
+        progress.value.cards--;
+        returnCard(card);
     }
 
     if(card.repeatStage === repeatStages.REMEMBER) {

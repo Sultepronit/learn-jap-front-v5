@@ -111,13 +111,14 @@ const evaluations = {
         if(card.mark === marks.RETURN) {
             returnCard(card);
             progress.value.cards--;
+            return;
         }
 
         // degrade
         if(card.mark === marks.BAD) {
             nullyfyCard(card);
             progress.repeat.bad++;
-            return;
+            // return;
         }
     },
     autorepeat(card) {
