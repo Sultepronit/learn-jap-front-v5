@@ -23,7 +23,7 @@ function evaluation(card) {
             returnCard(card);
         } */
 
-        return;
+        // return;
     }
     
     if(card.repeatStage === repeatStages.REPEAT) {
@@ -44,7 +44,7 @@ function evaluation(card) {
             }
         }
 
-        return;
+        // return;
     }
 
     // if it would be above REPEAT, card stage would change to the REMEMBER!!!
