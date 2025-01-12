@@ -117,7 +117,7 @@ const evaluations = {
         // degrade
         if(card.mark === marks.BAD) {
             nullyfyCard(card);
-            progress.repeat.bad++;
+            progress.value.repeat.bad++;
             // return;
         }
     },
