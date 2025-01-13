@@ -13,6 +13,7 @@ const progress = ref({
         good: 0,
         bad: 0,
         neutral: 0,
+        return: 0,
         upgraded: 0,
     },
     repeat: {

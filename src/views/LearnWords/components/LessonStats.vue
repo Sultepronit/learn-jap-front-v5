@@ -23,13 +23,13 @@ const repeatPass = computed(
         <strong>{{ progress.learn.upgraded }}</strong>
     </span> |
     <span class="blue">
-        <b><u>{{ plan.confirmNumber }}</u></b> <i>{{ progress.confirm.neutral }}</i> {{ progress.confirm.good }}
+        <b><u>{{ plan.confirmNumber }}</u></b> <i>{{ progress.confirm.neutral + progress.confirm.return }}</i> {{ progress.confirm.good }}
         <strong>{{ progress.confirm.upgraded }}-{{ progress.confirm.bad }}</strong>
     </span> |
     <b><u>{{ plan.repeatNumber }}</u></b> <i>{{ repeatPass }}</i>
     {{ progress.repeat.good }}<sup>{{ progress.repeat.autoGood+' ' }}</sup>
     <b>{{ progress.repeat.upgraded }}<sup>{{ progress.repeat.autoUpgraded }}</sup>-{{ progress.repeat.bad }}</b>
-    |1
+    |2
 </header>
 </template>
 
