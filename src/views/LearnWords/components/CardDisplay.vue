@@ -26,11 +26,18 @@ const randomReading = computed(() => {
 
     return randomInt(0, 1) ? reading : toKatakana(reading);
 });
+
+const label = computed(() => {
+    return card.value.repeatStage === repeatStages.REPEAT
+        && (card.value[`${card.value.direction}Progress`] < 0)
+            ? 'problematic' : card.value.repeatStage;
+});
 </script>
 
 <template>
 <main>
-    <p class="card-stats" :class="card.repeatStage">
+    <p class="card-stats" :class="label">
+        {{ console.log(label) }}
         {{ card.id }} [{{ card.repeatStatus }}]: 
         {{ card.fProgress }} {{ card.bProgress }} | 
         <span :class="{ auto: card.fAutorepeat }">
@@ -120,6 +127,10 @@ main {
 }
 
 .remember {
+    border-color: red;
+}
+
+.problematic {
     border-color: red;
 }
 

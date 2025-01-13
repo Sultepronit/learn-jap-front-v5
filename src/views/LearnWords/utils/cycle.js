@@ -17,7 +17,8 @@ function endSession() {
 
 function nextCycle() {
     cardDisplay.hideEverything();
-    buttons.singleButton();
+    // buttons.singleButton();
+    buttons.setButtons(false, true);
   
     card.value = nextCard();
     if(!card.value) {
@@ -55,7 +56,8 @@ function question() {
 function showReading() {
     cardDisplay.showReading();
 
-    buttons.goodBad();
+    // buttons.goodBad();
+    buttons.setButtons(true, false, false, true);
     buttons.setAction(quickRecognition);
 }
 
@@ -67,15 +69,22 @@ function quickRecognition(mark) {
 function answer() {
     showAnswerAndPlay();
 
-    if(card.value.mark === marks.RETURN) {
-        buttons.passReturn();
-    } /* else if(card.value.repeatStage === repeatStages.CONFIRM) {
-        buttons.goodPassBad();
-    }*/  else if(card.value.recogMark === marks.BAD && !card.value.altWriting) {
-        buttons.returnBad();
-    } else {
-        buttons.goodReturnBad();
-    }
+    // if(card.value.mark === marks.RETURN) {
+    //     buttons.passReturn();
+    // } /* else if(card.value.repeatStage === repeatStages.CONFIRM) {
+    //     buttons.goodPassBad();
+    // }*/  else if(card.value.recogMark === marks.BAD && !card.value.altWriting) {
+    //     buttons.returnBad();
+    // } else {
+    //     buttons.goodReturnBad();
+    // }
+
+    buttons.setButtons(
+        card.value.mark !== marks.RETURN && !(card.value.recogMark === marks.BAD && !card.value.altWriting),
+        card.value.mark === marks.RETURN,
+        true,
+        !(card.value.repeatStage === repeatStages.LEARN && card.value.direction === directions.FORWARD)
+    );
     
     buttons.setAction(evaluateSaveNext);
 }

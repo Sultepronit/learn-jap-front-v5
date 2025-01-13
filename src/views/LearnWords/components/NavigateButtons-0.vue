@@ -7,21 +7,21 @@ import { params } from '../utils/buttonsControls.js';
 <footer>
     <button
         class="good"
-        v-show="params.show.good"
+        v-show="params.showGood"
         @click="params.action(marks.GOOD)"
     />
     <button
-        v-show="params.show.pass"
+        v-show="params.showCentral"
         @click="params.action(marks.NEUTRAL)"
     />
     <button
         class="return"
-        v-show="params.show.retry"
+        v-show="params.showReturn"
         @click="params.action(marks.RETURN)"
     />
     <button
         class="bad"
-        v-show="params.show.bad"
+        v-show="params.showBad"
         @click="params.action(marks.BAD)"
     />
 </footer>

@@ -5,10 +5,22 @@ const params = ref({
     showCentral: false,
     showReturn: false,
     showBad: false,
+    show: {
+        good: false,
+        pass: false,
+        retry: false,
+        bad: false
+    },
     action: null
 });
 
 const change = {
+    setButtons(good = false, pass = false, retry = false, bad = false) {
+        params.value.show.good = good;
+        params.value.show.pass = pass;
+        params.value.show.retry = retry;
+        params.value.show.bad = bad;
+    },
     singleButton() {
         params.value.showGood = false;
         params.value.showCentral = true;
