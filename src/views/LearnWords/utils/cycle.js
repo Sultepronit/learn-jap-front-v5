@@ -69,9 +69,9 @@ function answer() {
 
     if(card.value.mark === marks.RETURN) {
         buttons.passReturn();
-    } else if(card.value.repeatStage === repeatStages.CONFIRM) {
+    } /* else if(card.value.repeatStage === repeatStages.CONFIRM) {
         buttons.goodPassBad();
-    } else if(card.value.recogMark === marks.BAD && !card.value.altWriting) {
+    }*/  else if(card.value.recogMark === marks.BAD && !card.value.altWriting) {
         buttons.returnBad();
     } else {
         buttons.goodReturnBad();

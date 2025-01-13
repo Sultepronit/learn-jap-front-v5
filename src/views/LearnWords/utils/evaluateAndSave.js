@@ -57,6 +57,12 @@ const evaluations = {
             card.bProgress = 0;
             return;
         }
+        // return
+        if(card.mark === marks.RETURN) {
+            returnCard(card);
+            progress.value.cards--;
+            return;
+        }
         // upgrade
         if(card.fProgress > 0 && card.bProgress > 0) {
             progress.value.confirm.upgraded++;
