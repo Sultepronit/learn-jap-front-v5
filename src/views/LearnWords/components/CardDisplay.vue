@@ -37,7 +37,6 @@ const label = computed(() => {
 <template>
 <main>
     <p class="card-stats" :class="label">
-        {{ console.log(label) }}
         {{ card.id }} [{{ card.repeatStatus }}]: 
         {{ card.fProgress }} {{ card.bProgress }} | 
         <span :class="{ auto: card.fAutorepeat }">

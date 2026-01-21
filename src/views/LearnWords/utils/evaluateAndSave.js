@@ -30,11 +30,14 @@ const evaluations = {
 
         // degrade
         if(card.mark === marks.BAD) {
+            card.repeatStatus = -2;
             card.fProgress = 0;
             card.bProgress = 0;
+            return;
         }
         // return
-        if(card.mark === marks.RETURN || card.mark === marks.BAD) {
+        // if(card.mark === marks.RETURN || card.mark === marks.BAD) {
+        if(card.mark === marks.RETURN) {
             returnCard(card);
             progress.value.cards--;
             return;
@@ -47,7 +50,7 @@ const evaluations = {
             card.bProgress = 0;
         }
     },
-    confirm(card) {
+    confirm(card) { // REMOVE?
         basicIncrement(card);
 
         // degrade
@@ -79,23 +82,35 @@ const evaluations = {
             nullyfyCard(card);
             return;
         }
-        // degrade record
-        if(card.mark === marks.NEUTRAL || card.mark === marks.RETURN) {
-            card[card.direction+'Record'] = -1;
-        }
+
         // return
         if(card.mark === marks.RETURN) {
             returnCard(card);
             progress.value.cards--;
+        }
+
+        // degrade record
+        if(card.mark === marks.NEUTRAL || card.mark === marks.RETURN) {
+            card[card.direction+'Record'] = -1;
             return;
         }
+
         // upgrade fRecord
-        if(card.mark === marks.GOOD && card.direction === directions.FORWARD) {
-            card.fRecord++;
-            if(card.fRecord > 1) {
-                card.fAutorepeat = 1;
+        // if(card.mark === marks.GOOD && card.direction === directions.FORWARD) {
+        //     card.fRecord++;
+        //     if(card.fRecord > 1) {
+        //         card.fAutorepeat = 1;
+        //     }
+        // }
+
+        // upgrade record
+        if(card.mark === marks.GOOD) {
+            card[`${card.direction}Record`]++;
+            if(card[`${card.direction}Record`] > 1) {
+                card[`${card.direction}Autorepeat`] = 1;
             }
         }
+
         // upgrade
         if(card.fProgress > 0 && card.bProgress > 0) {
             progress.value.repeat.upgraded++;
@@ -103,14 +118,14 @@ const evaluations = {
             card.fProgress = 0;
             card.bProgress = 0;
 
-            card.bRecord++;
+            // card.bRecord++;
 
-            if(card.bRecord > 1) {
-                card.bAutorepeat = 1;
-            }
+            // if(card.bRecord > 1) {
+            //     card.bAutorepeat = 1;
+            // }
         }
     },
-    remember(card) {
+    remember(card) { // no need maybe?
         basicIncrement(card);
         
         // return

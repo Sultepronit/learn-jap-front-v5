@@ -4,7 +4,8 @@ import { plan } from '../services/data.js';
 import progress from '../utils/progress.js';
 
 const learnPass = computed(
-    () => progress.value.learn.bad + progress.value.learn.neutral + progress.value.learn.return
+    // () => progress.value.learn.bad + progress.value.learn.neutral + progress.value.learn.return
+    () => progress.value.learn.neutral + progress.value.learn.return
 );
 
 const repeatPass = computed(
@@ -20,7 +21,7 @@ const repeatPass = computed(
     {{ progress.cards }} |
     <span class="green">
         <b><u>{{ plan.learnNumber }}</u></b> <i>{{ learnPass }}</i> {{ progress.learn.good }}
-        <strong>{{ progress.learn.upgraded }}</strong>
+        <strong>{{ progress.learn.upgraded }}-{{ progress.learn.bad }}</strong>
     </span> |
     <span class="blue">
         <b><u>{{ plan.confirmNumber }}</u></b> <i>{{ progress.confirm.neutral + progress.confirm.return }}</i> {{ progress.confirm.good }}

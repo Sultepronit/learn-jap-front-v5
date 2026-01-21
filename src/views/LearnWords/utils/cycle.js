@@ -16,6 +16,7 @@ function endSession() {
 }
 
 function nextCycle() {
+    console.log('choosing next card?')
     cardDisplay.hideEverything();
     // buttons.singleButton();
     buttons.setButtons(false, true);
@@ -83,7 +84,7 @@ function answer() {
         card.value.mark !== marks.RETURN && !(card.value.recogMark === marks.BAD && !card.value.altWriting),
         card.value.mark === marks.RETURN,
         true,
-        !(card.value.repeatStage === repeatStages.LEARN && card.value.direction === directions.FORWARD)
+        true // !(card.value.repeatStage === repeatStages.LEARN && card.value.direction === directions.FORWARD)
     );
     
     buttons.setAction(evaluateSaveNext);

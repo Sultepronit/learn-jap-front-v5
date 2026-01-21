@@ -17,6 +17,10 @@ watch(ready, () => {
   nextCycle();
 });
 
+// if (ready.value) { // in case of switching between views
+//   nextCycle();
+// }
+
 </script>
 
 <template>

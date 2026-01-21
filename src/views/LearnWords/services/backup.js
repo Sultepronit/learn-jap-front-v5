@@ -14,6 +14,7 @@ function saveSession(plan) {
 }
 
 function restoreSession() {
+    console.log('restoring words session!');
     return new Promise(resolve => {
         const restored = JSON.parse(localStorage.getItem('wordsSession'));
         if(!restored) {
