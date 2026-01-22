@@ -40,7 +40,7 @@ watch(ready, () => {
 
 <style scoped>
 .display {
-    height: calc(100dvh - 3px);
+    height: calc(100svh - 3px);
     display: grid;
     /* grid-template-rows: auto auto auto 1fr; */
     grid-template-rows: auto 1fr;
