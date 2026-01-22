@@ -13,7 +13,8 @@ import HappyEnd from '@/components/HappyEnd.vue';
 document.title = 'Learn Kanji';
 
 startSession();
-watch(ready, () => {
+watch(ready, (val) => {
+    if (!val) return;
     nextCycle();
 });
 </script>

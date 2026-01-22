@@ -41,15 +41,12 @@ function answer() {
     showAnswer.value = true;
 
     buttons.setAction(evaluateSaveNext);
+    buttons.setRetry(card.value.repeatStatus === 0 ? 0 : card.value.progress);
     if(card.value.repeatStage === repeatStages.REMEMBER) {
-        // buttons.twoButtons();
         buttons.setButtons(false, false, true, true, card.value.repeatStatus > 0);
     } else {
-        buttons.setButtons(card.value.record > 0, true, false, true, card.value.repeatStatus > 0);
-        // buttons.fourButtons();
-        // if(card.value.record > 0) {
-        //     buttons.bestButton();
-        // }
+        const showBad = card.value.repeatStatus > 0 && card.value.record < 0;
+        buttons.setButtons(card.value.record > 0, true, false, true, showBad);
     }
 }
 

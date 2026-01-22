@@ -8,7 +8,8 @@ const params = ref({
         retry: false,
         bad: false
     },
-    action: null
+    action: null,
+    retryWidth: 5
 });
 
 const change = {
@@ -22,6 +23,10 @@ const change = {
     },
     setAction(fn) {
         params.value.action = fn;
+    },
+    setRetry(progress) {
+        if (progress < -4) progress = -4;
+        params.value.retryWidth = 6 + progress;
     }
 }
 

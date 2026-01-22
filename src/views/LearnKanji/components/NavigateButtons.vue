@@ -24,17 +24,19 @@ import { params } from '../utils/buttonsControls.js';
         class="nav-b return"
         v-show="params.show.retry"
         @click="params.action(marks.RETURN)"
+        :style="{ flexGrow: params.retryWidth }"
     />
     <button
         class="nav-b bad"
         v-show="params.show.bad"
         @click="params.action(marks.BAD)"
+        :style="{ flexGrow: (12 - params.retryWidth) }"
     />
 </template>
 
 <style scoped>
 .nav-b {
-    flex-grow: 1;
+    flex-grow: 6;
     height: 4.5rem;
     /* margin-bottom: 1rem; */
     border-radius: 1rem;

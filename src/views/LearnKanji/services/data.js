@@ -16,6 +16,8 @@ async function fetchData() {
 }
 
 async function startSession() {
+    ready.value = false;
+
     const restored = await restoreSession();
     if(restored) {
         session = restored.session;
