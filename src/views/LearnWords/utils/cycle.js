@@ -58,6 +58,7 @@ function showReading() {
     cardDisplay.showReading();
 
     // buttons.goodBad();
+    buttons.setRetry(0);
     buttons.setButtons(true, false, false, true);
     buttons.setAction(quickRecognition);
 }
@@ -79,6 +80,10 @@ function answer() {
     // } else {
     //     buttons.goodReturnBad();
     // }
+    
+    let progress = card.value[`${card.value.direction}Progress`];
+    if (card.value.repeatStage === repeatStages.LEARN) progress /= 2;
+    buttons.setRetry(progress);
 
     buttons.setButtons(
         card.value.mark !== marks.RETURN && !(card.value.recogMark === marks.BAD && !card.value.altWriting),

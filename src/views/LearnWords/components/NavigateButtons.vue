@@ -18,11 +18,13 @@ import { params } from '../utils/buttonsControls.js';
         class="return"
         v-show="params.show.retry"
         @click="params.action(marks.RETURN)"
+        :style="{ flexGrow: params.retryWidth }"
     />
     <button
         class="bad"
         v-show="params.show.bad"
         @click="params.action(marks.BAD)"
+        :style="{ flexGrow: (12 - params.retryWidth) }"
     />
 </footer>
 </template>
@@ -39,7 +41,7 @@ footer {
     padding-inline: 0.5rem;
 }
 footer button {
-    flex-grow: 1;
+    flex-grow: 6;
     height: 4.5rem;
     margin-bottom: 1rem;
     border-radius: 1rem;
