@@ -9,6 +9,8 @@ let kanji = {};
 const ready = ref(false);
 
 async function startSession() {
+    ready.value = false;
+    
     const restored = await restoreSession();
     if(restored) {
         plan = restored.plan;

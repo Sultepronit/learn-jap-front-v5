@@ -13,7 +13,8 @@ import HappyEnd from '@/components/HappyEnd.vue';
 document.title = 'Learn Jap Words';
 
 startSession();
-watch(ready, () => {
+watch(ready, (val) => {
+  if (!val) return;
   nextCycle();
 });
 
